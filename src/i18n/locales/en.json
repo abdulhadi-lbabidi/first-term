@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "home": "Home",
+    "store": "Store",
+    "whyTrend": "Why Trend",
+    "orders": "My Orders",
+    "contact": "Contact Us",
+    "login": "Login",
+    "cart": "Cart",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "typingPrefix": "Discover the latest:",
+    "headline": "Fashion that moves with you every day",
+    "primaryCta": "Shop Now",
+    "secondaryCta": "Browse Categories",
+    "categoriesLabel": "Categories",
+    "slidesLabel": "Background slides",
+    "slideLabel": "Slide {{number}}",
+    "typingWords": [
+      "Dresses",
+      "Jackets",
+      "Shirts",
+      "Pants",
+      "Shoes",
+      "Accessories",
+      "Men's Wear",
+      "Women's Wear"
+    ]
+  },
+  "categories": {
+    "title": "Browse by Style",
+    "subtitle": "Choose the section closest to your look from Trend collections",
+    "productCount": "{{count}}+ products",
+    "browseNow": "Browse Now",
+    "items": {
+      "women": {
+        "title": "Women's Clothing",
+        "description": "Dresses, blouses, jackets and everyday looks"
+      },
+      "men": {
+        "title": "Men's Clothing",
+        "description": "Shirts, pants and modern jackets"
+      },
+      "accessories": {
+        "title": "Accessories",
+        "description": "Bags, watches, and sunglasses to complete your look"
+      },
+      "shoesBags": {
+        "title": "Shoes & Bags",
+        "description": "Elegant details that complete every look"
+      }
+    }
+  },
+  "language": {
+    "switchTo": "Switch to {{language}}"
+  },
+  "newArrivals": {
+    "title": "New Arrivals",
+    "subtitle": "Handpicked pieces to complete your look",
+    "colors": "Colors",
+    "sizes": "Sizes",
+    "viewAll": "View All",
+    "addToCart": "Add to Cart",
+    "addToWishlist": "Add to wishlist",
+    "removeFromWishlist": "Remove from wishlist",
+    "badges": {
+      "new": "New",
+      "bestseller": "Best Seller"
+    },
+    "products": {
+      "dress": { "name": "Silk Evening Dress", "price": "499 SAR" },
+      "jacket": { "name": "Classic Purple Jacket", "price": "379 SAR" },
+      "blouse": { "name": "Elegant Chiffon Blouse", "price": "249 SAR" },
+      "pants": { "name": "Tailored Wide Pants", "price": "299 SAR" }
+    }
+  },
+  "whyTrend": {
+    "title": "Why Trend?",
+    "subtitle": "Every detail is designed to give you a faster, more refined, and easier shopping experience.",
+    "stats": {
+      "products": { "label": "Curated Products" },
+      "categories": { "label": "Main Categories" },
+      "support": { "label": "Order Tracking" }
+    },
+    "image": {
+      "labelTitle": "Trend Experience",
+      "labelSubtitle": "Style, ease, and confidence",
+      "badges": {
+        "season": "New Season",
+        "picks": "Premium Picks",
+        "products": "250+ Products"
+      }
+    },
+    "items": {
+      "style": { "title": "Curated Style", "description": "Pieces carefully selected for your everyday and special looks." },
+      "shopping": { "title": "Faster Shopping", "description": "Clear search, organized categories, and an easy cart." },
+      "tracking": { "title": "Order Tracking", "description": "Track your orders after purchase with simple, clear steps." },
+      "trust": { "title": "Trusted Experience", "description": "Product details, sizes, colors, and SKU clearly in front of you." }
+    }
+  },
+  "auth": {
+    "close": "Close",
+    "success": "Operation completed successfully",
+    "visual": {
+      "title": "Welcome to Trend",
+      "subtitle": "Sign in to track your orders and shop with ease."
+    },
+    "login": {
+      "title": "Login",
+      "subtitle": "Welcome back, continue your shopping and orders",
+      "identifierLabel": "Email or Phone",
+      "identifierPlaceholder": "example@email.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Login",
+      "switchPrompt": "Don't have an account?",
+      "switchLink": "Create Account"
+    },
+    "register": {
+      "title": "Create New Account",
+      "subtitle": "Join Trend and track your orders with ease",
+      "fullNameLabel": "Full Name",
+      "fullNamePlaceholder": "Enter your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "example@email.com",
+      "phoneLabel": "Phone Number",
+      "phonePlaceholder": "05xxxxxxxx",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "••••••••",
+      "submit": "Create Account",
+      "switchPrompt": "Already have an account?",
+      "switchLink": "Login"
+    },
+    "errors": {
+      "required": "This field is required",
+      "passwordMin": "Password must be at least 6 characters",
+      "passwordMatch": "Passwords do not match"
+    }
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "store": "المتجر",
+    "whyTrend": "لماذا ترند",
+    "orders": "طلباتي",
+    "contact": "تواصل معنا",
+    "login": "تسجيل الدخول",
+    "cart": "السلة",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة"
+  },
+  "hero": {
+    "typingPrefix": "اكتشفي أحدث صيحات:",
+    "headline": "أزياء تواكبك كل يوم",
+    "primaryCta": "تسوقي الآن",
+    "secondaryCta": "شاهدي التصنيفات",
+    "categoriesLabel": "التصنيفات",
+    "slidesLabel": "شرائح الخلفية",
+    "slideLabel": "الشريحة {{number}}",
+    "typingWords": [
+      "فساتين",
+      "جاكيتات",
+      "قمصان",
+      "بناطيل",
+      "أحذية",
+      "إكسسوارات",
+      "ملابس رجالية",
+      "ملابس نسائية"
+    ]
+  },
+  "categories": {
+    "title": "تصفحي حسب ستايلك",
+    "subtitle": "اختاري القسم الأقرب لإطلالتك من مجموعات ترند",
+    "productCount": "{{count}}+ منتج",
+    "browseNow": "تصفحي الآن",
+    "items": {
+      "women": {
+        "title": "ملابس نسائية",
+        "description": "فساتين، بلايز، جاكيتات وإطلالات يومية"
+      },
+      "men": {
+        "title": "ملابس رجالية",
+        "description": "قمصان، بناطيل وجاكيتات عصرية"
+      },
+      "accessories": {
+        "title": "إكسسوارات",
+        "description": "حقائب، ساعات، ونظارات لإكمال الإطلالة"
+      },
+      "shoesBags": {
+        "title": "أحذية وحقائب",
+        "description": "تفاصيل أنيقة تكمل كل لوك"
+      }
+    }
+  },
+  "language": {
+    "switchTo": "التبديل إلى {{language}}"
+  },
+  "newArrivals": {
+    "title": "أحدث المنتجات",
+    "subtitle": "قطع مختارة بعناية لتكملي إطلالتك",
+    "colors": "الألوان",
+    "sizes": "المقاسات",
+    "viewAll": "عرض الكل",
+    "addToCart": "أضيفي للسلة",
+    "addToWishlist": "أضيفي للمفضلة",
+    "removeFromWishlist": "إزالة من المفضلة",
+    "badges": {
+      "new": "جديد",
+      "bestseller": "الأكثر طلبًا"
+    },
+    "products": {
+      "dress": { "name": "فستان سهرة حريري", "price": "٤٩٩ ر.س" },
+      "jacket": { "name": "جاكيت بنفسجي كلاسيكي", "price": "٣٧٩ ر.س" },
+      "blouse": { "name": "بلوزة شيفون أنيقة", "price": "٢٤٩ ر.س" },
+      "pants": { "name": "بنطال واسع مفصل", "price": "٢٩٩ ر.س" }
+    }
+  },
+  "whyTrend": {
+    "title": "لماذا ترند؟",
+    "subtitle": "كل تفصيلة مصممة لتمنحك تجربة تسوق أسرع، أرقى، وأسهل.",
+    "stats": {
+      "products": { "label": "منتج مختار" },
+      "categories": { "label": "تصنيفات رئيسية" },
+      "support": { "label": "متابعة الطلبات" }
+    },
+    "image": {
+      "labelTitle": "تجربة ترند",
+      "labelSubtitle": "ستايل، سهولة، وثقة",
+      "badges": {
+        "season": "موسم جديد",
+        "picks": "مختارات فاخرة",
+        "products": "250+ منتج"
+      }
+    },
+    "items": {
+      "style": { "title": "ستايل مختار", "description": "قطع منتقاة بعناية لتناسب إطلالتك اليومية والمميزة." },
+      "shopping": { "title": "تسوق أسرع", "description": "بحث واضح، تصنيفات مرتبة، وسلة سهلة الاستخدام." },
+      "tracking": { "title": "متابعة الطلبات", "description": "تابعي طلباتك بعد الشراء بخطوات بسيطة وواضحة." },
+      "trust": { "title": "تجربة موثوقة", "description": "تفاصيل المنتج، المقاسات، الألوان، ورقم المنتج أمامك بوضوح." }
+    }
+  },
+  "auth": {
+    "close": "إغلاق",
+    "success": "تم تنفيذ العملية بنجاح",
+    "visual": {
+      "title": "أهلاً بكِ في ترند",
+      "subtitle": "سجلي دخولك لتتابعي طلباتك وتكملي تسوقك بسهولة."
+    },
+    "login": {
+      "title": "تسجيل الدخول",
+      "subtitle": "أهلاً بعودتكِ، تابعي تسوقك وطلباتك",
+      "identifierLabel": "البريد الإلكتروني أو رقم الهاتف",
+      "identifierPlaceholder": "example@email.com",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "••••••••",
+      "remember": "تذكريني",
+      "forgot": "نسيتِ كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "switchPrompt": "ليس لديك حساب؟",
+      "switchLink": "إنشاء حساب"
+    },
+    "register": {
+      "title": "إنشاء حساب جديد",
+      "subtitle": "انضمي إلى ترند وتابعي طلباتك بسهولة",
+      "fullNameLabel": "الاسم الكامل",
+      "fullNamePlaceholder": "اكتبي اسمك",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "example@email.com",
+      "phoneLabel": "رقم الهاتف",
+      "phonePlaceholder": "05xxxxxxxx",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "••••••••",
+      "confirmPasswordLabel": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "••••••••",
+      "submit": "إنشاء حساب",
+      "switchPrompt": "هل لديك حساب مسبقاً؟",
+      "switchLink": "تسجيل الدخول"
+    },
+    "errors": {
+      "required": "هذا الحقل مطلوب",
+      "passwordMin": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+      "passwordMatch": "كلمتا المرور غير متطابقتين"
+    }
+  }
+}
