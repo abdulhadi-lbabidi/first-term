@@ -1,30 +1,26 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import HeroTypingBlock from '../../components/HeroTypingBlock/HeroTypingBlock'
+import AboutStore from '../../components/AboutStore/AboutStore'
 import Categories from '../../components/Categories/Categories'
 import Navbar from '../../components/Navbar/Navbar'
 import NewArrivals from '../../components/NewArrivals/NewArrivals'
+import Offers from '../../components/Offers/Offers'
+import Footer from '../../components/Footer/Footer'
 import WhyTrend from '../../components/WhyTrend/WhyTrend'
-import { heroSlides, SLIDE_INTERVAL } from '../../data/home'
+import HeroBackground from '../../components/HeroBackground/HeroBackground'
+import { heroSlides } from '../../data/home'
+import { useHeroCarousel } from '../../hooks/useHeroCarousel'
+import type { PageProps } from '../../types/navigation'
 
-export default function Home() {
+export default function Home({ currentPage, onNavigate }: PageProps) {
   const { t, i18n } = useTranslation()
-  const [activeSlide, setActiveSlide] = useState(0)
+  const { activeSlide, goToSlide } = useHeroCarousel(heroSlides.length)
 
   const typingWords = useMemo(
     () => t('hero.typingWords', { returnObjects: true }) as string[],
     [t],
   )
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
-    }, SLIDE_INTERVAL)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  const goToSlide = (index: number) => setActiveSlide(index)
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -32,39 +28,9 @@ export default function Home() {
         id="home"
         className="relative flex min-h-svh flex-col overflow-hidden text-white"
       >
-        <div className="absolute inset-0 z-0" aria-hidden="true">
-          {heroSlides.map((slide, index) => {
-            const isActive = index === activeSlide
-            return (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 overflow-hidden transition-opacity duration-1400ms ease-in-out ${
-                  isActive ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ background: slide.fallback }}
-              >
-                <img
-                  src={slide.image}
-                  alt=""
-                  draggable={false}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  className={`h-full w-full object-cover object-center ${
-                    isActive
-                      ? 'scale-110 transition-transform duration-5000 ease-out'
-                      : 'scale-100'
-                  }`}
-                />
-              </div>
-            )
-          })}
-        </div>
+        <HeroBackground activeSlide={activeSlide} />
 
-        <div
-          className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(135deg,rgba(15,5,30,0.88)_0%,rgba(30,10,55,0.72)_45%,rgba(59,7,100,0.55)_100%),linear-gradient(to_top,rgba(0,0,0,0.65)_0%,transparent_50%)]"
-          aria-hidden="true"
-        />
-
-        <Navbar overlay />
+        <Navbar overlay currentPage={currentPage} onNavigate={onNavigate} />
 
         <div className="relative z-[2] mx-auto grid w-full max-w-[1200px] flex-1 grid-cols-1 items-center gap-12 px-6 pb-[100px] pt-[calc(72px+48px)] lg:grid-cols-[200px_1fr] lg:gap-12">
           <HeroTypingBlock key={i18n.language} words={typingWords} />
@@ -97,11 +63,15 @@ export default function Home() {
       </section>
 
       <main className="flex-1">
-        <NewArrivals />
+        <NewArrivals onNavigate={onNavigate} />
         <Categories />
-        <div id="orders" />
+        <Offers />
+        <AboutStore />
+        <div id="orders" data-aos="fade-up" />
         <WhyTrend />
       </main>
+
+      <Footer />
     </div>
   )
 }

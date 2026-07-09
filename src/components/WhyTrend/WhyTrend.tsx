@@ -38,7 +38,7 @@ export default function WhyTrend() {
       />
 
       <div className="container relative">
-        <div className="mb-6 text-center max-md:mb-5">
+        <div className="mb-6 text-center max-md:mb-5" data-aos="fade-up">
           <h2 className="text-[clamp(28px,4vw,42px)] font-extrabold tracking-tight">
             {t('whyTrend.title')}
           </h2>
@@ -48,7 +48,11 @@ export default function WhyTrend() {
         </div>
 
         <div className="relative mx-auto max-w-[1100px] md:min-h-[500px] lg:min-h-[580px]">
-          <div className="group/image relative z-10 mx-auto w-full max-w-[300px] rotate-[-2deg] transition-transform duration-500 ease-out hover:rotate-[-1deg] md:absolute md:left-1/2 md:top-1/2 md:max-w-[220px] md:-translate-x-1/2 md:-translate-y-1/2 lg:max-w-[320px]">
+          <div
+            className="group/image relative z-10 mx-auto w-full max-w-[300px] rotate-[-2deg] transition-transform duration-500 ease-out hover:rotate-[-1deg] md:absolute md:left-1/2 md:top-1/2 md:max-w-[220px] md:-translate-x-1/2 md:-translate-y-1/2 lg:max-w-[320px]"
+            data-aos="zoom-in"
+            data-aos-delay="120"
+          >
             <div
               className="pointer-events-none absolute -inset-5 rounded-[2.5rem] bg-purple-500/35 blur-3xl"
               aria-hidden="true"
@@ -83,10 +87,11 @@ export default function WhyTrend() {
           </div>
 
           <div className="relative mt-6 flex flex-col gap-5 max-md:gap-12 md:absolute md:inset-0 md:mt-0">
-            {whyTrendItems.map((item) => (
+            {whyTrendItems.map((item, index) => (
               <WhyTrendFeatureCard
                 key={item.id}
                 item={item}
+                index={index}
                 className={whyTrendFeaturePositions[item.id]}
                 floatClass={whyTrendFeatureFloat[item.id]}
               />

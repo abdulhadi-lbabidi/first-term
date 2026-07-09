@@ -1,22 +1,56 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { navLinks } from '../../data/home'
+import { navLinks, type NavLink } from '../../data/home'
+import { useCart } from '../../context/CartContext'
+import type { AppPage, NavigateFn } from '../../types/navigation'
+import { ABOUT_PATH, CART_PATH, HOME_PATH, STORE_PATH } from '../../utils/routing'
 import AuthModal from '../AuthModal/AuthModal'
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 import { CartIcon, CloseIcon, MenuIcon, UserIcon } from '../icons/Icons'
 
 interface NavbarProps {
   overlay?: boolean
+  currentPage?: AppPage
+  onNavigate?: NavigateFn
 }
 
 const SCROLL_THRESHOLD = 40
 
-export default function Navbar({ overlay = false }: NavbarProps) {
+function isPageLink(
+  link: NavLink,
+): link is { key: 'about' | 'store'; page: 'about' | 'store' } {
+  return 'page' in link
+}
+
+function getPageHref(page: AppPage) {
+  if (page === 'about') return ABOUT_PATH
+  if (page === 'store') return STORE_PATH
+  if (page === 'cart') return CART_PATH
+  return HOME_PATH
+}
+
+export default function Navbar({
+  overlay = false,
+  currentPage = 'home',
+  onNavigate,
+}: NavbarProps) {
   const { t } = useTranslation()
+  const { cartCount } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [authOpen, setAuthOpen] = useState(false)
   const [authKey, setAuthKey] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [badgePulse, setBadgePulse] = useState(false)
+  const prevCartCount = useRef(cartCount)
+
+  useEffect(() => {
+    if (prevCartCount.current !== cartCount) {
+      setBadgePulse(true)
+      const timer = window.setTimeout(() => setBadgePulse(false), 450)
+      prevCartCount.current = cartCount
+      return () => window.clearTimeout(timer)
+    }
+  }, [cartCount])
 
   const isTransparent = overlay && !isScrolled
   const closeMenu = () => setMenuOpen(false)
@@ -38,12 +72,56 @@ export default function Navbar({ overlay = false }: NavbarProps) {
     ? 'text-white hover:bg-white/10 hover:text-white'
     : 'text-zinc-700 hover:bg-purple-50 hover:text-purple-700'
 
+  const activeLinkClass = isTransparent
+    ? 'bg-white/15 text-white'
+    : 'bg-purple-100 text-purple-800'
+
   const actionBtnClass = isTransparent
     ? 'border-white/25 bg-white/10 text-white hover:bg-white/20'
     : 'border-purple-200/80 bg-white/60 text-zinc-800 hover:bg-purple-50 backdrop-blur-sm'
 
   const actionBtnSizeClass =
     'h-8 w-8 [&_svg]:size-[17px] md:h-10 md:w-10 md:[&_svg]:size-[22px]'
+
+  const handleLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    closeMenu()
+    onNavigate?.('home', '#home')
+  }
+
+  const handleNavClick = (link: NavLink, event: MouseEvent<HTMLAnchorElement>) => {
+    if (isPageLink(link)) {
+      event.preventDefault()
+      closeMenu()
+      onNavigate?.(link.page)
+      return
+    }
+
+    if (link.href.startsWith('#')) {
+      event.preventDefault()
+      closeMenu()
+      onNavigate?.('home', link.href)
+      return
+    }
+
+    closeMenu()
+  }
+
+  const isLinkActive = (link: NavLink) => {
+    if (isPageLink(link)) {
+      if (link.page === 'about') return currentPage === 'about'
+      return currentPage === 'store' || currentPage === 'product'
+    }
+    if (link.key === 'home') return currentPage === 'home'
+    return false
+  }
+
+  const goToCart = () => {
+    closeMenu()
+    onNavigate?.('cart')
+  }
+
+  const cartBadgeClass = badgePulse ? 'scale-125' : 'scale-100'
 
   const actionButtons = (
     <>
@@ -55,23 +133,18 @@ export default function Navbar({ overlay = false }: NavbarProps) {
       >
         <UserIcon />
       </button>
-      <a
-        href="#cart"
-        onClick={closeMenu}
-        aria-label={t('nav.cart')}
-        className={`relative flex items-center justify-center rounded-full border transition-all duration-500 ${actionBtnSizeClass} ${actionBtnClass}`}
-      >
-        <CartIcon />
-        <span
-          className={`absolute -end-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-0.5 text-[9px] font-bold text-white transition-colors duration-500 md:-end-1 md:-top-1 md:h-5 md:min-w-5 md:px-1 md:text-[10px] ${
-            isTransparent ? 'bg-purple-400' : 'bg-gradient-to-r from-violet-600 to-purple-500'
-          }`}
-        >
-          0
-        </span>
-      </a>
     </>
   )
+
+  const cartButtonClass = `${
+    currentPage === 'cart'
+      ? isTransparent
+        ? 'border-white/30 bg-white/15 text-white'
+        : 'border-purple-200 bg-purple-100 text-purple-800'
+      : isTransparent
+        ? 'border-white/20 bg-white/10 text-white hover:bg-white/20'
+        : 'border-purple-100 bg-white/70 text-purple-700 hover:border-purple-200 hover:bg-purple-50'
+  }`
 
   return (
     <header
@@ -85,8 +158,8 @@ export default function Navbar({ overlay = false }: NavbarProps) {
     >
       <div className="mx-auto flex h-full w-full max-w-[1200px] items-center justify-between gap-6 px-6">
         <a
-          href="#home"
-          onClick={closeMenu}
+          href={HOME_PATH}
+          onClick={handleLogoClick}
           className={`flex shrink-0 items-center gap-2.5 text-[22px] font-extrabold transition-colors duration-500 ${
             isTransparent ? 'text-white' : 'text-purple-800'
           }`}
@@ -113,21 +186,43 @@ export default function Navbar({ overlay = false }: NavbarProps) {
           }`}
         >
           <ul className="flex items-center gap-0.5 max-md:w-full max-md:flex-col max-md:items-center max-md:gap-1 md:gap-1">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  onClick={closeMenu}
-                  className={`block rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors duration-500 max-md:px-4 max-md:py-3 max-md:text-center max-md:text-base md:px-2 md:py-1.5 md:text-[13px] lg:px-3.5 lg:py-2 lg:text-[15px] ${linkClass}`}
-                >
-                  {t(`nav.${link.key}`)}
-                </a>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const href = isPageLink(link) ? getPageHref(link.page) : link.href
+              return (
+                <li key={link.key}>
+                  <a
+                    href={href}
+                    onClick={(event) => handleNavClick(link, event)}
+                    className={`block rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors duration-500 max-md:px-4 max-md:py-3 max-md:text-center max-md:text-base md:px-2 md:py-1.5 md:text-[13px] lg:px-3.5 lg:py-2 lg:text-[15px] ${
+                      isLinkActive(link) ? activeLinkClass : linkClass
+                    }`}
+                  >
+                    {t(`nav.${link.key}`)}
+                  </a>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
         <div className="flex items-center gap-1.5 md:gap-2">
+          <button
+            type="button"
+            onClick={goToCart}
+            className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-semibold transition-all duration-500 [&_svg]:size-[18px] ${cartButtonClass}`}
+          >
+            <span className="relative">
+              <CartIcon />
+              {cartCount > 0 && (
+                <span
+                  className={`absolute -end-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-500 px-1 text-[9px] font-bold text-white transition-transform duration-300 ${cartBadgeClass}`}
+                >
+                  {cartCount}
+                </span>
+              )}
+            </span>
+            {t('nav.cart')}
+          </button>
           <div className="flex items-center gap-1.5 max-md:flex md:hidden">
             {actionButtons}
           </div>

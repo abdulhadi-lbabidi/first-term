@@ -25,11 +25,12 @@ export default function Categories() {
         <SectionHeader
           title={t('categories.title')}
           subtitle={t('categories.subtitle')}
+          aos="zoom-in"
         />
 
         <div className="group/panels grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-4 lg:flex lg:h-[520px] lg:flex-row lg:gap-3">
-          {categories.map((category) => (
-            <CategoryPanel key={category.id} category={category} />
+          {categories.map((category, index) => (
+            <CategoryPanel key={category.id} category={category} index={index} />
           ))}
         </div>
       </div>

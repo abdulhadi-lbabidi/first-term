@@ -1,7 +1,13 @@
 {
+  "ui": {
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "retry": "Try again"
+  },
   "nav": {
     "home": "Home",
     "store": "Store",
+    "about": "About Store",
     "whyTrend": "Why Trend",
     "orders": "My Orders",
     "contact": "Contact Us",
@@ -100,6 +106,73 @@
       "trust": { "title": "Trusted Experience", "description": "Product details, sizes, colors, and SKU clearly in front of you." }
     }
   },
+  "offers": {
+    "title": "Trend Offers",
+    "subtitle": "Curated deals for a better look at a smarter price",
+    "ribbon": "Limited Offers • New Season • Trend Sale",
+    "ghostSale": "SALE",
+    "codeLabel": "CODE: {{code}}",
+    "posters": {
+      "discount-40": {
+        "badge": "Limited Discount",
+        "title": "Up to 40% Off",
+        "description": "On selected women's and men's fashion",
+        "buttonText": "Shop Now"
+      },
+      "style-3": {
+        "badge": "Special Offer",
+        "title": "3 at a Special Price",
+        "description": "Buy two pieces and get the third at a special price",
+        "buttonText": "Discover Offer"
+      },
+      "new-launch": {
+        "badge": "New Season",
+        "title": "Launch Prices",
+        "description": "On newly arrived pieces for a limited time",
+        "buttonText": "See What's New"
+      }
+    }
+  },
+  "aboutStore": {
+    "sectionTitle": "About Trend Store",
+    "badge": "About Trend",
+    "title": "An online fashion store that makes choosing your look easier",
+    "description": "Trend is more than a clothing store — it's a shopping experience designed to help you choose your look with ease and confidence. We bring you modern pieces, clear categories, detailed product information, and a simple cart that makes your journey from browsing to ordering more elegant.",
+    "imageAlt": "Trend fashion store",
+    "imageBadge": "Premium Fashion",
+    "floatingCard": {
+      "title": "Trend Store",
+      "text": "Fashion made easier"
+    },
+    "highlights": {
+      "curated": "Carefully curated fashion",
+      "categories": "Clear categories for every style",
+      "shopping": "Easy and fast shopping experience"
+    },
+    "timeline": {
+      "label": "Shopping Journey",
+      "title": "Your Journey with Trend",
+      "subtitle": "Simple, clear steps from choosing an item to tracking your order",
+      "steps": {
+        "browse": {
+          "title": "Choose a category",
+          "caption": "Browse sections that match your style"
+        },
+        "details": {
+          "title": "View product details",
+          "caption": "See sizes, colors, and photos clearly"
+        },
+        "cart": {
+          "title": "Add to cart",
+          "caption": "Add your favorite pieces in one step"
+        },
+        "track": {
+          "title": "Track your order",
+          "caption": "Monitor your order status after purchase"
+        }
+      }
+    }
+  },
   "auth": {
     "close": "Close",
     "success": "Operation completed successfully",
@@ -142,5 +215,283 @@
       "passwordMin": "Password must be at least 6 characters",
       "passwordMatch": "Passwords do not match"
     }
+  },
+  "footer": {
+    "newsletter": {
+      "title": "Stay Close to What's New",
+      "subtitle": "Subscribe to receive the latest offers and collections from Trend",
+      "placeholder": "Enter your email address",
+      "submit": "Subscribe Now",
+      "success": "Successfully subscribed! Thank you"
+    },
+    "brand": {
+      "description": "Your online store for modern fashion with an easy, elegant shopping experience."
+    },
+    "columns": {
+      "quickLinks": "Quick Links",
+      "account": "My Account",
+      "contact": "Contact Us"
+    },
+    "links": {
+      "home": "Home",
+      "store": "Store",
+      "categories": "Categories",
+      "about": "About Store",
+      "contact": "Contact Us",
+      "orders": "My Orders",
+      "cart": "Shopping Cart",
+      "login": "Login",
+      "register": "Create Account"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "tiktok": "TikTok"
+    },
+    "contact": {
+      "tagline": "Online Fashion Store"
+    },
+    "bottom": {
+      "copyright": "© 2026 Trend. All rights reserved.",
+      "tagline": "Designed for a premium shopping experience"
+    },
+    "backToTop": "Back to top"
+  },
+  "aboutPage": {
+    "hero": {
+      "title": "About Trend Store",
+      "subtitle": "More than a clothing store — Trend is a shopping experience designed to make choosing your look easier, clearer, and more beautiful.",
+      "shopNow": "Start Shopping",
+      "browseCategories": "Browse Categories",
+      "badges": {
+        "premium": "Premium Fashion",
+        "easy": "Easy Shopping",
+        "curated": "Curated Style"
+      },
+      "imageAlt": "Trend fashion store"
+    },
+    "story": {
+      "badge": "Trend Story",
+      "title": "We started with a simple idea: clearer shopping, better style",
+      "description": "Trend began with a simple idea: making clothing shopping clearer and more elegant. We believe every piece should be presented with its details, colors, sizes, and SKU in a way that helps you choose with confidence.",
+      "imageAlt": "Trend story",
+      "highlights": {
+        "curated": "Curated Pieces",
+        "clear": "Clear Details",
+        "easy": "Easy Experience"
+      }
+    },
+    "visionMission": {
+      "vision": {
+        "title": "Our Vision",
+        "text": "To become your favorite destination for modern fashion with an easy, comfortable shopping experience."
+      },
+      "mission": {
+        "title": "Our Mission",
+        "text": "To deliver an online store that combines beautiful design, clear product information, and easy ordering and tracking."
+      }
+    },
+    "values": {
+      "title": "Trend Values",
+      "subtitle": "The values that make shopping clearer, more beautiful, and easier",
+      "hubTitle": "Trend",
+      "hubSubtitle": "Values",
+      "items": {
+        "elegance": {
+          "title": "Elegance",
+          "description": "Every piece is carefully selected to suit your look."
+        },
+        "clarity": {
+          "title": "Clarity",
+          "description": "Product details, sizes, colors, and SKU clearly in front of you."
+        },
+        "ease": {
+          "title": "Ease",
+          "description": "A simple, fast browsing and checkout experience."
+        },
+        "trust": {
+          "title": "Trust",
+          "description": "Clear order tracking and an organized shopping experience."
+        }
+      }
+    },
+    "timeline": {
+      "title": "Your Journey with Trend",
+      "steps": {
+        "browse": { "title": "Choose a Category" },
+        "view": { "title": "View the Product" },
+        "cart": { "title": "Add to Cart" },
+        "track": { "title": "Track Your Order" }
+      }
+    },
+    "stats": {
+      "products": { "label": "Curated Products" },
+      "categories": { "label": "Main Categories" },
+      "support": { "label": "Order Tracking" },
+      "experience": { "label": "Easier Experience" }
+    },
+    "difference": {
+      "title": "Why Is Trend Different?",
+      "description": "We don't just display products — we organize the entire shopping experience: from the image, to the details, to the cart, to order tracking.",
+      "imageAlt": "Trend premium experience",
+      "features": {
+        "photos": { "title": "Clear Photos" },
+        "info": { "title": "Accurate Information" },
+        "order": { "title": "Easier Ordering" }
+      }
+    },
+    "cta": {
+      "title": "Ready to Choose Your Next Look?",
+      "description": "Discover the latest pieces and offers from Trend now.",
+      "button": "Shop Now"
+    }
+  },
+  "store": {
+    "badge": "Trend Store",
+    "title": "Trend Store",
+    "subtitle": "Discover the latest fashion with easy filters to find your perfect piece quickly",
+    "description": "Browse our curated collection of clothing and accessories, and use filters to find the right product.",
+    "stats": {
+      "products": "250+ Products",
+      "categories": "4+ Categories",
+      "experience": "Easy Experience"
+    },
+    "productCount": "{{count}} products",
+    "showFilters": "Show Filters",
+    "hideFilters": "Hide Filters",
+    "loadingProducts": "Loading products...",
+    "loadError": "Failed to load products",
+    "currency": "SAR",
+    "filters": {
+      "title": "Filters",
+      "subtitle": "Filter products by your preferences",
+      "codeSearch": "Search by product code",
+      "codePlaceholder": "Example: TRD-1001",
+      "size": "Size",
+      "color": "Color",
+      "price": "Price",
+      "category": "Category",
+      "reset": "Reset Filters",
+      "colorPickerOpen": "Pick a custom color",
+      "colorPickerConfirm": "Confirm"
+    },
+    "colors": {
+      "all": "All",
+      "black": "Black",
+      "white": "White",
+      "purple": "Purple",
+      "pink": "Pink",
+      "beige": "Beige",
+      "silver": "Silver",
+      "lavender": "Lavender"
+    },
+    "categories": {
+      "all": "All",
+      "women": "Women's Clothing",
+      "men": "Men's Clothing",
+      "accessories": "Accessories",
+      "shoesBags": "Shoes & Bags"
+    },
+    "priceRanges": {
+      "all": "All",
+      "under250": "Under 250",
+      "250-400": "250 - 400",
+      "over400": "Over 400"
+    },
+    "empty": {
+      "title": "No products match the current filters",
+      "description": "Try adjusting the filters or reset them to see more products."
+    },
+    "card": {
+      "colors": "Colors",
+      "sizes": "Sizes",
+      "viewDetails": "View Details",
+      "new": "New"
+    },
+    "productDetails": {
+      "notFound": "Product Not Found",
+      "notFoundDescription": "We couldn't find the requested product. It may have been removed or the link is incorrect.",
+      "backToStore": "Back to Store",
+      "featured": "Featured Product",
+      "codeLabel": "Product Code: {{code}}",
+      "addToCart": "Add to Cart",
+      "addingToCart": "Adding...",
+      "cartPending": "Cart integration coming soon",
+      "related": "You May Also Like"
+    },
+    "products": {
+      "1": {
+        "name": "Elegant Silk Dress",
+        "description": "A luxurious silk dress with an elegant design perfect for occasions and evenings. A comfortable fit with refined details that reflect Trend's luxury."
+      },
+      "2": {
+        "name": "Classic Jacket",
+        "description": "A classic jacket with a modern design that adds a premium touch to your daily look. Soft fabric and elegant details."
+      },
+      "3": {
+        "name": "Soft Chiffon Blouse",
+        "description": "A lightweight chiffon blouse with a soft feel, ideal for everyday looks and casual occasions."
+      },
+      "4": {
+        "name": "Wide-Leg Pants",
+        "description": "Wide-leg pants with a modern design that combines comfort and elegance. A wardrobe essential."
+      },
+      "5": {
+        "name": "Premium Men's Shirt",
+        "description": "A men's shirt with an elegant cut and excellent fabric, suitable for work and formal occasions."
+      },
+      "6": {
+        "name": "Purple Handbag",
+        "description": "A handbag with a modern design and distinctive purple color, completing your look with a premium touch."
+      },
+      "7": {
+        "name": "Elegant Watch",
+        "description": "An elegant watch with a simple, premium design that adds a refined touch to every look."
+      },
+      "8": {
+        "name": "Elegant Heels",
+        "description": "Elegant heels with a premium design perfect for occasions and evenings. Comfort and style in one piece."
+      },
+      "9": {
+        "name": "Silk Scarf",
+        "description": "A soft silk scarf with a premium feel, adding depth and elegance to your look in every season."
+      },
+      "10": {
+        "name": "Classic Men's Suit",
+        "description": "A classic men's suit with a refined cut for formal occasions."
+      },
+      "11": {
+        "name": "Embroidered Evening Dress",
+        "description": "An embroidered evening dress with luxurious details for special occasions."
+      },
+      "12": {
+        "name": "Premium Sunglasses",
+        "description": "Modern sunglasses that protect your eyes and complete your look."
+      }
+    }
+  },
+  "cart": {
+    "badge": "Trend Cart",
+    "title": "Shopping Cart",
+    "subtitle": "Review your selected pieces before checkout",
+    "heroText": "All your choices in one place — color, size, and quantity at a glance.",
+    "loading": "Loading cart...",
+    "error": "An error occurred while loading the cart",
+    "emptyTitle": "Your cart is empty",
+    "emptyText": "Start adding your favorite pieces from Trend store.",
+    "backToStore": "Back to Store",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "summaryTitle": "Order Summary",
+    "itemsCount": "Items",
+    "subtotalLabel": "Subtotal",
+    "delivery": "Delivery",
+    "deliveryLater": "To be determined",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "checkoutPending": "Checkout will be implemented later",
+    "addedToCart": "Product added to cart",
+    "removedFromCart": "Product removed from cart",
+    "quantityUpdated": "Quantity updated"
   }
 }

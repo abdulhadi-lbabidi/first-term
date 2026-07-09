@@ -1,3 +1,6 @@
+export type { AddToCartPayload, CartItem } from './cart'
+export type { Product, ProductColor } from './product'
+
 export interface HeroSlide {
   id: string
   image: string
@@ -11,10 +14,10 @@ export interface Category {
   fallback: string
 }
 
-export interface Product {
+export interface ShowcaseProduct {
   id: string
   sku: string
-  image: string
+  images: string[]
   fallback: string
   colors: string[]
   sizes: string[]

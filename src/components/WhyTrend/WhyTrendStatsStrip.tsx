@@ -21,14 +21,11 @@ function StatCounter({ stat }: { stat: WhyTrendStat }) {
 }
 
 export default function WhyTrendStatsStrip() {
-  const { ref, isInView } = useInView(0.25)
-
   return (
     <div
-      ref={ref}
-      className={`mx-auto mt-6 flex max-w-3xl flex-col items-center justify-center gap-4 rounded-[2rem] border border-white/15 bg-white/10 px-6 py-4 backdrop-blur-xl transition-all duration-700 ease-out sm:flex-row sm:gap-0 sm:px-10 sm:py-5 ${
-        isInView ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-90'
-      }`}
+      data-aos="fade-up"
+      data-aos-delay="240"
+      className="mx-auto mt-6 flex max-w-3xl flex-col items-center justify-center gap-4 rounded-[2rem] border border-white/15 bg-white/10 px-6 py-4 backdrop-blur-xl sm:flex-row sm:gap-0 sm:px-10 sm:py-5"
     >
       {whyTrendStats.map((stat, index) => (
         <div key={stat.id} className="flex items-center gap-4 sm:flex-1 sm:justify-center">

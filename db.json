@@ -1,0 +1,455 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "code": "TRD-1001",
+      "price": 499,
+      "oldPrice": 650,
+      "categoryKey": "women",
+      "images": [
+        "/images/product-1.jpg",
+        "/images/product-1-2.jpg",
+        "/images/product-1-3.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#111111"
+        },
+        {
+          "key": "purple",
+          "value": "#7c3aed"
+        },
+        {
+          "key": "white",
+          "value": "#ffffff"
+        },
+        {
+          "key": "lavender",
+          "value": "#c084fc"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "isNew": true,
+      "isFeatured": true,
+      "createdAt": "2026-07-01"
+    },
+    {
+      "id": "2",
+      "code": "TRD-1002",
+      "price": 379,
+      "oldPrice": 459,
+      "categoryKey": "women",
+      "images": [
+        "/images/product-2.jpg",
+        "/images/product-2-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#18181b"
+        },
+        {
+          "key": "purple",
+          "value": "#6b21a8"
+        },
+        {
+          "key": "beige",
+          "value": "#e9d5ff"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "isNew": false,
+      "isFeatured": true,
+      "createdAt": "2026-06-20"
+    },
+    {
+      "id": "3",
+      "code": "TRD-1003",
+      "price": 249,
+      "categoryKey": "women",
+      "images": [
+        "/images/product-3.jpg",
+        "/images/product-3-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "white",
+          "value": "#ffffff"
+        },
+        {
+          "key": "pink",
+          "value": "#d8b4fe"
+        },
+        {
+          "key": "purple",
+          "value": "#9333ea"
+        }
+      ],
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "isNew": true,
+      "isFeatured": false,
+      "createdAt": "2026-07-05"
+    },
+    {
+      "id": "4",
+      "code": "TRD-1004",
+      "price": 299,
+      "categoryKey": "women",
+      "images": [
+        "/images/product-4.jpg",
+        "/images/product-4-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#27272a"
+        },
+        {
+          "key": "silver",
+          "value": "#a1a1aa"
+        },
+        {
+          "key": "purple",
+          "value": "#52525b"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL"
+      ],
+      "isNew": false,
+      "isFeatured": false,
+      "createdAt": "2026-05-15"
+    },
+    {
+      "id": "5",
+      "code": "TRD-1005",
+      "price": 329,
+      "categoryKey": "men",
+      "images": [
+        "/images/product-2.jpg",
+        "/images/product-2-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "white",
+          "value": "#f8fafc"
+        },
+        {
+          "key": "black",
+          "value": "#0f172a"
+        },
+        {
+          "key": "purple",
+          "value": "#581c87"
+        }
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "isNew": true,
+      "isFeatured": true,
+      "createdAt": "2026-07-02"
+    },
+    {
+      "id": "6",
+      "code": "TRD-1006",
+      "price": 459,
+      "oldPrice": 549,
+      "categoryKey": "shoesBags",
+      "images": [
+        "/images/product-3.jpg",
+        "/images/product-3-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "purple",
+          "value": "#7c3aed"
+        },
+        {
+          "key": "black",
+          "value": "#18181b"
+        },
+        {
+          "key": "beige",
+          "value": "#d6d3d1"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M"
+      ],
+      "isNew": true,
+      "isFeatured": false,
+      "createdAt": "2026-07-08"
+    },
+    {
+      "id": "7",
+      "code": "TRD-1007",
+      "price": 199,
+      "categoryKey": "accessories",
+      "images": [
+        "/images/product-4.jpg",
+        "/images/product-4-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#18181b"
+        },
+        {
+          "key": "purple",
+          "value": "#9333ea"
+        },
+        {
+          "key": "silver",
+          "value": "#e7e5e4"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M"
+      ],
+      "isNew": false,
+      "isFeatured": true,
+      "createdAt": "2026-04-10"
+    },
+    {
+      "id": "8",
+      "code": "TRD-1008",
+      "price": 549,
+      "oldPrice": 649,
+      "categoryKey": "shoesBags",
+      "images": [
+        "/images/product-1.jpg",
+        "/images/product-1-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#1e1033"
+        },
+        {
+          "key": "pink",
+          "value": "#d946ef"
+        },
+        {
+          "key": "white",
+          "value": "#f5f5f4"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "isNew": false,
+      "isFeatured": true,
+      "createdAt": "2026-06-01"
+    },
+    {
+      "id": "9",
+      "code": "TRD-1009",
+      "price": 189,
+      "categoryKey": "accessories",
+      "images": [
+        "/images/product-3.jpg",
+        "/images/product-3-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "purple",
+          "value": "#7c3aed"
+        },
+        {
+          "key": "pink",
+          "value": "#f0abfc"
+        },
+        {
+          "key": "white",
+          "value": "#fafafa"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M"
+      ],
+      "isNew": true,
+      "isFeatured": false,
+      "createdAt": "2026-07-07"
+    },
+    {
+      "id": "10",
+      "code": "TRD-1010",
+      "price": 899,
+      "oldPrice": 1099,
+      "categoryKey": "men",
+      "images": [
+        "/images/product-1.jpg",
+        "/images/product-1-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#0f0a1a"
+        },
+        {
+          "key": "purple",
+          "value": "#3b0764"
+        },
+        {
+          "key": "silver",
+          "value": "#71717a"
+        }
+      ],
+      "sizes": [
+        "M",
+        "L",
+        "XL"
+      ],
+      "isNew": false,
+      "isFeatured": true,
+      "createdAt": "2026-03-22"
+    },
+    {
+      "id": "11",
+      "code": "TRD-1011",
+      "price": 799,
+      "categoryKey": "women",
+      "images": [
+        "/images/product-4.jpg",
+        "/images/product-4-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "purple",
+          "value": "#581c87"
+        },
+        {
+          "key": "pink",
+          "value": "#db2777"
+        },
+        {
+          "key": "black",
+          "value": "#18181b"
+        }
+      ],
+      "sizes": [
+        "S",
+        "M",
+        "L"
+      ],
+      "isNew": true,
+      "isFeatured": true,
+      "createdAt": "2026-07-03"
+    },
+    {
+      "id": "12",
+      "code": "TRD-1012",
+      "price": 159,
+      "categoryKey": "accessories",
+      "images": [
+        "/images/product-2.jpg",
+        "/images/product-2-2.jpg"
+      ],
+      "colors": [
+        {
+          "key": "black",
+          "value": "#18181b"
+        },
+        {
+          "key": "silver",
+          "value": "#c0c0c0"
+        },
+        {
+          "key": "purple",
+          "value": "#7c3aed"
+        }
+      ],
+      "sizes": [
+        "S"
+      ],
+      "isNew": false,
+      "isFeatured": false,
+      "createdAt": "2026-05-28"
+    }
+  ],
+  "cart": [
+    {
+      "productId": "1",
+      "code": "TRD-1001",
+      "name": "Elegant Silk Dress",
+      "price": 499,
+      "image": "/images/product-1.jpg",
+      "selectedColor": {
+        "name": "White",
+        "value": "#ffffff"
+      },
+      "selectedSize": "S",
+      "quantity": 1,
+      "id": "wFs6YTeYBmg"
+    },
+    {
+      "productId": "3",
+      "code": "TRD-1003",
+      "name": "Soft Chiffon Blouse",
+      "price": 249,
+      "image": "/images/product-3.jpg",
+      "selectedColor": {
+        "name": "White",
+        "value": "#ffffff"
+      },
+      "selectedSize": "XS",
+      "quantity": 1,
+      "id": "epDSXc0cHVg"
+    },
+    {
+      "productId": "1",
+      "code": "TRD-1001",
+      "name": "Elegant Silk Dress",
+      "price": 499,
+      "image": "/images/product-1.jpg",
+      "selectedColor": {
+        "name": "Purple",
+        "value": "#7c3aed"
+      },
+      "selectedSize": "XL",
+      "quantity": 1,
+      "id": "XniAe4Rq6D8"
+    },
+    {
+      "productId": "1",
+      "code": "TRD-1001",
+      "name": "Elegant Silk Dress",
+      "price": 499,
+      "image": "/images/product-1.jpg",
+      "selectedColor": {
+        "name": "Black",
+        "value": "#111111"
+      },
+      "selectedSize": "XL",
+      "quantity": 1,
+      "id": "KHnoKCmQGi4"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

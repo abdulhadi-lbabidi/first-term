@@ -1,12 +1,18 @@
 import type { Category, HeroSlide } from '../types'
 
-export const navLinks = [
+export type NavLink =
+  | { key: 'home' | 'whyTrend' | 'orders'; href: string; page?: never }
+  | { key: 'about' | 'store'; page: 'about' | 'store'; href?: never }
+  | { key: 'contact'; href: string; page?: never }
+
+export const navLinks: NavLink[] = [
   { key: 'home', href: '#home' },
-  { key: 'store', href: '#store' },
+  { key: 'store', page: 'store' },
+  { key: 'about', page: 'about' },
   { key: 'whyTrend', href: '#why-trend' },
   { key: 'orders', href: '#orders' },
   { key: 'contact', href: 'mailto:info@trend.sa' },
-] as const
+]
 
 export const heroSlides: HeroSlide[] = [
   {

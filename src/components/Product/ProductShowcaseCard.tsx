@@ -1,26 +1,57 @@
-import { useState } from 'react'
+import { useState, type KeyboardEvent, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { Product } from '../../types'
+import type { ShowcaseProduct } from '../../types'
+import { aosDelay } from '../../utils/aos'
 import { CartIcon, HeartIcon } from '../icons/Icons'
+import ProductImageCarousel from '../ProductImageCarousel/ProductImageCarousel'
 
 interface ProductShowcaseCardProps {
-  product: Product
+  product: ShowcaseProduct
   index: number
+  displayName?: string
+  displayPrice?: string
+  displayOldPrice?: string
+  onCardClick?: () => void
+  onCartClick?: () => void
+}
+
+function stopCardNavigation(event: MouseEvent) {
+  event.stopPropagation()
 }
 
 export default function ProductShowcaseCard({
   product,
   index,
+  displayName,
+  displayPrice,
+  displayOldPrice,
+  onCardClick,
+  onCartClick,
 }: ProductShowcaseCardProps) {
   const { t } = useTranslation()
   const [wishlisted, setWishlisted] = useState(false)
+  const [carouselPaused, setCarouselPaused] = useState(false)
   const isReversed = index % 2 === 1
+
+  const name = displayName ?? t(`newArrivals.products.${product.id}.name`)
+  const price = displayPrice ?? t(`newArrivals.products.${product.id}.price`)
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (!onCardClick) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      onCardClick()
+    }
+  }
 
   const actionButtons = (
     <>
       <button
         type="button"
-        onClick={() => setWishlisted((prev) => !prev)}
+        onClick={(event) => {
+          stopCardNavigation(event)
+          setWishlisted((prev) => !prev)
+        }}
         className={`flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-500 ease-out lg:h-10 lg:w-10 [&_svg]:size-[18px] lg:[&_svg]:size-[20px] ${
           wishlisted
             ? 'border-purple-300 bg-purple-50 text-purple-600'
@@ -37,7 +68,11 @@ export default function ProductShowcaseCard({
 
       <button
         type="button"
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-purple-700 text-white shadow-lg shadow-purple-500/30 transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 hover:bg-purple-600 hover:shadow-purple-500/45 lg:h-11 lg:w-11 [&_svg]:size-[18px] lg:[&_svg]:size-[22px]"
+        onClick={(event) => {
+          stopCardNavigation(event)
+          onCartClick?.()
+        }}
+        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-purple-700 text-white shadow-lg shadow-purple-500/30 transition-all duration-500 ease-out group-hover:scale-110 group-hover:rotate-6 hover:bg-purple-600 hover:shadow-purple-500/45 lg:h-11 lg:w-11 [&_svg]:size-[18px] lg:[&_svg]:size-[22px]"
         aria-label={t('newArrivals.addToCart')}
       >
         <CartIcon />
@@ -46,14 +81,26 @@ export default function ProductShowcaseCard({
   )
 
   return (
-    <article className="group relative h-full">
+    <article
+      className="group relative h-full"
+      data-aos="fade-up"
+      data-aos-delay={aosDelay(index)}
+      onMouseEnter={() => setCarouselPaused(true)}
+      onMouseLeave={() => setCarouselPaused(false)}
+    >
       <div
         className="pointer-events-none absolute -inset-2 -z-10 rounded-[28px] bg-purple-500/0 blur-2xl transition-all duration-500 ease-out group-hover:bg-purple-500/20"
         aria-hidden="true"
       />
 
       <div
+        role={onCardClick ? 'button' : undefined}
+        tabIndex={onCardClick ? 0 : undefined}
+        onClick={onCardClick}
+        onKeyDown={handleCardKeyDown}
         className={`relative flex h-full flex-col overflow-hidden rounded-3xl border border-purple-100/90 bg-white shadow-[0_10px_40px_rgba(30,16,51,0.07)] transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:border-purple-300/80 group-hover:shadow-[0_28px_60px_rgba(124,58,237,0.18)] lg:h-[300px] lg:flex-row ${
+          onCardClick ? 'cursor-pointer' : ''
+        } ${
           isReversed
             ? 'lg:flex-row-reverse lg:rtl:flex-row'
             : 'lg:rtl:flex-row-reverse'
@@ -63,21 +110,20 @@ export default function ProductShowcaseCard({
           className="relative h-[220px] w-full shrink-0 overflow-hidden sm:h-[240px] lg:h-full lg:w-[65%]"
           style={{ background: product.fallback }}
         >
-          <img
-            src={product.image}
-            alt={t(`newArrivals.products.${product.id}.name`)}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
+          <ProductImageCarousel
+            images={product.images}
+            alt={name}
+            paused={carouselPaused}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1e1033]/45 via-[#3b0764]/10 to-transparent" />
-          <div className="absolute inset-0 bg-purple-600/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#1e1033]/45 via-[#3b0764]/10 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-purple-600/10 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-          <span className="absolute start-4 top-4 rounded-full border border-white/30 bg-white/92 px-3 py-1 text-[11px] font-bold tracking-wide text-purple-800 backdrop-blur-md">
+          <span className="pointer-events-none absolute start-4 top-4 z-10 rounded-full border border-white/30 bg-white/92 px-3 py-1 text-[11px] font-bold tracking-wide text-purple-800 backdrop-blur-md">
             {product.sku}
           </span>
 
           {product.badge && (
-            <span className="absolute end-4 top-4 rounded-full bg-purple-700 px-3 py-1 text-[11px] font-bold text-white shadow-lg shadow-purple-500/30">
+            <span className="pointer-events-none absolute end-4 top-4 z-10 rounded-full bg-purple-700 px-3 py-1 text-[11px] font-bold text-white shadow-lg shadow-purple-500/30">
               {t(`newArrivals.badges.${product.badge}`)}
             </span>
           )}
@@ -88,13 +134,16 @@ export default function ProductShowcaseCard({
             {actionButtons}
           </div>
 
-          <div className="max-lg:pe-24">
-            <h3 className="line-clamp-2 text-lg font-bold leading-snug text-[#1e1033] transition-colors duration-300 group-hover:text-purple-800">
-              {t(`newArrivals.products.${product.id}.name`)}
+          <div className="min-w-0 max-lg:pe-24">
+            <h3 className="truncate text-lg font-bold leading-snug text-[#1e1033] transition-colors duration-300 group-hover:text-purple-800">
+              {name}
             </h3>
-            <p className="mt-2 text-2xl font-extrabold text-purple-700">
-              {t(`newArrivals.products.${product.id}.price`)}
-            </p>
+            <div className="mt-2 flex items-center gap-2">
+              <p className="text-xl font-bold text-purple-700">{price}</p>
+              {displayOldPrice && (
+                <p className="text-sm text-[#8b7fa0] line-through">{displayOldPrice}</p>
+              )}
+            </div>
 
             <div className="mt-4">
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-[#8b7fa0]">

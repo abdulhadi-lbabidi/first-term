@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { CloseIcon } from '../icons/Icons'
 
@@ -145,9 +146,9 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   if (!isOpen) return null
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[200] flex items-center justify-center overflow-y-auto p-4 sm:p-6"
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
@@ -167,7 +168,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-[960px] overflow-hidden rounded-3xl bg-white/90 shadow-2xl backdrop-blur-xl">
+      <div className="relative my-auto w-full max-w-[960px] overflow-hidden rounded-3xl bg-white/90 shadow-2xl backdrop-blur-xl">
         <button
           type="button"
           onClick={onClose}
@@ -472,6 +473,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   )
 }

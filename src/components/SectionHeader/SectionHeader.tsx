@@ -3,6 +3,8 @@ interface SectionHeaderProps {
   subtitle?: string
   align?: 'center' | 'start'
   light?: boolean
+  aos?: string
+  aosDelay?: number
 }
 
 export default function SectionHeader({
@@ -10,9 +12,13 @@ export default function SectionHeader({
   subtitle,
   align = 'center',
   light = false,
+  aos,
+  aosDelay,
 }: SectionHeaderProps) {
   return (
     <div
+      data-aos={aos}
+      data-aos-delay={aosDelay}
       className={`mb-12 max-md:mb-8 ${align === 'center' ? 'text-center' : 'text-start'}`}
     >
       <h2

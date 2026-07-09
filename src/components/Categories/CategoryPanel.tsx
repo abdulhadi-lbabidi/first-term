@@ -1,16 +1,20 @@
 import { useTranslation } from 'react-i18next'
 import type { Category } from '../../types'
+import { aosDelay } from '../../utils/aos'
 
 interface CategoryPanelProps {
   category: Category
+  index: number
 }
 
-export default function CategoryPanel({ category }: CategoryPanelProps) {
+export default function CategoryPanel({ category, index }: CategoryPanelProps) {
   const { t } = useTranslation()
 
   return (
     <a
       href="#store"
+      data-aos="fade-up"
+      data-aos-delay={aosDelay(index)}
       className="group/panel relative flex h-[280px] min-w-0 flex-1 overflow-hidden rounded-3xl border border-purple-200/40 shadow-[0_12px_40px_rgba(30,16,51,0.1)] transition-all duration-500 ease-out lg:h-[520px] lg:group-hover/panels:opacity-55 lg:group-hover/panels:brightness-75 lg:hover:flex-[2.4] lg:hover:opacity-100 lg:hover:brightness-100 lg:hover:shadow-[0_0_48px_rgba(124,58,237,0.35)]"
       style={{ background: category.fallback }}
     >
