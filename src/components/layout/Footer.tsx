@@ -48,8 +48,8 @@ export default function Footer() {
             <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary border border-primary/25 shadow-sm">
               <Crown className="w-6 h-6 fill-current" />
             </div>
-            <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas">
-              لوكس هافن
+            <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
+              LUXE HAVEN
             </span>
           </Link>
           <div className="space-y-4">
