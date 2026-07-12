@@ -49,7 +49,7 @@ export default function Footer() {
               <Crown className="w-6 h-6 fill-current" />
             </div>
             <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
-              LUXE HAVEN
+              Vercel Hotels
             </span>
           </Link>
           <div className="space-y-4">

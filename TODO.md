@@ -31,6 +31,7 @@
 --- 
 # new tasks
 - [x] logo redesign
+- [x] logo redesign | logo "Vercel Hotels" only English in navbar and footer
 - [x] font redesign
 - [x] hero image 
     - [x] change bg image
@@ -51,4 +52,4 @@
             - [x] col detels | booking table
 - [x] UX Writering
 - [x] if clicking use scroll smooth animation x2
-- [x] الشعار فقط بالعربي
+- [x] الشعار فقط بالنكليزي

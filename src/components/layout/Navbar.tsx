@@ -93,7 +93,7 @@ export default function Navbar() {
             <Crown className="w-5 h-5 fill-current" />
           </div>
           <span className="font-serif-display text-lg lg:text-xl font-bold tracking-wider text-ink dark:text-canvas uppercase group-hover:text-primary transition-colors">
-            LUXE HAVEN
+            Vercel Hotels
           </span>
         </Link>
 
