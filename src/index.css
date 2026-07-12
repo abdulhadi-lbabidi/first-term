@@ -17,15 +17,15 @@
   --color-error: #B94A48;
 
   --font-display-en: "Cormorant Garamond", "Playfair Display", serif;
-  --font-interface-en: "Inter", sans-serif;
-  --font-display-ar: "Noto Kufi Arabic", "Noto Naskh Arabic", sans-serif;
-  --font-interface-ar: "IBM Plex Sans Arabic", "Tajawal", sans-serif;
+  --font-interface-en: "Cormorant Garamond", "Playfair Display", serif;
+  --font-display-ar: "Noto Naskh Arabic", serif;
+  --font-interface-ar: "Noto Naskh Arabic", serif;
 }
 
 :root {
   background-color: var(--color-canvas);
   color: var(--color-body);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-interface-en);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
