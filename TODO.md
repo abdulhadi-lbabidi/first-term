@@ -1,3 +1,4 @@
+# Old tasks
 - [x] عم يعمل كراش عند التنقل
 - [x] الهيرو فل سكرين
 - [x] الايقونات فول حاول لا تستخدم outline
@@ -29,3 +30,16 @@
 
 --- 
 # new tasks
+- [ ] logo redesign
+- [ ] font redesign
+- [ ] hero image 
+    - [ ] change bg image
+    - [ ] filter optmization and alignment
+        - [ ] Guests Capacity add icons
+        - [ ] When you click on filters, there should be a sheet with the number of people and the button - +
+        - [ ] In desktop mode 7XL max  
+        - [ ] 
+- [ ] rooms
+    - [ ] add location in maps 
+- [ ] UX Writering
+- [ ] if clicking use scroll smooth animation x2

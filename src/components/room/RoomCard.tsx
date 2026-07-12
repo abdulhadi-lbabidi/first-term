@@ -1,11 +1,9 @@
 import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Room, Branch } from '../../types';
-import { Star, Maximize2, Users, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { StorageService } from '../../services/storage.service';
 import dayjs from 'dayjs';
-import Badge from '../ui/Badge';
-import Button from '../ui/Button';
 
 interface RoomCardProps {
   room: Room;
@@ -16,104 +14,96 @@ export default function RoomCard({ room, branch }: RoomCardProps) {
   const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const currentLang = lang || 'en';
+  const isRtl = currentLang === 'ar';
 
   const roomName = currentLang === 'ar' ? room.nameAr : room.nameEn;
-  const branchName = branch
+  const branchName = branch 
     ? (currentLang === 'ar' ? branch.nameAr : branch.nameEn)
     : '';
 
-  // Check if room is booked today
   const todayStr = dayjs().format('YYYY-MM-DD');
   const bookings = StorageService.getBookings();
-  const isBookedToday = bookings.some(b =>
-    b.roomId === room.id &&
-    b.status === 'confirmed' &&
-    (dayjs(todayStr).isSame(b.checkIn) || dayjs(todayStr).isAfter(b.checkIn)) &&
+  const isBookedToday = bookings.some(b => 
+    b.roomId === room.id && 
+    b.status === 'confirmed' && 
+    (dayjs(todayStr).isSame(b.checkIn) || dayjs(todayStr).isAfter(b.checkIn)) && 
     dayjs(todayStr).isBefore(b.checkOut)
   );
   const isAvailable = !isBookedToday;
 
   return (
-    <Link
+    <Link 
       to={`/${currentLang}/rooms/${room.id}`}
-      className="group bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(183,154,90,0.08)] transition-all duration-500 flex flex-col h-full font-interfaceEn"
+      className="group relative aspect-[3/4] rounded-[28px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-luxury flex flex-col justify-end text-left rtl:text-right h-full w-full border border-border/10"
     >
-      {/* Room Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-canvas/30">
-        <img
-          src={room.images[0] || 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80'}
-          alt={roomName}
-          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          loading="lazy"
-        />
+      {/* Background Room Image */}
+      <img 
+        src={room.images[0] || 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80'} 
+        alt={roomName}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+        loading="lazy"
+      />
 
-        {/* Availability Badge */}
-        <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
-          <span className={`text-[12px] font-semibold px-3 py-1 rounded-full backdrop-blur-md shadow-sm ${isAvailable
-            ? 'bg-success/10 text-success border border-success/20'
-            : 'bg-error/10 text-error border border-error/20'
-            }`}>
-            {isAvailable ? t('rooms.available') : t('rooms.unavailable')}
-          </span>
-        </div>
+      {/* Luxury Translucent Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent z-10 transition-opacity duration-300 group-hover:opacity-95" />
+
+      {/* Availability Status Badge */}
+      <div className="absolute top-5 left-5 rtl:left-auto rtl:right-5 z-20">
+        <span className={`text-[11px] font-bold tracking-wide uppercase px-3 py-1 rounded-full backdrop-blur-md shadow-sm select-none ${
+          isAvailable 
+            ? 'bg-emerald-500/25 text-emerald-300 border border-emerald-500/20' 
+            : 'bg-rose-500/25 text-rose-300 border border-rose-500/20'
+        }`}>
+          {isAvailable ? t('rooms.available') : t('rooms.unavailable')}
+        </span>
       </div>
 
-      {/* Room Content Card */}
-      <div className="p-6 flex flex-col flex-grow text-left rtl:text-right space-y-4">
-        {/* Branch & Stars */}
-        <div className="flex items-center justify-between">
-          <Badge variant="outline">
+      {/* Room Details Overlay Content */}
+      <div className="relative z-20 p-6 flex flex-col space-y-3.5 w-full text-white">
+        {/* Branch Name & Rating Badge */}
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[12px] font-bold text-primary tracking-wider uppercase">
             {branchName}
-          </Badge>
-          <div className="flex items-center space-x-0.5 rtl:space-x-reverse text-primary">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star
-                key={i}
-                className={`w-3.5 h-3.5 ${i < (room.stars || 5)
-                  ? 'fill-primary'
-                  : 'text-border dark:text-border-strong/20'
-                  }`}
-              />
-            ))}
+          </span>
+          <div className="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-bold select-none border border-white/10 text-white">
+            <Star className="w-3 h-3 fill-primary text-primary" />
+            <span className="font-interfaceEn">{room.stars || 5}.0</span>
           </div>
         </div>
 
-        {/* Title */}
-        <h3 className="font-serif-display text-xl font-semibold text-ink dark:text-canvas line-clamp-1 group-hover:text-primary transition-colors">
+        {/* Room Title */}
+        <h3 className="font-serif-display text-xl lg:text-2xl font-bold tracking-wide text-white line-clamp-1 leading-tight my-0 group-hover:text-primary transition-colors duration-300">
           {roomName}
         </h3>
 
-        {/* Specs Icons */}
-        <div className="grid grid-cols-2 gap-4 py-2 border-y border-border/40 dark:border-border-strong/10 text-[13px] text-body/80 dark:text-canvas/70 font-medium">
-          <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <Maximize2 className="w-4 h-4 text-primary shrink-0" />
-            <span>{t('common.roomSize', { size: room.size })}</span>
+        {/* Room Short Description Excerpt */}
+        <p className="text-[12px] text-white/70 line-clamp-2 leading-relaxed font-medium my-0">
+          {currentLang === 'ar' ? room.descriptionAr : room.descriptionEn}
+        </p>
+
+        {/* Metadata Details Row (Capacity, Size, Pricing) */}
+        <div className="flex flex-wrap items-center gap-2 pt-1 select-none font-interfaceEn">
+          <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold border border-white/5 text-white/90">
+            {room.capacity} {currentLang === 'ar' ? 'أفراد' : 'Guests'}
           </div>
-          <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <Users className="w-4 h-4 text-primary shrink-0" />
-            <span>{t('common.guests', { count: room.capacity })}</span>
+          <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold border border-white/5 text-white/90">
+            {room.size} {currentLang === 'ar' ? 'م٢' : 'm²'}
+          </div>
+          <div className="bg-primary/20 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-bold border border-primary/30 text-primary">
+            {currentLang === 'ar' ? `${room.pricePerNight} درهم / ليلة` : `$${room.pricePerNight} / Night`}
           </div>
         </div>
 
-        {/* Price & Action Row */}
-        <div className="flex items-center justify-between gap-3">
-          <div className="text-left rtl:text-right">
-            <span className="text-[11px] text-muted block uppercase tracking-wider font-semibold">
-              {currentLang === 'ar' ? 'سعر الليلة' : 'Price / Night'}
-            </span>
-            <span className="text-[18px] font-bold text-primary font-interfaceEn block">
-              ${room.pricePerNight}
-            </span>
-          </div>
-
+        {/* Dynamic Action Trigger Button */}
+        <div className="pt-2 select-none">
           {isAvailable ? (
-            <Button size="sm" variant="primary">
+            <div className="w-full bg-white text-ink text-center text-[13px] font-bold py-3 rounded-full shadow-lg group-hover:bg-primary group-hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] active:scale-95 cursor-pointer">
               {t('common.bookNow')}
-            </Button>
+            </div>
           ) : (
-            <Button size="sm" variant="secondary" disabled>
+            <div className="w-full bg-white/10 backdrop-blur-sm text-white/40 text-center text-[13px] font-bold py-3 rounded-full border border-white/5 cursor-not-allowed">
               {t('rooms.unavailable')}
-            </Button>
+            </div>
           )}
         </div>
       </div>
