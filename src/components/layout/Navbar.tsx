@@ -13,7 +13,8 @@ import {
   ShoppingBag,
   LogOut,
   Briefcase,
-  ChevronDown
+  ChevronDown,
+  Crown
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -86,9 +87,14 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           to={`/${currentLang}`}
-          className="font-serif-display text-2xl lg:text-3xl font-semibold tracking-tight text-ink dark:text-canvas hover:text-primary dark:hover:text-primary transition-colors"
+          className="flex items-center gap-2.5 group select-none"
         >
-          {t('common.hotelName')}
+          <div className="w-9 h-9 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
+            <Crown className="w-5 h-5 fill-current" />
+          </div>
+          <span className="font-serif-display text-lg lg:text-xl font-bold tracking-wider text-ink dark:text-canvas uppercase group-hover:text-primary transition-colors">
+            {t('common.hotelName')}
+          </span>
         </Link>
 
         {/* Desktop Nav Links */}

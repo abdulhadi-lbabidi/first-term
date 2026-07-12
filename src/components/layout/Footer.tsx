@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Crown } from 'lucide-react';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -41,8 +41,16 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left rtl:text-right">
         {/* Brand & About Us Block (Spans 2 columns on desktop) */}
         <div className="space-y-6 lg:col-span-2">
-          <Link to={`/${currentLang}`} className="font-serif-display text-3xl font-semibold tracking-tight text-canvas hover:text-primary transition-colors">
-            {t('common.hotelName')}
+          <Link 
+            to={`/${currentLang}`} 
+            className="flex items-center gap-2.5 group select-none hover:text-primary transition-colors"
+          >
+            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary border border-primary/25 shadow-sm">
+              <Crown className="w-6 h-6 fill-current" />
+            </div>
+            <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
+              {t('common.hotelName')}
+            </span>
           </Link>
           <div className="space-y-4">
             <p className="text-[14px] text-canvas/85 font-medium italic">
