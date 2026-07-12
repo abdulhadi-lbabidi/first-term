@@ -12,6 +12,7 @@
     "orders": "My Orders",
     "contact": "Contact Us",
     "login": "Login",
+    "myAccount": "My Account",
     "cart": "Cart",
     "openMenu": "Open menu",
     "closeMenu": "Close menu"
@@ -190,6 +191,8 @@
       "remember": "Remember me",
       "forgot": "Forgot password?",
       "submit": "Login",
+      "loading": "Signing in...",
+      "success": "Signed in successfully",
       "switchPrompt": "Don't have an account?",
       "switchLink": "Create Account"
     },
@@ -207,6 +210,8 @@
       "confirmPasswordLabel": "Confirm Password",
       "confirmPasswordPlaceholder": "••••••••",
       "submit": "Create Account",
+      "loading": "Creating account...",
+      "success": "Account created successfully",
       "switchPrompt": "Already have an account?",
       "switchLink": "Login"
     },
@@ -214,6 +219,39 @@
       "required": "This field is required",
       "passwordMin": "Password must be at least 6 characters",
       "passwordMatch": "Passwords do not match"
+    }
+  },
+  "profile": {
+    "close": "Close",
+    "title": "My Account",
+    "subtitle": "Manage your details and follow your Trend experience",
+    "logout": "Sign Out",
+    "editInfo": "Edit Information",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully",
+    "ordersComingSoon": "Orders page will be added soon",
+    "statusActive": "Active now",
+    "memberStatus": "Trend Member",
+    "accountInfo": "Account Information",
+    "summary": {
+      "orders": "Orders",
+      "soon": "Soon",
+      "cart": "Cart",
+      "status": "Status",
+      "active": "Active"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "joinDate": "Join Date"
+    },
+    "actions": {
+      "orders": "My Orders",
+      "cart": "Shopping Cart",
+      "store": "Store"
     }
   },
   "footer": {
@@ -338,6 +376,153 @@
         "photos": { "title": "Clear Photos" },
         "info": { "title": "Accurate Information" },
         "order": { "title": "Easier Ordering" }
+      }
+    },
+    "cta": {
+      "title": "Ready to Choose Your Next Look?",
+      "description": "Discover the latest pieces and offers from Trend now.",
+      "button": "Shop Now"
+    }
+  },
+  "contactPage": {
+    "hero": {
+      "badge": "Trend Care Center",
+      "title": "How Can We Help You?",
+      "subtitle": "Choose your help type, write your message, and the Trend team is ready to follow up on your order or inquiry.",
+      "badges": {
+        "fastReply": "Fast Reply",
+        "orderSupport": "Order Tracking",
+        "productInquiries": "Product Inquiries"
+      }
+    },
+    "helpSelector": {
+      "title": "Choose Your Help Type",
+      "subtitle": "This helps us route your message faster",
+      "types": {
+        "product": {
+          "title": "Product Inquiry",
+          "description": "Sizes, colors, product number, or details"
+        },
+        "order": {
+          "title": "Order Follow-up",
+          "description": "Check your order status after purchase"
+        },
+        "cart": {
+          "title": "Cart Issue",
+          "description": "Problems adding products or quantities"
+        },
+        "suggestion": {
+          "title": "Suggestion",
+          "description": "Your ideas to improve the Trend experience"
+        }
+      }
+    },
+    "form": {
+      "title": "Send Your Message",
+      "subtitle": "We'll review your message and get back to you as soon as possible.",
+      "selectedType": "Selected message type: {{type}}",
+      "fields": {
+        "fullName": {
+          "label": "Full Name",
+          "placeholder": "Enter your name"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "example@email.com"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "05xxxxxxxx"
+        },
+        "messageType": {
+          "label": "Message Type"
+        },
+        "orderNumber": {
+          "label": "Order Number",
+          "placeholder": "Enter your order number if available"
+        },
+        "message": {
+          "label": "Message",
+          "placeholder": "Write your message here..."
+        }
+      },
+      "messageTypes": {
+        "product": "Product Inquiry",
+        "order": "Order Follow-up",
+        "cart": "Cart Issue",
+        "suggestion": "Suggestion"
+      },
+      "submit": "Send Message",
+      "error": "Please fill in your name, email, and message.",
+      "success": "Your message has been sent successfully. We'll reply to you soon.",
+      "orderNote": "Add your order number if available to speed up follow-up.",
+      "tipNote": "The clearer your details, the faster we can reply."
+    },
+    "panel": {
+      "badge": "Trend Support",
+      "title": "Trend Support",
+      "text": "Every message from you helps us deliver a clearer, easier shopping experience.",
+      "contact": {
+        "email": {
+          "label": "Email",
+          "value": "support@trend.com"
+        },
+        "phone": {
+          "label": "Phone",
+          "value": "+966 500 000 000"
+        },
+        "hours": {
+          "label": "Response Time",
+          "value": "Within 24 hours"
+        }
+      },
+      "status": {
+        "title": "Support Available Now",
+        "subtitle": "We usually reply in less than 24 hours"
+      },
+      "pills": {
+        "orders": "Orders",
+        "products": "Products",
+        "cart": "Cart",
+        "sizes": "Sizes"
+      },
+      "miniSteps": {
+        "title": "How is your message handled?",
+        "steps": {
+          "receive": "Message received",
+          "review": "Details reviewed",
+          "reply": "We reply to you"
+        }
+      }
+    },
+    "journey": {
+      "title": "Your Message Journey",
+      "steps": {
+        "choose": "Choose help type",
+        "details": "Write the details",
+        "send": "Send your message",
+        "reply": "We reply soon"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "trackOrder": {
+          "question": "How do I track my order?",
+          "answer": "After completing your order, you can track its status from the My Orders page."
+        },
+        "changeSize": {
+          "question": "Can I change the size or color?",
+          "answer": "Contact us and we'll help you based on your order status."
+        },
+        "chooseSize": {
+          "question": "How do I choose the right size?",
+          "answer": "Check the product details and available sizes on the product page."
+        },
+        "accountRequired": {
+          "question": "Do I need an account to send a message?",
+          "answer": "No, you can send a message directly from the contact page."
+        }
       }
     },
     "cta": {
@@ -493,5 +678,90 @@
     "addedToCart": "Product added to cart",
     "removedFromCart": "Product removed from cart",
     "quantityUpdated": "Quantity updated"
+  },
+  "checkoutPage": {
+    "title": "Checkout",
+    "subtitle": "Review your details and confirm your order",
+    "formTitle": "Order Details",
+    "summaryTitle": "Order Summary",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "deliveryLater": "To be determined",
+    "total": "Total",
+    "confirm": "Confirm Order",
+    "submitting": "Confirming order...",
+    "successToast": "Order created and saved to My Orders",
+    "error": "An error occurred while confirming the order",
+    "validationRequired": "Please fill in the required fields",
+    "emptyCart": "Your cart is currently empty",
+    "errors": {
+      "fullName": "Full name is required",
+      "email": "Email is required",
+      "phone": "Phone number is required",
+      "city": "City is required",
+      "address": "Full address is required"
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "city": "City",
+      "address": "Full Address",
+      "paymentMethod": "Payment Method"
+    },
+    "payment": {
+      "cash": "Cash on Delivery",
+      "card": "Bank Card - Demo",
+      "demoNote": "This is demo data only",
+      "cardNumber": "Card Number",
+      "expiry": "Expiry Date",
+      "cvv": "CVV"
+    }
+  },
+  "ordersPage": {
+    "title": "My Orders",
+    "subtitle": "Track your previous orders and each order status clearly",
+    "heroSubtitle": "All your orders in one place",
+    "description": "Review your purchases, track order status, and find everything you need about your Trend experience.",
+    "badge": "Trend Orders",
+    "stats": {
+      "orders": "Orders saved",
+      "tracking": "Status tracking",
+      "experience": "Easy experience"
+    },
+    "loading": "Loading orders...",
+    "error": "An error occurred while loading orders",
+    "emptyTitle": "No orders yet",
+    "emptyText": "Start adding your favorite pieces from Trend store.",
+    "backToStore": "Back to Store",
+    "loginRequiredTitle": "Sign in to view your orders",
+    "loginRequiredText": "You need to sign in to track your previous orders.",
+    "loginHint": "Click the user icon at the top to sign in",
+    "orderNumber": "Order #{{id}}",
+    "customer": "Customer",
+    "itemsCount": "Items",
+    "total": "Total",
+    "payment": "Payment",
+    "paymentCash": "Cash on Delivery",
+    "paymentCard": "Bank Card",
+    "showDetails": "View Details",
+    "hideDetails": "Hide Details",
+    "quantity": "{{count}} pcs",
+    "table": {
+      "order": "Order",
+      "date": "Date",
+      "customer": "Customer",
+      "address": "Address",
+      "items": "Items",
+      "total": "Total",
+      "payment": "Payment",
+      "status": "Status",
+      "actions": "Details",
+      "productsTitle": "Order Products",
+      "product": "Product",
+      "code": "Code",
+      "specs": "Specs",
+      "price": "Price"
+    }
   }
 }

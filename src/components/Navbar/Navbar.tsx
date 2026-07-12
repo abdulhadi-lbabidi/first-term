@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { navLinks, type NavLink } from '../../data/home'
+import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import type { AppPage, NavigateFn } from '../../types/navigation'
-import { ABOUT_PATH, CART_PATH, HOME_PATH, STORE_PATH } from '../../utils/routing'
+import { ABOUT_PATH, CART_PATH, CHECKOUT_PATH, CONTACT_PATH, HOME_PATH, ORDERS_PATH, STORE_PATH } from '../../utils/routing'
 import AuthModal from '../AuthModal/AuthModal'
+import ProfileModal from '../ProfileModal/ProfileModal'
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 import { CartIcon, CloseIcon, MenuIcon, UserIcon } from '../icons/Icons'
 
@@ -18,7 +20,10 @@ const SCROLL_THRESHOLD = 40
 
 function isPageLink(
   link: NavLink,
-): link is { key: 'about' | 'store'; page: 'about' | 'store' } {
+): link is {
+  key: 'about' | 'store' | 'contact' | 'orders'
+  page: 'about' | 'store' | 'contact' | 'orders'
+} {
   return 'page' in link
 }
 
@@ -26,6 +31,9 @@ function getPageHref(page: AppPage) {
   if (page === 'about') return ABOUT_PATH
   if (page === 'store') return STORE_PATH
   if (page === 'cart') return CART_PATH
+  if (page === 'contact') return CONTACT_PATH
+  if (page === 'checkout') return CHECKOUT_PATH
+  if (page === 'orders') return ORDERS_PATH
   return HOME_PATH
 }
 
@@ -35,9 +43,11 @@ export default function Navbar({
   onNavigate,
 }: NavbarProps) {
   const { t } = useTranslation()
+  const { currentUser } = useAuth()
   const { cartCount } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [authOpen, setAuthOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
   const [authKey, setAuthKey] = useState(0)
   const [isScrolled, setIsScrolled] = useState(false)
   const [badgePulse, setBadgePulse] = useState(false)
@@ -60,6 +70,19 @@ export default function Navbar({
     setAuthOpen(true)
   }
   const closeAuth = useCallback(() => setAuthOpen(false), [])
+  const openProfile = () => {
+    closeMenu()
+    setProfileOpen(true)
+  }
+  const closeProfile = useCallback(() => setProfileOpen(false), [])
+
+  const handleUserClick = () => {
+    if (currentUser) {
+      openProfile()
+      return
+    }
+    openAuth()
+  }
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > SCROLL_THRESHOLD)
@@ -110,6 +133,8 @@ export default function Navbar({
   const isLinkActive = (link: NavLink) => {
     if (isPageLink(link)) {
       if (link.page === 'about') return currentPage === 'about'
+      if (link.page === 'contact') return currentPage === 'contact'
+      if (link.page === 'orders') return currentPage === 'orders'
       return currentPage === 'store' || currentPage === 'product'
     }
     if (link.key === 'home') return currentPage === 'home'
@@ -125,14 +150,28 @@ export default function Navbar({
 
   const actionButtons = (
     <>
-      <button
-        type="button"
-        onClick={openAuth}
-        aria-label={t('nav.login')}
-        className={`flex items-center justify-center rounded-full border transition-all duration-500 ${actionBtnSizeClass} ${actionBtnClass}`}
-      >
-        <UserIcon />
-      </button>
+      {currentUser ? (
+        <button
+          type="button"
+          onClick={handleUserClick}
+          aria-label={currentUser.fullName}
+          className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-semibold transition-all duration-500 [&_svg]:size-[18px] ${actionBtnClass}`}
+        >
+          <span className="max-w-[100px] truncate sm:max-w-[140px] md:max-w-[180px]">
+            {currentUser.fullName}
+          </span>
+          <UserIcon />
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={handleUserClick}
+          aria-label={t('nav.login')}
+          className={`flex items-center justify-center rounded-full border transition-all duration-500 ${actionBtnSizeClass} ${actionBtnClass}`}
+        >
+          <UserIcon />
+        </button>
+      )}
     </>
   )
 
@@ -245,6 +284,7 @@ export default function Navbar({
       </div>
 
       <AuthModal key={authKey} isOpen={authOpen} onClose={closeAuth} />
+      <ProfileModal isOpen={profileOpen} onClose={closeProfile} onNavigate={onNavigate} />
     </header>
   )
 }

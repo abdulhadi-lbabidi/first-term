@@ -1,4 +1,12 @@
-export type AppPage = 'home' | 'about' | 'store' | 'product' | 'cart'
+export type AppPage =
+  | 'home'
+  | 'about'
+  | 'store'
+  | 'product'
+  | 'cart'
+  | 'contact'
+  | 'checkout'
+  | 'orders'
 
 export type NavigateOptions = {
   hash?: string

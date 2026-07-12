@@ -13,7 +13,7 @@ import ErrorState from '../UiStates/ErrorState'
 import ProductShowcaseCard from '../Product/ProductShowcaseCard'
 
 interface NewArrivalsProps {
-  onNavigate?: NavigateFn
+  onNavigate: NavigateFn
 }
 
 export default function NewArrivals({ onNavigate }: NewArrivalsProps) {
@@ -59,7 +59,7 @@ export default function NewArrivals({ onNavigate }: NewArrivalsProps) {
 
           <button
             type="button"
-            onClick={() => onNavigate?.('store')}
+            onClick={() => onNavigate('store')}
             className="shrink-0 rounded-full border border-purple-200 bg-white px-6 py-2.5 text-sm font-semibold text-purple-700 shadow-sm transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-purple-300 hover:bg-purple-50 hover:shadow-md hover:shadow-purple-500/15"
           >
             {t('newArrivals.viewAll')}
@@ -83,7 +83,7 @@ export default function NewArrivals({ onNavigate }: NewArrivalsProps) {
                   displayPrice={display.price}
                   displayOldPrice={display.oldPrice}
                   onCardClick={() =>
-                    onNavigate?.('product', { productId: product.id })
+                    onNavigate('product', { productId: product.id })
                   }
                   onCartClick={() => setCartModalProduct(product)}
                 />

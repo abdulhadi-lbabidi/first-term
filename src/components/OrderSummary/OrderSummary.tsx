@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { useToast } from '../Toast/Toast'
 import { formatProductPrice } from '../../utils/productDisplay'
 
 interface OrderSummaryProps {
@@ -7,6 +6,7 @@ interface OrderSummaryProps {
   total: number
   priceLocale: string
   currency: string
+  onCheckout?: () => void
 }
 
 export default function OrderSummary({
@@ -14,14 +14,9 @@ export default function OrderSummary({
   total,
   priceLocale,
   currency,
+  onCheckout,
 }: OrderSummaryProps) {
   const { t } = useTranslation()
-  const { showToast } = useToast()
-
-  const handleCheckout = () => {
-    console.log('Checkout placeholder')
-    showToast(t('cart.checkoutPending'))
-  }
 
   return (
     <aside
@@ -66,7 +61,7 @@ export default function OrderSummary({
 
         <button
           type="button"
-          onClick={handleCheckout}
+          onClick={onCheckout}
           className="mt-7 w-full rounded-full bg-gradient-to-r from-fuchsia-500 via-purple-500 to-violet-500 px-6 py-3.5 text-sm font-bold text-white shadow-[0_16px_40px_rgba(217,70,239,0.35)] transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-[0_20px_50px_rgba(217,70,239,0.45)]"
         >
           {t('cart.checkout')}

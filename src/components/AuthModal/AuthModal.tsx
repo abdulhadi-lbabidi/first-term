@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
+import { useAuth } from '../../context/AuthContext'
 import { CloseIcon } from '../icons/Icons'
 
 export interface AuthModalProps {
@@ -51,6 +52,7 @@ function getPanelClass(isActive: boolean, direction: 'register' | 'login') {
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const { t } = useTranslation()
+  const { register, login, loading, error, clearError } = useAuth()
   const [mode, setMode] = useState<AuthMode>('register')
   const [successMessage, setSuccessMessage] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -72,6 +74,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   useEffect(() => {
     if (!isOpen) return
 
+    clearError()
+    setSuccessMessage('')
+    setErrors({})
+
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') onClose()
     }
@@ -83,12 +89,13 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       document.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = ''
     }
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, clearError])
 
   const switchMode = (nextMode: AuthMode) => {
     setMode(nextMode)
     setSuccessMessage('')
     setErrors({})
+    clearError()
   }
 
   const validateLogin = (): boolean => {
@@ -128,20 +135,44 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     return Object.keys(nextErrors).length === 0
   }
 
-  const handleLoginSubmit = (event: FormEvent) => {
+  const handleLoginSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (!validateLogin()) return
+    if (!validateLogin() || loading) return
 
-    console.log('Login:', loginForm)
-    setSuccessMessage(t('auth.success'))
+    clearError()
+    setSuccessMessage('')
+
+    try {
+      await login({
+        identifier: loginForm.identifier.trim(),
+        password: loginForm.password,
+      })
+      setSuccessMessage(t('auth.login.success'))
+      window.setTimeout(() => onClose(), 1200)
+    } catch {
+      // error shown from auth context
+    }
   }
 
-  const handleRegisterSubmit = (event: FormEvent) => {
+  const handleRegisterSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (!validateRegister()) return
+    if (!validateRegister() || loading) return
 
-    console.log('Register:', registerForm)
-    setSuccessMessage(t('auth.success'))
+    clearError()
+    setSuccessMessage('')
+
+    try {
+      await register({
+        fullName: registerForm.fullName.trim(),
+        email: registerForm.email.trim(),
+        phone: registerForm.phone.trim(),
+        password: registerForm.password,
+      })
+      setSuccessMessage(t('auth.register.success'))
+      window.setTimeout(() => onClose(), 1200)
+    } catch {
+      // error shown from auth context
+    }
   }
 
   if (!isOpen) return null
@@ -231,8 +262,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
             <div className="relative z-10 h-[440px] shrink-0 overflow-hidden">
               {successMessage && (
-                <div className="absolute start-0 end-0 top-0 z-20 rounded-2xl border border-purple-200 bg-purple-50 px-4 py-3 text-sm font-semibold text-purple-800">
+                <div className="absolute start-0 end-0 top-0 z-20 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800">
                   {successMessage}
+                </div>
+              )}
+
+              {error && (
+                <div className="absolute start-0 end-0 top-12 z-20 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                  {error}
                 </div>
               )}
 
@@ -364,8 +401,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     </div>
                   </div>
 
-                  <button type="submit" className={`${submitClass} shrink-0`}>
-                    {t('auth.register.submit')}
+                  <button type="submit" disabled={loading} className={`${submitClass} shrink-0 disabled:cursor-not-allowed disabled:opacity-70`}>
+                    {loading && mode === 'register'
+                      ? t('auth.register.loading')
+                      : t('auth.register.submit')}
                   </button>
 
                   <p className="shrink-0 pb-1 text-center text-sm text-[#5b4d6d]">
@@ -453,8 +492,10 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     </a>
                   </div>
 
-                  <button type="submit" className={`${submitClass} mt-auto shrink-0`}>
-                    {t('auth.login.submit')}
+                  <button type="submit" disabled={loading} className={`${submitClass} mt-auto shrink-0 disabled:cursor-not-allowed disabled:opacity-70`}>
+                    {loading && mode === 'login'
+                      ? t('auth.login.loading')
+                      : t('auth.login.submit')}
                   </button>
 
                   <p className="shrink-0 pb-1 text-center text-sm text-[#5b4d6d]">

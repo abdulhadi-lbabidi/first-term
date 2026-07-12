@@ -2,8 +2,11 @@ import { useCallback, useEffect, useState } from 'react'
 import PageIntro from './components/PageIntro/PageIntro'
 import About from './pages/About/About'
 import Cart from './pages/Cart/Cart'
+import Checkout from './pages/Checkout/Checkout'
 import Home from './pages/Home/Home'
+import Orders from './pages/Orders/Orders'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
+import Contact from './pages/Contact/Contact'
 import Store from './pages/Store/Store'
 import type { AppPage, NavigateOptions } from './types/navigation'
 import { parseNavigateOptions } from './types/navigation'
@@ -144,6 +147,18 @@ export default function App() {
       document.title = 'Trend | Product Details'
       return
     }
+    if (page === 'contact') {
+      document.title = 'Trend | Contact Us'
+      return
+    }
+    if (page === 'checkout') {
+      document.title = 'Trend | Checkout'
+      return
+    }
+    if (page === 'orders') {
+      document.title = 'Trend | My Orders'
+      return
+    }
     document.title = 'Trend | Fashion Store'
   }, [page])
 
@@ -163,6 +178,12 @@ export default function App() {
             productId={productId}
           />
         )
+      case 'contact':
+        return <Contact currentPage={page} onNavigate={navigate} />
+      case 'checkout':
+        return <Checkout currentPage={page} onNavigate={navigate} />
+      case 'orders':
+        return <Orders currentPage={page} onNavigate={navigate} />
       default:
         return <Home currentPage={page} onNavigate={navigate} />
     }

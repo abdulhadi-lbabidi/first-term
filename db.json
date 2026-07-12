@@ -1,4 +1,15 @@
 {
+  "users": [
+    {
+      "fullName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "password": "12345678",
+      "avatar": "",
+      "createdAt": "2026-07-12T08:16:00.497Z",
+      "id": "ktIBuiLt_wA"
+    }
+  ],
   "products": [
     {
       "id": "1",
@@ -393,62 +404,97 @@
       "createdAt": "2026-05-28"
     }
   ],
-  "cart": [
+  "cart": [],
+  "orders": [
     {
-      "productId": "1",
-      "code": "TRD-1001",
-      "name": "Elegant Silk Dress",
-      "price": 499,
-      "image": "/images/product-1.jpg",
-      "selectedColor": {
-        "name": "White",
-        "value": "#ffffff"
-      },
-      "selectedSize": "S",
-      "quantity": 1,
-      "id": "wFs6YTeYBmg"
+      "userId": "ktIBuiLt_wA",
+      "customerName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "address": "lll",
+      "city": "aleppo",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "White",
+            "value": "#ffffff"
+          },
+          "selectedSize": "S",
+          "quantity": 2,
+          "id": "qpP92oIFqQ8"
+        },
+        {
+          "productId": "5",
+          "code": "TRD-1005",
+          "name": "Premium Men's Shirt",
+          "price": 329,
+          "image": "/images/product-2.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#0f172a"
+          },
+          "selectedSize": "XL",
+          "quantity": 1,
+          "id": "uEj8nzvOoP4"
+        }
+      ],
+      "subtotal": 1327,
+      "delivery": 0,
+      "total": 1327,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-12T09:38:15.294Z",
+      "id": "oPAYcQYIZfU"
     },
     {
-      "productId": "3",
-      "code": "TRD-1003",
-      "name": "Soft Chiffon Blouse",
-      "price": 249,
-      "image": "/images/product-3.jpg",
-      "selectedColor": {
-        "name": "White",
-        "value": "#ffffff"
-      },
-      "selectedSize": "XS",
-      "quantity": 1,
-      "id": "epDSXc0cHVg"
-    },
-    {
-      "productId": "1",
-      "code": "TRD-1001",
-      "name": "Elegant Silk Dress",
-      "price": 499,
-      "image": "/images/product-1.jpg",
-      "selectedColor": {
-        "name": "Purple",
-        "value": "#7c3aed"
-      },
-      "selectedSize": "XL",
-      "quantity": 1,
-      "id": "XniAe4Rq6D8"
-    },
-    {
-      "productId": "1",
-      "code": "TRD-1001",
-      "name": "Elegant Silk Dress",
-      "price": 499,
-      "image": "/images/product-1.jpg",
-      "selectedColor": {
-        "name": "Black",
-        "value": "#111111"
-      },
-      "selectedSize": "XL",
-      "quantity": 1,
-      "id": "KHnoKCmQGi4"
+      "userId": "ktIBuiLt_wA",
+      "customerName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "address": "florkan",
+      "city": "Aleppo",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "wA5eWJWKvGI"
+        },
+        {
+          "productId": "2",
+          "code": "TRD-1002",
+          "name": "Classic Jacket",
+          "price": 379,
+          "image": "/images/product-2.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#18181b"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "nkI6GqtkTck"
+        }
+      ],
+      "subtotal": 878,
+      "delivery": 0,
+      "total": 878,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-12T09:51:48.876Z",
+      "id": "zIP6iduZtEM"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

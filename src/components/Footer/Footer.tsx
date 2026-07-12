@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ChevronUpIcon } from '../icons/Icons'
 
 type FooterLinkKey =
   | 'home'
@@ -268,9 +269,9 @@ export default function Footer() {
         type="button"
         onClick={scrollToTop}
         aria-label={t('footer.backToTop')}
-        className="fixed bottom-8 end-8 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-gradient-to-br from-violet-600/90 via-purple-600/90 to-fuchsia-500/90 text-lg font-bold text-white shadow-[0_8px_32px_rgba(124,58,237,0.4)] backdrop-blur-sm transition-all duration-500 ease-out hover:scale-110 hover:shadow-[0_12px_40px_rgba(217,70,239,0.5)] active:scale-95 max-md:bottom-6 max-md:end-6 max-md:h-10 max-md:w-10"
+        className="fixed bottom-8 end-8 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-gradient-to-br from-violet-600/90 via-purple-600/90 to-fuchsia-500/90 text-white shadow-[0_8px_32px_rgba(124,58,237,0.4)] backdrop-blur-sm transition-all duration-500 ease-out hover:scale-110 hover:shadow-[0_12px_40px_rgba(217,70,239,0.5)] active:scale-95 max-md:bottom-6 max-md:end-6 max-md:h-10 max-md:w-10"
       >
-        ↑
+        <ChevronUpIcon />
       </button>
     </footer>
   )

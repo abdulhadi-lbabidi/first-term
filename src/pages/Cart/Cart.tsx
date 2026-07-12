@@ -169,6 +169,13 @@ export default function Cart({ currentPage, onNavigate }: PageProps) {
                 total={cartTotal}
                 priceLocale={priceLocale}
                 currency={currency}
+                onCheckout={() => {
+                  if (cartItems.length === 0) {
+                    showToast(t('cart.emptyTitle'))
+                    return
+                  }
+                  onNavigate('checkout')
+                }}
               />
             </div>
           )}

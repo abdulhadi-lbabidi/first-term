@@ -4,15 +4,18 @@ import 'aos/dist/aos.css'
 import './i18n'
 import './index.css'
 import App from './App.tsx'
+import { AuthProvider } from './context/AuthContext'
 import { CartProvider } from './context/CartContext'
 import { ToastProvider } from './components/Toast/Toast'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ToastProvider>
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
     </ToastProvider>
   </StrictMode>,
 )
