@@ -30,24 +30,25 @@
 
 --- 
 # new tasks
-- [ ] logo redesign
-- [ ] font redesign
-- [ ] hero image 
-    - [ ] change bg image
-    - [ ] filter optmization and alignment
-        - [ ] Guests Capacity add icons
-        - [ ] When you click on filters, there should be a sheet with the number of people and the button - +
-        - [ ] In desktop mode 7XL max  
-        - [ ] 
-- [ ] rooms
-    - [ ] filters open and close smooth animation and butn in buttoms grid 2 or 3
-    - [ ] card 
-    - [ ] ditels room
-        - [ ] add location in maps
-        - [ ] booking table
-            - add checkin and checkout date for one input using shadcn ui datepicker
-        - view row (2 columns grid)
-            - col images | Amenities | location
-            - col detels | booking table
-- [ ] UX Writering
-- [ ] if clicking use scroll smooth animation x2
+- [x] logo redesign
+- [x] font redesign
+- [x] hero image 
+    - [x] change bg image
+    - [x] filter optmization and alignment
+        - [x] Guests Capacity add icons
+        - [x] When you click on filters, there should be a sheet with the number of people and the button - +
+        - [x] In desktop mode 7XL max  
+- [x] rooms
+    - [x] filters open and close smooth animation and butn in buttoms grid 2 or 3
+    - [x] card 
+    - [x] ditels room
+        - [x] booking availability 
+        - [x] add location in maps
+        - [x] booking table
+            - [x] add checkin and checkout date for one input using shadcn ui datepicker
+        - [x] view row (2 columns grid)
+            - [x] col images | Amenities | location
+            - [x] col detels | booking table
+- [x] UX Writering
+- [x] if clicking use scroll smooth animation x2
+- [x] الشعار فقط بالعربي

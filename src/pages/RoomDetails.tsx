@@ -73,33 +73,35 @@ export default function RoomDetails() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const isDateBooked = (dateItem: dayjs.Dayjs) => {
+    if (!room) return false;
+    const bookingsList = StorageService.getBookings();
+    const roomBookings = bookingsList.filter(b => b.roomId === room.id && b.status === 'confirmed');
+    
+    return roomBookings.some(b => {
+      const start = dayjs(b.checkIn);
+      const end = dayjs(b.checkOut);
+      return (dateItem.isSame(start, 'day') || dateItem.isAfter(start, 'day')) && dateItem.isBefore(end, 'day');
+    });
+  };
+
+  const hasBookedDateInRange = (startStr: string, endStr: string) => {
+    let current = dayjs(startStr);
+    const end = dayjs(endStr);
+    while (current.isBefore(end, 'day')) {
+      if (isDateBooked(current)) return true;
+      current = current.add(1, 'day');
+    }
+    return false;
+  };
+
   // Check date conflict with existing bookings
   useEffect(() => {
-    const checkDateConflict = () => {
-      if (!id || !checkIn || !checkOut) {
-        setIsDateConflicting(false);
-        return;
-      }
-      try {
-        const bookingsList = StorageService.getBookings();
-        const roomBookings = bookingsList.filter(b => b.roomId === id && b.status === 'confirmed');
-        
-        const hasOverlap = roomBookings.some(b => {
-          const startSelected = dayjs(checkIn);
-          const endSelected = dayjs(checkOut);
-          const startBooked = dayjs(b.checkIn);
-          const endBooked = dayjs(b.checkOut);
-          
-          return startSelected.isBefore(endBooked) && endSelected.isAfter(startBooked);
-        });
-        
-        setIsDateConflicting(hasOverlap);
-      } catch (err) {
-        console.error('Error checking date conflicts:', err);
-      }
-    };
-    
-    checkDateConflict();
+    if (!id || !checkIn || !checkOut) {
+      setIsDateConflicting(false);
+      return;
+    }
+    setIsDateConflicting(hasBookedDateInRange(checkIn, checkOut));
   }, [id, checkIn, checkOut]);
 
   // Load Room Details
@@ -488,11 +490,14 @@ export default function RoomDetails() {
                         const isSelectedEnd = checkOut && dayItem.isSame(checkOut, 'day');
                         const isMiddleRange = checkIn && checkOut && dayItem.isAfter(checkIn) && dayItem.isBefore(checkOut);
                         const isPast = dayItem.isBefore(dayjs(), 'day');
+                        const isBooked = isDateBooked(dayItem);
                         const isCurrentMonth = dayItem.isSame(calendarMonth, 'month');
 
                         let dayStyle = "w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer transition-all active:scale-95 mx-auto ";
                         if (isPast) {
                           dayStyle += "text-muted/30 cursor-not-allowed pointer-events-none";
+                        } else if (isBooked) {
+                          dayStyle += "text-rose-400/50 bg-rose-500/5 line-through cursor-not-allowed pointer-events-none";
                         } else if (!isCurrentMonth) {
                           dayStyle += "text-muted/35 hover:bg-canvas/50 dark:hover:bg-body/10";
                         } else if (isSelectedStart || isSelectedEnd) {
@@ -507,7 +512,7 @@ export default function RoomDetails() {
                           <div
                             key={index}
                             onClick={() => {
-                              if (isPast) return;
+                              if (isPast || isBooked) return;
                               if (!checkIn || (checkIn && checkOut)) {
                                 setCheckIn(dayItem.format('YYYY-MM-DD'));
                                 setCheckOut('');
@@ -515,8 +520,13 @@ export default function RoomDetails() {
                                 if (dayItem.isBefore(dayjs(checkIn))) {
                                   setCheckIn(dayItem.format('YYYY-MM-DD'));
                                 } else {
-                                  setCheckOut(dayItem.format('YYYY-MM-DD'));
-                                  setIsCalendarOpen(false);
+                                  if (hasBookedDateInRange(checkIn, dayItem.format('YYYY-MM-DD'))) {
+                                    setCheckIn(dayItem.format('YYYY-MM-DD'));
+                                    setCheckOut('');
+                                  } else {
+                                    setCheckOut(dayItem.format('YYYY-MM-DD'));
+                                    setIsCalendarOpen(false);
+                                  }
                                 }
                               }
                             }}
