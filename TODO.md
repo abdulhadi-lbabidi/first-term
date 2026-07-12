@@ -40,6 +40,14 @@
         - [ ] In desktop mode 7XL max  
         - [ ] 
 - [ ] rooms
-    - [ ] add location in maps 
+    - [ ] filters open and close smooth animation and butn in buttoms grid 2 or 3
+    - [ ] card 
+    - [ ] ditels room
+        - [ ] add location in maps
+        - [ ] booking table
+            - add checkin and checkout date for one input using shadcn ui datepicker
+        - view row (2 columns grid)
+            - col images | Amenities | location
+            - col detels | booking table
 - [ ] UX Writering
 - [ ] if clicking use scroll smooth animation x2

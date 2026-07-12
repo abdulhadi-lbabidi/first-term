@@ -136,7 +136,7 @@ export default function Rooms() {
               ))}
             </div>
           ) : rooms.length > 0 ? (
-            <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${cols === 'grid-3' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
+            <div className={`grid gap-6 ${cols === 'grid-3' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 lg:grid-cols-2'}`}>
               {rooms.map((room) => {
                 const branch = branches.find(b => b.id === room.branchId);
                 return (
@@ -167,27 +167,33 @@ export default function Rooms() {
       </div>
 
       {/* Mobile Drawer (Bottom Sheet) */}
-      {mobileFiltersOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end bg-black/50 backdrop-blur-sm">
-          <div className="bg-canvas dark:bg-ink rounded-t-3xl max-h-[85vh] overflow-y-auto p-6 space-y-6 shadow-2xl relative animate-slide-up">
-            <button
-              onClick={() => setMobileFiltersOpen(false)}
-              className="absolute top-4 right-4 rtl:left-4 rtl:right-auto p-2 bg-white dark:bg-body/10 border border-border/50 dark:border-border-strong/20 rounded-full text-ink dark:text-canvas"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <div className="pt-4">
-              <FilterSidebar branches={branches} />
-            </div>
-            <button
-              onClick={() => setMobileFiltersOpen(false)}
-              className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 rounded-full shadow-md"
-            >
-              {t('common.confirm')}
-            </button>
+      <div 
+        className={`fixed inset-0 z-50 lg:hidden flex flex-col justify-end bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
+          mobileFiltersOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div 
+          className={`bg-canvas dark:bg-ink rounded-t-3xl max-h-[85vh] overflow-y-auto p-6 space-y-6 shadow-2xl relative transition-transform duration-300 ease-out transform ${
+            mobileFiltersOpen ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
+          <button
+            onClick={() => setMobileFiltersOpen(false)}
+            className="absolute top-4 right-4 rtl:left-4 rtl:right-auto p-2 bg-white dark:bg-body/10 border border-border/50 dark:border-border-strong/20 rounded-full text-ink dark:text-canvas cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+          <div className="pt-4">
+            <FilterSidebar branches={branches} />
           </div>
+          <button
+            onClick={() => setMobileFiltersOpen(false)}
+            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 rounded-full shadow-md cursor-pointer"
+          >
+            {t('common.confirm')}
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 }

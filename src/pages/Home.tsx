@@ -16,7 +16,8 @@ import {
   Clock,
   Search,
   Users,
-  ChevronDown
+  ChevronDown,
+  User
 } from 'lucide-react';
 
 export default function Home() {
@@ -98,9 +99,10 @@ export default function Home() {
         {/* Background Image Overlay */}
         <div className="absolute inset-0 bg-black/45 z-10" />
         <img 
-          src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1920&q=85" 
-          alt="Luxury Lobby" 
+          src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1920&q=90" 
+          alt="Luxury Resort" 
           className="absolute inset-0 w-full h-full object-cover animate-slow-zoom"
+          loading="lazy"
         />
 
         {/* Hero Content */}
@@ -195,30 +197,43 @@ export default function Home() {
                   <ChevronDown className={`w-3.5 h-3.5 text-white/60 transition-transform duration-300 ${isCapacityDropdownOpen ? 'rotate-180' : ''}`} />
                 </div>
                 {isCapacityDropdownOpen && (
-                  <div className="absolute left-0 mt-2.5 w-48 bg-black/85 backdrop-blur-md border border-white/10 rounded-xl shadow-xl overflow-hidden z-20 py-1 text-[13px] animate-fade-in select-none">
-                    <div 
-                      onClick={() => {
-                        setSelectedCapacity('');
-                        setIsCapacityDropdownOpen(false);
-                      }}
-                      className={`px-4 py-2.5 hover:bg-white/10 text-white/90 cursor-pointer transition-colors ${!selectedCapacity ? 'text-primary font-bold' : ''}`}
-                    >
-                      {currentLang === 'ar' ? 'الكل' : 'All'}
-                    </div>
-                    {[1, 2, 3, 4].map(num => (
-                      <div 
-                        key={num} 
-                        onClick={() => {
-                          setSelectedCapacity(num);
-                          setIsCapacityDropdownOpen(false);
-                        }}
-                        className={`px-4 py-2.5 hover:bg-white/10 text-white/90 cursor-pointer transition-colors ${selectedCapacity === num ? 'text-primary font-bold' : ''}`}
-                      >
-                        {num === 4 
-                          ? (currentLang === 'ar' ? '4+ أفراد' : '4+ Guests') 
-                          : (currentLang === 'ar' ? `${num} أفراد` : `${num} ${num === 1 ? 'Guest' : 'Guests'}`)}
+                  <div className="absolute left-0 mt-2.5 w-64 bg-black/85 backdrop-blur-md border border-white/10 rounded-xl shadow-xl overflow-hidden z-20 p-4 text-[13px] text-white select-none animate-fade-in">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4.5 h-4.5 text-primary shrink-0" />
+                        <div className="flex flex-col text-left rtl:text-right">
+                          <span className="font-bold text-[13px]">{currentLang === 'ar' ? 'عدد النزلاء' : 'Guests'}</span>
+                          <span className="text-[10px] text-white/50">{currentLang === 'ar' ? 'عدد الأفراد' : 'Number of guests'}</span>
+                        </div>
                       </div>
-                    ))}
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          disabled={!selectedCapacity || selectedCapacity === 0}
+                          onClick={() => setSelectedCapacity(prev => {
+                            const val = Number(prev) || 0;
+                            return val <= 1 ? '' : val - 1;
+                          })}
+                          className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center text-white hover:bg-white/10 active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer font-bold text-base select-none"
+                        >
+                          -
+                        </button>
+                        <span className="font-bold text-[15px] min-w-[20px] text-center font-interfaceEn">
+                          {selectedCapacity || 0}
+                        </span>
+                        <button
+                          type="button"
+                          disabled={Number(selectedCapacity) >= 6}
+                          onClick={() => setSelectedCapacity(prev => {
+                            const val = Number(prev) || 0;
+                            return val >= 6 ? 6 : val + 1;
+                          })}
+                          className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center text-white hover:bg-white/10 active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer font-bold text-base select-none"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
