@@ -8,8 +8,8 @@ import { authService } from '../services';
 import { useAppDispatch } from '../store';
 import { loginSuccess, setAuthLoading, setAuthError } from '../store/authSlice';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
-import Input from '../components/ui/Input';
-import Button from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Button } from '../components/ui/Button';
 
 export default function Login() {
   const { t, i18n } = useTranslation();

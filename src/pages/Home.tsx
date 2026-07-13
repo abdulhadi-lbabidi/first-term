@@ -31,7 +31,7 @@ export default function Home() {
     if (selectedBranch) params.set('branch', selectedBranch);
     if (selectedCapacity) params.set('capacity', String(selectedCapacity));
     if (searchQuery) params.set('q', searchQuery);
-    
+
     navigate(`/${currentLang}/rooms?${params.toString()}`);
   };
 
@@ -70,9 +70,9 @@ export default function Home() {
       />
 
       {/* 2. Editorial Description section */}
-      <AboutSection 
-        currentLang={currentLang} 
-        t={t} 
+      <AboutSection
+        currentLang={currentLang}
+        t={t}
       />
 
       {/* 3. Featured suite selections */}
@@ -85,16 +85,16 @@ export default function Home() {
       />
 
       {/* 4. Hotel locations destinations grid */}
-      <BranchesSection 
-        branches={branches} 
-        currentLang={currentLang} 
-        t={t} 
+      <BranchesSection
+        branches={branches}
+        currentLang={currentLang}
+        t={t}
       />
 
       {/* 5. Services grid */}
-      <ServicesSection 
-        t={t} 
-        currentLang={currentLang} 
+      <ServicesSection
+        t={t}
+        currentLang={currentLang}
       />
     </div>
   );

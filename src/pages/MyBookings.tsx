@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../store';
 import { bookingService, roomService } from '../services';
 import { Booking, Room, Branch } from '../types';
-import Button from '../components/ui/Button';
+import { Button } from '../components/ui/Button';
 import { Calendar, CreditCard, XCircle, Briefcase } from 'lucide-react';
 import dayjs from 'dayjs';
 
@@ -142,8 +142,8 @@ export default function MyBookings() {
                       {/* Compact dates info */}
                       <span className="text-[13px] text-muted font-medium flex items-center gap-1.5 mt-1">
                         <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
-                        <span>{dayjs(booking.checkIn).format('DD MMM YYYY')} &rarr; {dayjs(booking.checkOut).format('DD MMM YYYY')}</span>
-                        <span className="opacity-60">({t('common.nights', { count: booking.days })})</span>
+                        <span>{dayjs(booking.checkInDate).format('DD MMM YYYY')} &rarr; {dayjs(booking.checkOutDate).format('DD MMM YYYY')}</span>
+                        <span className="opacity-60">({t('common.nights', { count: booking.nights })})</span>
                       </span>
                     </div>
 
@@ -197,11 +197,22 @@ export default function MyBookings() {
                   )}
 
                   {!isCancelled && isPaid && (
-                    <div className="flex justify-end pt-2 border-t border-border/30 dark:border-border-strong/10 mt-2">
-                      <span className="text-[12px] text-success font-medium flex items-center gap-1">
+                    <div className="flex justify-between items-center pt-3 border-t border-border/30 dark:border-border-strong/10 mt-3">
+                      <span className="text-[12px] text-success font-medium flex items-center gap-1.5 bg-success/5 px-3 py-1.5 rounded-full">
                         <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
                         <span>{currentLang === 'ar' ? 'تم الدفع والـتأكيد' : 'Paid & Confirmed'}</span>
                       </span>
+                      {!dayjs().isAfter(dayjs(booking.checkInDate)) && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleCancelBooking(booking.id)}
+                          className="text-error border-error/20 hover:bg-error/5"
+                        >
+                          <XCircle className="w-3.5 h-3.5 mr-1 rtl:ml-1 rtl:mr-0" />
+                          <span>{t('bookings.cancelBtn')}</span>
+                        </Button>
+                      )}
                     </div>
                   )}
                 </div>

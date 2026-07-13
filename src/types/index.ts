@@ -40,9 +40,13 @@ export interface Booking {
   id: string;
   userId: string;
   roomId: string;
-  checkIn: string; // ISO string
-  checkOut: string; // ISO string
-  days: number;
+  checkInDate: string; // YYYY-MM-DD
+  checkOutDate: string; // YYYY-MM-DD
+  checkInTime: string; // e.g., "14:00"
+  checkOutTime: string; // e.g., "12:00"
+  startAt: string; // ISO 8601 Timestamp
+  endAt: string; // ISO 8601 Timestamp
+  nights: number;
   totalPrice: number;
   status: 'pending' | 'confirmed' | 'cancelled';
   paymentStatus: 'unpaid' | 'paid';
@@ -60,11 +64,12 @@ export interface Review {
 }
 
 export interface RoomFilterOptions {
-  q?: string; // Search query
-  branch?: string; // Branch ID or slug
+  q?: string;          // Search query
+  branch?: string;     // Branch ID (comma-separated)
   min_price?: number;
   max_price?: number;
   stars?: number;
   capacity?: number;
-  available?: boolean;
+  check_in?: string;   // YYYY-MM-DD — filter availability start
+  check_out?: string;  // YYYY-MM-DD — filter availability end
 }

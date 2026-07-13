@@ -5,7 +5,19 @@ import { Room, Branch } from '../types';
 import { useRoomFilters } from '../hooks/useRoomFilters';
 import FilterSidebar from '../components/filters/FilterSidebar';
 import RoomCard from '../components/room/RoomCard';
-import { SlidersHorizontal, X, LayoutGrid, Grid } from 'lucide-react';
+import { SlidersHorizontal, LayoutGrid, Grid, List as ListIcon } from 'lucide-react';
+import { Button } from '../components/ui/Button';
+import { Badge } from '../components/ui/Badge';
+import { Skeleton } from '../components/ui/skeleton';
+import {
+  Sheet,
+  SheetContent,
+  SheetClose,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
+  SheetTrigger,
+} from '../components/ui/sheet';
 
 export default function Rooms() {
   const { t, i18n } = useTranslation();
@@ -15,8 +27,8 @@ export default function Rooms() {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [loading, setLoading] = useState(true);
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [cols, setCols] = useState<'grid-2' | 'grid-3'>('grid-3');
+  const [cols, setCols] = useState<'grid-2' | 'grid-3' | 'list'>('grid-3');
+  const [showFilters, setShowFilters] = useState(true);
 
   useEffect(() => {
     const loadStaticData = async () => {
@@ -36,7 +48,7 @@ export default function Rooms() {
       try {
         const fetchedRooms = await roomService.getRooms(filters);
         setRooms(fetchedRooms);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (err) {
         console.error(err);
       } finally {
@@ -60,93 +72,156 @@ export default function Rooms() {
 
       <div className="lg:grid lg:grid-cols-4 gap-8">
         {/* Desktop Sidebar Filters */}
-        <div className="hidden lg:block lg:col-span-1">
-          <FilterSidebar branches={branches} />
-        </div>
+        {showFilters && (
+          <div className="hidden lg:block lg:col-span-1">
+            <FilterSidebar branches={branches} />
+          </div>
+        )}
 
-        {/* Mobile Filter Toggle & Summary */}
+        {/* Mobile Filter Toggle — Sheet */}
         <div className="lg:hidden flex items-center justify-between bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 p-4 rounded-2xl mb-6">
-          <button
-            onClick={() => setMobileFiltersOpen(true)}
-            className="flex items-center space-x-2.5 rtl:space-x-reverse text-[14px] font-semibold text-ink dark:text-canvas"
-          >
-            <SlidersHorizontal className="w-5 h-5 text-primary" />
-            <span>{t('rooms.filters')}</span>
-            {activeFiltersCount > 0 && (
-              <span className="bg-primary text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
-                {activeFiltersCount}
-              </span>
-            )}
-          </button>
-          
+          <Sheet>
+            <SheetTrigger
+              render={
+                <Button variant="ghost" className="flex items-center gap-2.5 text-[14px] font-semibold text-ink dark:text-canvas h-auto p-0 hover:bg-transparent" />
+              }
+            >
+              <SlidersHorizontal className="w-5 h-5 text-primary" />
+              <span>{t('rooms.filters')}</span>
+              {activeFiltersCount > 0 && (
+                <Badge className="bg-primary text-white text-[11px] font-bold px-2 py-0.5 rounded-full">
+                  {activeFiltersCount}
+                </Badge>
+              )}
+            </SheetTrigger>
+            <SheetContent side="bottom" className="max-h-[85vh] overflow-y-auto rounded-t-3xl p-0">
+              <SheetHeader className="px-6 pt-6 pb-0">
+                <SheetTitle className="font-serif-display text-lg">
+                  {t('rooms.filters')}
+                </SheetTitle>
+              </SheetHeader>
+              <div className="px-6 py-4">
+                <FilterSidebar branches={branches} />
+              </div>
+              <SheetFooter className="px-6 pb-6">
+                <SheetClose
+                  render={
+                    <Button
+                      variant="primary"
+                      fullWidth
+                      className="h-12 rounded-full text-[14px] font-semibold"
+                    />
+                  }
+                >
+                  {t('common.confirm')}
+                </SheetClose>
+              </SheetFooter>
+            </SheetContent>
+          </Sheet>
+
           {activeFiltersCount > 0 && (
-            <button 
+            <Button
+              variant="ghost"
               onClick={clearFilters}
-              className="text-[13px] font-medium text-primary hover:underline"
+              className="text-[13px] font-medium text-primary hover:text-primary hover:underline h-auto p-0 hover:bg-transparent"
             >
               {t('rooms.clearAll')}
-            </button>
+            </Button>
           )}
         </div>
 
         {/* Rooms Grid */}
-        <div className="lg:col-span-3">
-          {/* Tabs Grid Switcher */}
+
+        {/* Tasks: enable filter */}
+        {/* Tasks: use taps */}
+        <div className={showFilters ? 'lg:col-span-3' : 'lg:col-span-4'}>
+          {/* Grid Switcher + count */}
           <div className="flex justify-between items-center mb-6">
-            <span className="text-[13px] text-muted font-semibold uppercase tracking-wider">
-              {t('rooms.title')}: {rooms.length} {currentLang === 'ar' ? 'غرف' : 'rooms'}
-            </span>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden lg:flex items-center gap-2 rounded-full border-border/40 dark:border-border-strong/15 text-ink dark:text-canvas"
+                onClick={() => setShowFilters(!showFilters)}
+              >
+                <SlidersHorizontal className="w-4 h-4" />
+                {currentLang === 'ar' ? (showFilters ? 'إخفاء الفلاتر' : 'إظهار الفلاتر') : (showFilters ? 'Hide Filters' : 'Show Filters')}
+              </Button>
+              <span className="text-[13px] text-muted font-semibold uppercase tracking-wider">
+                {t('rooms.title')}: {rooms.length} {currentLang === 'ar' ? 'غرف' : 'rooms'}
+              </span>
+            </div>
             <div className="bg-canvas dark:bg-body/20 p-1 rounded-full border border-border/40 dark:border-border-strong/10 flex items-center gap-1">
-              <button
+              <Button
                 type="button"
-                onClick={() => setCols('grid-2')}
+                variant="ghost"
+                size="icon"
                 title={currentLang === 'ar' ? 'عرض عمودين' : '2 Columns'}
-                className={`p-2 rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                  cols === 'grid-2'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-muted hover:text-ink dark:hover:text-canvas'
-                }`}
+                onClick={() => setCols('grid-2')}
+                className={`rounded-full transition-all duration-300 ${cols === 'grid-2'
+                  ? 'bg-primary text-white shadow-sm hover:bg-primary hover:text-white'
+                  : 'text-muted hover:text-ink dark:hover:text-canvas hover:bg-transparent'
+                  }`}
               >
                 <LayoutGrid className="w-4 h-4" />
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
-                onClick={() => setCols('grid-3')}
+                variant="ghost"
+                size="icon"
                 title={currentLang === 'ar' ? 'عرض 3 أعمدة' : '3 Columns'}
-                className={`p-2 rounded-full transition-all duration-300 cursor-pointer flex items-center justify-center ${
-                  cols === 'grid-3'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-muted hover:text-ink dark:hover:text-canvas'
-                }`}
+                onClick={() => setCols('grid-3')}
+                className={`rounded-full transition-all duration-300 ${cols === 'grid-3'
+                  ? 'bg-primary text-white shadow-sm hover:bg-primary hover:text-white'
+                  : 'text-muted hover:text-ink dark:hover:text-canvas hover:bg-transparent'
+                  }`}
               >
                 <Grid className="w-4 h-4" />
-              </button>
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                title={currentLang === 'ar' ? 'عرض قائمة' : 'List View'}
+                onClick={() => setCols('list')}
+                className={`rounded-full transition-all duration-300 ${cols === 'list'
+                  ? 'bg-primary text-white shadow-sm hover:bg-primary hover:text-white'
+                  : 'text-muted hover:text-ink dark:hover:text-canvas hover:bg-transparent'
+                  }`}
+              >
+                <ListIcon className="w-4 h-4" />
+              </Button>
             </div>
           </div>
 
+          {/* Loading Skeleton */}
           {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={`grid gap-6 ${cols === 'list' ? 'grid-cols-1' : cols === 'grid-3' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 lg:grid-cols-2'}`}>
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse bg-white dark:bg-ink border border-border/20 rounded-2xl aspect-[4/5] p-6 space-y-4">
-                  <div className="bg-canvas/50 dark:bg-body/10 rounded-xl aspect-[4/3] w-full" />
-                  <div className="h-6 bg-canvas/50 dark:bg-body/10 rounded w-2/3" />
-                  <div className="h-4 bg-canvas/50 dark:bg-body/10 rounded w-1/2" />
-                  <div className="h-10 bg-canvas/50 dark:bg-body/10 rounded-full w-full" />
+                <div key={i} className="space-y-4 rounded-2xl overflow-hidden border border-border/20 bg-white dark:bg-ink p-4">
+                  <Skeleton className="aspect-[4/3] w-full rounded-xl" />
+                  <Skeleton className="h-6 w-2/3 rounded" />
+                  <Skeleton className="h-4 w-1/2 rounded" />
+                  <Skeleton className="h-10 w-full rounded-full" />
                 </div>
               ))}
             </div>
+
+            /* Rooms Grid */
           ) : rooms.length > 0 ? (
-            <div className={`grid gap-6 ${cols === 'grid-3' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-2 lg:grid-cols-2'}`}>
+            <div className={`grid gap-6 ${cols === 'list' ? 'grid-cols-1' : cols === 'grid-3' ? (showFilters ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4') : (showFilters ? 'grid-cols-2 lg:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3')}`}>
               {rooms.map((room) => {
                 const branch = branches.find(b => b.id === room.branchId);
                 return (
-                  <RoomCard key={room.id} room={room} branch={branch} />
+                  <RoomCard key={room.id} room={room} branch={branch} layout={cols === "list" ? "list" : "grid"} />
                 );
               })}
             </div>
+
+            /* Empty state */
           ) : (
             <div className="text-center py-20 bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl p-8 max-w-md mx-auto">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
+              <div className="size-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
                 <SlidersHorizontal className="w-8 h-8" />
               </div>
               <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas mb-3">
@@ -155,43 +230,15 @@ export default function Rooms() {
               <p className="text-[14px] text-muted mb-6 leading-relaxed">
                 {t('rooms.emptyStateDesc')}
               </p>
-              <button 
+              <Button
+                variant="primary"
                 onClick={clearFilters}
-                className="bg-primary hover:bg-primary-hover text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-luxury"
+                className="rounded-full px-6 h-10 text-[14px] font-semibold"
               >
                 {t('rooms.clearAll')}
-              </button>
+              </Button>
             </div>
           )}
-        </div>
-      </div>
-
-      {/* Mobile Drawer (Bottom Sheet) */}
-      <div 
-        className={`fixed inset-0 z-50 lg:hidden flex flex-col justify-end bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${
-          mobileFiltersOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <div 
-          className={`bg-canvas dark:bg-ink rounded-t-3xl max-h-[85vh] overflow-y-auto p-6 space-y-6 shadow-2xl relative transition-transform duration-300 ease-out transform ${
-            mobileFiltersOpen ? 'translate-y-0' : 'translate-y-full'
-          }`}
-        >
-          <button
-            onClick={() => setMobileFiltersOpen(false)}
-            className="absolute top-4 right-4 rtl:left-4 rtl:right-auto p-2 bg-white dark:bg-body/10 border border-border/50 dark:border-border-strong/20 rounded-full text-ink dark:text-canvas cursor-pointer"
-          >
-            <X className="w-5 h-5" />
-          </button>
-          <div className="pt-4">
-            <FilterSidebar branches={branches} />
-          </div>
-          <button
-            onClick={() => setMobileFiltersOpen(false)}
-            className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 rounded-full shadow-md cursor-pointer"
-          >
-            {t('common.confirm')}
-          </button>
         </div>
       </div>
     </div>

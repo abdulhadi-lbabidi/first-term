@@ -38,6 +38,32 @@ export default function Footer() {
 
   return (
     <footer className="bg-ink text-canvas pt-20 pb-10 border-t border-border-strong/10 font-interfaceEn">
+      {/* Newsletter Section */}
+      <div className="max-w-7xl mx-auto px-6 mb-20 border-b border-canvas/10 pb-16 text-center text-left rtl:text-right">
+        <div className="bg-canvas/5 border border-canvas/10 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="space-y-3 text-left rtl:text-right md:max-w-xl">
+            <h3 className="font-serif-display text-2xl lg:text-3xl font-bold text-canvas">
+              {currentLang === 'ar' ? 'اشترك في نشرتنا الإخبارية' : 'Subscribe to our Newsletter'}
+            </h3>
+            <p className="text-[14px] text-canvas/70 font-light">
+              {currentLang === 'ar' 
+                ? 'احصل على آخر العروض الحصرية وأخبار الفندق المميزة مباشرة في بريدك الإلكتروني.' 
+                : 'Get the latest exclusive offers and premium updates delivered straight to your inbox.'}
+            </p>
+          </div>
+          <div className="w-full md:w-auto flex-1 max-w-md flex items-center gap-2">
+            <input 
+              type="email" 
+              placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Your email address'}
+              className="w-full bg-canvas/10 border border-canvas/20 focus:border-primary text-canvas rounded-full px-6 py-3.5 text-[14px] outline-none transition-all placeholder:text-canvas/40"
+            />
+            <button className="bg-primary hover:bg-primary-hover text-white px-6 py-3.5 rounded-full font-semibold text-[14px] transition-all whitespace-nowrap">
+              {currentLang === 'ar' ? 'اشتراك' : 'Subscribe'}
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left rtl:text-right">
         {/* Brand & About Us Block (Spans 2 columns on desktop) */}
         <div className="space-y-6 lg:col-span-2">

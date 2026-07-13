@@ -13,7 +13,8 @@ export function useRoomFilters() {
     max_price: searchParams.get('max_price') ? Number(searchParams.get('max_price')) : undefined,
     stars: searchParams.get('stars') ? Number(searchParams.get('stars')) : undefined,
     capacity: searchParams.get('capacity') ? Number(searchParams.get('capacity')) : undefined,
-    available: searchParams.get('available') === 'true' ? true : searchParams.get('available') === 'false' ? false : undefined,
+    check_in: searchParams.get('check_in') || undefined,
+    check_out: searchParams.get('check_out') || undefined,
   }), [searchParams]);
 
   // Update filters in search parameters

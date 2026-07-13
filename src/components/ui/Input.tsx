@@ -1,44 +1,52 @@
-import React from 'react';
+import * as React from "react"
+import { Input as InputPrimitive } from "@base-ui/react/input"
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
-  error?: string;
-  icon?: React.ReactNode;
+import { cn } from "@/lib/utils"
+
+interface InputProps extends React.ComponentProps<"input"> {
+  label?: string
+  error?: string
+  icon?: React.ReactNode
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className = '', label, error, icon, type = 'text', ...props }, ref) => {
-    return (
-      <div className="space-y-1.5 w-full text-left rtl:text-right">
-        {label && (
-          <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase tracking-wide block">
-            {label}
-          </label>
-        )}
-        <div className="relative">
-          <input
-            ref={ref}
-            type={type}
-            className={`w-full h-12 pl-10 pr-4 rtl:pl-4 rtl:pr-10 bg-canvas/30 dark:bg-body/10 border border-border dark:border-border-strong/20 focus:border-primary rounded-xl text-[14px] outline-none transition-all duration-300 ${
-              error ? 'border-error focus:border-error' : 'focus:border-primary'
-            } ${icon ? '' : 'pl-4 pr-4 rtl:pl-4 rtl:pr-4'} ${className}`}
-            {...props}
-          />
-          {icon && (
-            <div className="absolute left-3.5 rtl:right-3.5 rtl:left-auto top-1/2 -translate-y-1/2 text-muted">
-              {icon}
-            </div>
-          )}
-        </div>
-        {error && (
-          <span className="text-[12px] text-error font-medium block mt-1">
-            {error}
+function Input({ className, type, label, error, icon, ...props }: InputProps) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      {label && (
+        <label className="text-sm font-medium text-ink dark:text-canvas">
+          {label}
+        </label>
+      )}
+      <div className="relative">
+        {icon && (
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none rtl:left-auto rtl:right-3">
+            {icon}
           </span>
         )}
+        <InputPrimitive
+          type={type}
+          data-slot="input"
+          aria-invalid={!!error}
+          className={cn(
+            "h-10 w-full min-w-0 rounded-xl border border-input bg-transparent py-2 text-base transition-colors outline-none",
+            "file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
+            "placeholder:text-muted-foreground",
+            "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50",
+            "disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50",
+            "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
+            "dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
+            icon ? "pl-9 pr-3 rtl:pl-3 rtl:pr-9" : "px-3",
+            className
+          )}
+          {...props}
+        />
       </div>
-    );
-  }
-);
+      {error && (
+        <p className="text-[12px] text-destructive font-medium">{error}</p>
+      )}
+    </div>
+  )
+}
 
-Input.displayName = 'Input';
-export default Input;
+export { Input }
+export type { InputProps }

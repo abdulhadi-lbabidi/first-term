@@ -43,7 +43,7 @@ export default function Checkout() {
     setLoading(true);
     try {
       let latestBookingId = '';
-      
+
       // Complete booking for each cart selection
       for (const item of cartItems) {
         const booking = await bookingService.createBooking(
@@ -53,7 +53,7 @@ export default function Checkout() {
           item.checkOut
         );
         latestBookingId = booking.id;
-        
+
         // Simulate immediate payment since user clicked complete payment checkout!
         await bookingService.payBooking(booking.id);
       }
@@ -74,7 +74,7 @@ export default function Checkout() {
       <div className="max-w-md mx-auto px-6 font-interfaceEn my-12 text-center">
         <div className="bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-2xl p-8 shadow-md space-y-6">
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center text-success mx-auto">
-            <CheckCircle2 className="w-10 h-10 animate-bounce" />
+            <CheckCircle2 className="w-10 h-10" />
           </div>
           <h1 className="font-serif-display text-3xl font-semibold text-ink dark:text-canvas my-0">
             {t('bookings.successTitle')}
@@ -121,10 +121,10 @@ export default function Checkout() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Checkout inputs (70%) */}
           <div className="lg:col-span-8 space-y-6">
-            
+
             {/* Warning Box */}
             <div className="p-4 bg-error/5 border border-error/20 rounded-2xl flex items-start space-x-3.5 rtl:space-x-reverse text-left rtl:text-right">
-              <AlertTriangle className="w-6 h-6 text-error shrink-0 mt-0.5" />
+              <AlertTriangle className="w-6 h-6 mx-2 text-error shrink-0 mt-0.5" />
               <p className="text-[13px] text-error font-medium leading-relaxed">
                 {t('bookings.simulatedWarning')}
               </p>
@@ -133,7 +133,7 @@ export default function Checkout() {
             {/* Payment Details Form */}
             <form onSubmit={handleCheckoutSubmit} className="bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-2xl p-6 shadow-sm text-left rtl:text-right space-y-5">
               <h3 className="font-serif-display text-xl font-semibold text-ink dark:text-canvas flex items-center space-x-2.5 rtl:space-x-reverse pb-3 border-b border-border/40 dark:border-border-strong/10">
-                <CreditCard className="w-5 h-5 text-primary" />
+                <CreditCard className="w-5 h-5 mx-2 text-primary" />
                 <span>{t('bookings.paymentDetails')}</span>
               </h3>
 
@@ -169,7 +169,7 @@ export default function Checkout() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                    Expiry Date
+                    {currentLang === 'ar' ? 'تاريخ الانتهاء' : 'Expiry Date'}
                   </label>
                   <input
                     type="text"
@@ -181,7 +181,7 @@ export default function Checkout() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                    CVV
+                    {currentLang === 'ar' ? 'رمز التحقق (CVV)' : 'CVV'}
                   </label>
                   <input
                     type="password"
@@ -195,8 +195,8 @@ export default function Checkout() {
 
               {/* Secure disclaimer */}
               <div className="pt-2 flex items-center space-x-2 rtl:space-x-reverse text-muted text-[13px] font-medium">
-                <ShieldCheck className="w-4.5 h-4.5 text-success" />
-                <span>Simulated Secure Payment - SSL Encrypted</span>
+                <ShieldCheck className="w-4.5 h-4.5 mx-2 text-success" />
+                <span>{currentLang === 'ar' ? 'دفع آمن تجريبي - محمي بتقنية SSL' : 'Simulated Secure Payment - SSL Encrypted'}</span>
               </div>
 
               {/* Submit */}
@@ -219,7 +219,7 @@ export default function Checkout() {
             <div className="space-y-4 text-[14px] text-left rtl:text-right">
               <div className="space-y-2.5 max-h-48 overflow-y-auto">
                 {cartItems.map((item, i) => (
-                  <div key={i} className="flex justify-between text-muted text-xs">
+                  <div key={i} className="flex justify-between text-muted text-xs overflow-hidden">
                     <span>{t('common.nights', { count: item.days })}</span>
                     <span>${item.totalPrice}</span>
                   </div>
@@ -236,7 +236,7 @@ export default function Checkout() {
       ) : (
         <div className="text-center py-20 bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl p-8 max-w-md mx-auto animate-fade-in">
           <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary mx-auto mb-6">
-            <ShoppingBag className="w-8 h-8" />
+            <ShoppingBag className="w-8 h-8 mx-2" />
           </div>
           <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas mb-3">
             {currentLang === 'ar' ? 'سلة الحجز فارغة' : 'No reservations in checkout'}
@@ -244,7 +244,7 @@ export default function Checkout() {
           <p className="text-[14px] text-muted mb-6">
             {t('bookings.cartEmpty')}
           </p>
-          <Link 
+          <Link
             to={`/${currentLang}/rooms`}
             className="bg-primary hover:bg-primary-hover text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-luxury inline-block animate-pulse"
           >

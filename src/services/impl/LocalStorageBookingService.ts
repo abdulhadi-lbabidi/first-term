@@ -2,9 +2,10 @@ import { IBookingService } from '../interfaces';
 import { Booking } from '../../types';
 import { StorageService } from '../storage.service';
 import dayjs from 'dayjs';
+import { hotelSettings } from '../../config/hotelSettings';
 
 export class LocalStorageBookingService implements IBookingService {
-  async createBooking(userId: string, roomId: string, checkIn: string, checkOut: string): Promise<Booking> {
+  async createBooking(userId: string, roomId: string, checkInDate: string, checkOutDate: string): Promise<Booking> {
     const rooms = StorageService.getRooms();
     const roomIndex = rooms.findIndex(r => r.id === roomId);
     
@@ -14,40 +15,52 @@ export class LocalStorageBookingService implements IBookingService {
 
     const room = rooms[roomIndex];
     
-    // Check date conflict with existing bookings
+    // Generate precise timestamps based on hotel settings
+    const startAt = dayjs(`${checkInDate}T${hotelSettings.checkInTime}:00`).toISOString();
+    const endAt = dayjs(`${checkOutDate}T${hotelSettings.checkOutTime}:00`).toISOString();
+
+    if (dayjs(endAt).isBefore(dayjs(startAt)) || (!hotelSettings.allowSameDayBooking && checkInDate === checkOutDate)) {
+      throw new Error('تواريخ غير صالحة / Invalid dates');
+    }
+    
+    // Check interval conflicts with existing bookings
+    // A room is unavailable ONLY when: newStart < existingEnd AND newEnd > existingStart
     const bookings = StorageService.getBookings();
     const hasConflict = bookings.some(b => 
       b.roomId === roomId && 
       b.status === 'confirmed' && 
-      dayjs(checkIn).isBefore(dayjs(b.checkOut)) && 
-      dayjs(checkOut).isAfter(dayjs(b.checkIn))
+      dayjs(startAt).isBefore(dayjs(b.endAt)) && 
+      dayjs(endAt).isAfter(dayjs(b.startAt))
     );
     
     if (hasConflict) {
       throw new Error('الغرفة محجوزة بالفعل خلال هذه الفترة / Room is already reserved for the selected period');
     }
 
-    // Calculate dates
-    const start = dayjs(checkIn);
-    const end = dayjs(checkOut);
-    let days = end.diff(start, 'day');
+    const start = dayjs(checkInDate);
+    const end = dayjs(checkOutDate);
+    let nights = end.diff(start, 'day');
     
-    if (days <= 0) {
-      days = 1; // Minimum 1 day booking
+    if (nights < hotelSettings.minimumStay) {
+      nights = hotelSettings.minimumStay;
     }
 
-    const totalPrice = room.pricePerNight * days;
+    const totalPrice = room.pricePerNight * nights;
 
     const newBooking: Booking = {
       id: crypto.randomUUID(),
       userId,
       roomId,
-      checkIn,
-      checkOut,
-      days,
+      checkInDate,
+      checkOutDate,
+      checkInTime: hotelSettings.checkInTime,
+      checkOutTime: hotelSettings.checkOutTime,
+      startAt,
+      endAt,
+      nights,
       totalPrice,
-      status: 'confirmed', // Confirmed directly for demo
-      paymentStatus: 'unpaid', // Will be paid at checkout
+      status: 'confirmed',
+      paymentStatus: 'unpaid',
       createdAt: new Date().toISOString(),
     };
 

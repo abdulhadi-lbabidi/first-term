@@ -1,55 +1,27 @@
-# Old tasks
-- [x] عم يعمل كراش عند التنقل
-- [x] الهيرو فل سكرين
-- [x] الايقونات فول حاول لا تستخدم outline
-- [x] تصميم الهيرو من جديد
-- [x] اضف فلتر في الهيرو وغير الخلفية اكثر توافق مع الهيرو
-- [x] لا تستخدم مكونات الاساسية مع html استخدم مكونات بدل shadcn ui
-- [x] عند التنقل بين الصفحات يجب ان يكود السكرول للاعلى بشكل سموث
-- [x] حجز الفندق في لا تخليه يكون 2 زر وحل مشكلة {{price}}$ وخليه زر الحجز لونه اكثر وضوح
-- [x] في صفحة معلومات صور الفندق في الاعلى  وتحتها معلومات الفندق 
-- [x] المستخدم لا يمكنه تقييم الفندق اكثر من مرة لكل حجز 
-- [x] تصميم التقييمات وجعله اكثر احترافية وتناسق مع احترافية الموقع
-- [x] كادر الغرفة مغلف كاملا برابط
-    - [x] مؤكد - مو مبين
-    - [x] سعر الليلة خليه واضح اكثر
-- [x] الناف لازم عليه تحسين اكثر
-- [x] الفوتر حولنا لازم بتكون تحت العنوان والديسلوغن
-- [x] الفتوتر الرقم يجب ان يدعم اللغة العربيةوالانكليزية والاتجاه 
-- [x] امكانية تكبير الصورة في dialog 
-- [x] قسم التثييمات اكثر احترافية وتوجيه للمستخدم وبدون حشو وبسيط مثل الهويةالبصرية
-- [x] grid 2 | grid 3 في اقائمة الغرف
-- [x] grid 2 | grid 3 في اقائمة الغرف
-- [x] نطاق السعر مكون السعر يجب ان يكون رينج خط مع تحريك نقطتين مع سقف 2000  درهم 
-- [x] فرع الفندق استخدم اختيار متعدد Select with Search
-- [x] grid 2 | grid 3 use icons only
-- [x] نطاق السعر مكون السعر يجب ان يكون رينج خط مع تحريك نقطتين مع سقف 2000  درهم 
-    - [x] يجب ان يدعم الخط اللغة العربية
-- [x] عدد النزلاء استخدم select with icons
-- [x] على كل فلتر رجعني لاول الصفحة
-
---- 
-# new tasks
-- [x] logo redesign
-- [x] logo redesign | logo "Vercel Hotels" only English in navbar and footer
-- [x] font redesign
-- [x] hero image 
-    - [x] change bg image
-    - [x] filter optmization and alignment
-        - [x] Guests Capacity add icons
-        - [x] When you click on filters, there should be a sheet with the number of people and the button - +
-        - [x] In desktop mode 7XL max  
-- [x] rooms
-    - [x] filters open and close smooth animation and butn in buttoms grid 2 or 3
-    - [x] card 
-    - [x] ditels room
-        - [x] booking availability 
-        - [x] add location in maps
-        - [x] booking table
-            - [x] add checkin and checkout date for one input using shadcn ui datepicker
-        - [x] view row (2 columns grid)
-            - [x] col images | Amenities | location
-            - [x] col detels | booking table
-- [x] UX Writering
-- [x] if clicking use scroll smooth animation x2
-- [x] الشعار فقط بالنكليزي
+# new tasks 
+- [ ] home
+    - [ ] hero
+        - [ ] تغيير الخلفية لتكون فخمة مع مراعات ان يكون النصامامها مقرواء وفيه تباين
+    - [ ] الفقرة الثانية تحسن الخطوط والنصوص
+- [ ] rooms
+    - [ ] detils:
+        - [ ] review view only 3 review & view all for butn
+        - [ ] booking use shadcn ui
+            - fix bug
+        - [ ] cols 5
+            3 - images & الوصف ومزايا والخريطة والتقييم
+            2 - booking & information  
+    - [ ] filters
+        - [ ] الفلترة عبر التاريخ
+        -   
+    - [ ] Card: الصورة وقت الهوفر يجب التركيز على النصوص
+        - مكون عرضي يتفعل على اساس عرض المكونات 
+- [ ] footer: تحسين التصميم  وجعله احترافي
+- [ ] about: 
+- [ ] responsive design for all pages
+- [ ] to i18n for <span>Simulated Secure Payment - SSL Encrypted</span>
+- [ ] booking 
+    - [ ] تحسين الصفحة لتكون اكثر احترافية
+    - [ ] اضهر زر الغاء الحجز واخفيه قبل 24 ساعة
+    
+- [ ] الملف الشخصي تحسين كمان

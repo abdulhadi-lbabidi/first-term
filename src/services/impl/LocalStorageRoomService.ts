@@ -1,6 +1,7 @@
 import { IRoomService } from '../interfaces';
 import { Branch, Room, RoomFilterOptions } from '../../types';
 import { StorageService } from '../storage.service';
+import { hotelSettings } from '../../config/hotelSettings';
 
 export class LocalStorageRoomService implements IRoomService {
   async getBranches(): Promise<Branch[]> {
@@ -56,9 +57,28 @@ export class LocalStorageRoomService implements IRoomService {
       rooms = rooms.filter(r => r.capacity >= filters.capacity!);
     }
 
-    // Filter by availability
-    if (filters.available !== undefined) {
-      rooms = rooms.filter(r => r.isAvailable === filters.available);
+    // Filter by date availability
+    if (filters.check_in) {
+      const checkInDate = filters.check_in;
+      const checkOutDate = filters.check_out || (() => {
+        const d = new Date(filters.check_in);
+        d.setDate(d.getDate() + 1);
+        return d.toISOString().split('T')[0];
+      })();
+
+      const startAt = `${checkInDate}T${hotelSettings.checkInTime}:00`;
+      const endAt = `${checkOutDate}T${hotelSettings.checkOutTime}:00`;
+
+      const bookings = StorageService.getBookings();
+      rooms = rooms.filter(r => {
+        const hasConflict = bookings.some(b =>
+          b.roomId === r.id &&
+          b.status === 'confirmed' &&
+          startAt < b.endAt &&
+          endAt > b.startAt
+        );
+        return !hasConflict;
+      });
     }
 
     return rooms;

@@ -1,86 +1,24 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { authService } from '../services';
-import { useAppDispatch, useAppSelector } from '../store';
-import { updateProfileSuccess } from '../store/authSlice';
-import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck } from 'lucide-react';
-import { bookingService } from '../services';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
+const fs = require('fs');
+const file = 'd:/projects/vercel-hotels/src/pages/Profile.tsx';
+let content = fs.readFileSync(file, 'utf8');
 
-export default function Profile() {
-  const { t, i18n } = useTranslation();
-  const { lang } = useParams<{ lang: string }>();
-  const currentLang = lang || 'en';
-  
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+// Add new imports
+content = content.replace(
+  "import { User, Phone, CheckCircle, AlertCircle } from 'lucide-react';",
+  "import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck } from 'lucide-react';\nimport { bookingService } from '../services';"
+);
 
-  const [formSuccess, setFormSuccess] = useState('');
-  const [formError, setFormError] = useState('');
-  const [bookingCount, setBookingCount] = useState(0);
+// Add state for booking count
+content = content.replace(
+  "const [formError, setFormError] = useState('');",
+  "const [formError, setFormError] = useState('');\n  const [bookingCount, setBookingCount] = useState(0);\n\n  useEffect(() => {\n    if (user) {\n      bookingService.getBookings(user.id).then(res => setBookingCount(res.length)).catch(console.error);\n    }\n  }, [user]);"
+);
 
-  useEffect(() => {
-    if (user) {
-      bookingService.getBookings(user.id).then(res => setBookingCount(res.length)).catch(console.error);
-    }
-  }, [user]);
+// Replace UI
+const uiOldStart = '<div className="max-w-md mx-auto px-6 font-interfaceEn my-12">';
+const uiOldStartIndex = content.indexOf(uiOldStart);
 
-  // Route protection
-  useEffect(() => {
-    if (!isAuthenticated || !user) {
-      navigate(`/${currentLang}/login?redirect=profile`);
-    }
-  }, [isAuthenticated, navigate, currentLang, user]);
-
-  const profileSchema = z.object({
-    fullName: z.string().min(1, t('auth.validation.nameRequired')),
-    phone: z.string().optional(),
-  });
-
-  type ProfileForm = z.infer<typeof profileSchema>;
-
-  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ProfileForm>({
-    resolver: zodResolver(profileSchema),
-    defaultValues: {
-      fullName: user?.fullName || '',
-      phone: user?.phone || '',
-    }
-  });
-
-  // Reset form when user loads
-  useEffect(() => {
-    if (user) {
-      reset({
-        fullName: user.fullName,
-        phone: user.phone || '',
-      });
-    }
-  }, [user, reset]);
-
-  const onSubmit = async (data: ProfileForm) => {
-    setFormSuccess('');
-    setFormError('');
-    if (!user) return;
-
-    try {
-      const updatedUser = await authService.updateProfile(user.id, data.fullName, data.phone);
-      dispatch(updateProfileSuccess(updatedUser));
-      setFormSuccess(currentLang === 'ar' ? 'تم تحديث الملف الشخصي بنجاح' : 'Profile updated successfully');
-    } catch (err: any) {
-      setFormError(err.message || 'خطأ في التحديث');
-    }
-  };
-
-  if (!user) return null;
-
-  return (
-        <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
+const uiNew = `    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left rtl:text-right">
         
         {/* Left Sidebar: Profile Card */}
@@ -160,6 +98,9 @@ export default function Profile() {
         </div>
 
       </div>
-    </div>
-  );
-}
+    </div>`;
+
+content = content.substring(0, uiOldStartIndex) + uiNew + '\n  );\n}\n';
+
+fs.writeFileSync(file, content, 'utf8');
+console.log('Profile updated');
