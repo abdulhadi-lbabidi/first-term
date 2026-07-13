@@ -1,7 +1,7 @@
 import type { Category, HeroSlide } from '../types'
 
 export type NavLink =
-  | { key: 'home' | 'whyTrend'; href: string; page?: never }
+  | { key: 'home'; href: string; page?: never }
   | {
       key: 'about' | 'store' | 'contact' | 'orders'
       page: 'about' | 'store' | 'contact' | 'orders'
@@ -12,7 +12,6 @@ export const navLinks: NavLink[] = [
   { key: 'home', href: '#home' },
   { key: 'store', page: 'store' },
   { key: 'about', page: 'about' },
-  { key: 'whyTrend', href: '#why-trend' },
   { key: 'orders', page: 'orders' },
   { key: 'contact', page: 'contact' },
 ]
@@ -46,6 +45,18 @@ export const heroSlides: HeroSlide[] = [
 ]
 
 export const SLIDE_INTERVAL = 4000
+
+/** Maps hero sidebar typing words (by index) to a store category when one exists. */
+export const HERO_TYPING_STORE_CATEGORIES: (string | undefined)[] = [
+  undefined, // Dresses
+  undefined, // Jackets
+  undefined, // Shirts
+  undefined, // Pants
+  'shoesBags', // Shoes
+  'accessories', // Accessories
+  'men', // Men's Wear
+  'women', // Women's Wear
+]
 
 export const categories: Category[] = [
   {

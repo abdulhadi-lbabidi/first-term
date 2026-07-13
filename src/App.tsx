@@ -1,55 +1,184 @@
-import { useCallback, useEffect, useState } from 'react'
-import PageIntro from './components/PageIntro/PageIntro'
+import { useEffect, useState } from 'react'
+import { Navigate, Route, Routes, useLocation, useParams, useSearchParams } from 'react-router-dom'
+import PageIntro from './components/modals/PageIntro/PageIntro'
 import About from './pages/About/About'
 import Cart from './pages/Cart/Cart'
 import Checkout from './pages/Checkout/Checkout'
+import Contact from './pages/Contact/Contact'
 import Home from './pages/Home/Home'
 import Orders from './pages/Orders/Orders'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
-import Contact from './pages/Contact/Contact'
 import Store from './pages/Store/Store'
-import type { AppPage, NavigateOptions } from './types/navigation'
-import { parseNavigateOptions } from './types/navigation'
+import { useAppNavigate, useCurrentPage } from './hooks/useAppNavigate'
+import { isValidStoreCategory } from './data/filters'
 import { initAos, refreshAos } from './utils/aos'
-import { getPageFromLocation, syncHistory } from './utils/routing'
-
-function getInitialHash(): string | null {
-  const location = getPageFromLocation()
-  if (location.page !== 'home') return null
-  return window.location.hash || null
-}
+import {
+  ABOUT_PATH,
+  CART_PATH,
+  CHECKOUT_PATH,
+  CONTACT_PATH,
+  HOME_PATH,
+  ORDERS_PATH,
+  STORE_PATH,
+} from './utils/routing'
 
 function prefersReducedMotion() {
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
 
-export default function App() {
-  const reducedMotion = prefersReducedMotion()
-  const initialLocation = getPageFromLocation()
-  const [showIntro, setShowIntro] = useState(() => !reducedMotion)
-  const [isLeaving, setIsLeaving] = useState(false)
-  const [page, setPage] = useState<AppPage>(() => initialLocation.page)
-  const [productId, setProductId] = useState<number | undefined>(
-    () => initialLocation.productId,
-  )
-  const [pendingHash, setPendingHash] = useState<string | null>(getInitialHash)
+function useDocumentTitle() {
+  const page = useCurrentPage()
 
-  const contentRevealed = !showIntro || isLeaving
+  useEffect(() => {
+    const titles: Record<string, string> = {
+      about: 'Trend | About Store',
+      store: 'Trend | Store',
+      cart: 'Trend | Cart',
+      product: 'Trend | Product Details',
+      contact: 'Trend | Contact Us',
+      checkout: 'Trend | Checkout',
+      orders: 'Trend | My Orders',
+      home: 'Trend | Fashion Store',
+    }
+    document.title = titles[page] ?? titles.home
+  }, [page])
+}
 
-  const navigate = useCallback((target: AppPage, options?: string | NavigateOptions) => {
-    const { hash, productId: nextProductId } = parseNavigateOptions(options)
-    syncHistory(target, { hash, productId: nextProductId })
-    setPage(target)
-    setProductId(nextProductId)
+function useHashScroll() {
+  const { pathname, hash } = useLocation()
+  const [pendingHash, setPendingHash] = useState<string | null>(null)
 
-    if (hash) {
+  useEffect(() => {
+    if (pathname === HOME_PATH && hash) {
       setPendingHash(hash)
       return
     }
-
     setPendingHash(null)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [pathname, hash])
+
+  useEffect(() => {
+    if (!pendingHash) return
+
+    const scrollToHash = () => {
+      const element = document.querySelector(pendingHash)
+      if (!element) return false
+      element.scrollIntoView({ behavior: 'smooth' })
+      setPendingHash(null)
+      return true
+    }
+
+    if (scrollToHash()) return
+
+    const timer = window.setTimeout(scrollToHash, 100)
+    return () => window.clearTimeout(timer)
+  }, [pendingHash])
+}
+
+function HomeRoute() {
+  const navigate = useAppNavigate()
+  return <Home currentPage="home" onNavigate={navigate} />
+}
+
+function AboutRoute() {
+  const navigate = useAppNavigate()
+  return <About currentPage="about" onNavigate={navigate} />
+}
+
+function StoreRoute() {
+  const navigate = useAppNavigate()
+  const [searchParams] = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  const searchParam = searchParams.get('search')?.trim()
+
+  const initialCategory =
+    categoryParam && categoryParam !== 'all' && isValidStoreCategory(categoryParam)
+      ? categoryParam
+      : 'all'
+
+  return (
+    <Store
+      key={`${initialCategory}-${searchParam || ''}`}
+      currentPage="store"
+      onNavigate={navigate}
+      initialCategory={initialCategory}
+      initialSearch={searchParam || ''}
+    />
+  )
+}
+
+function CartRoute() {
+  const navigate = useAppNavigate()
+  return <Cart currentPage="cart" onNavigate={navigate} />
+}
+
+function ContactRoute() {
+  const navigate = useAppNavigate()
+  return <Contact currentPage="contact" onNavigate={navigate} />
+}
+
+function CheckoutRoute() {
+  const navigate = useAppNavigate()
+  return <Checkout currentPage="checkout" onNavigate={navigate} />
+}
+
+function OrdersRoute() {
+  const navigate = useAppNavigate()
+  return <Orders currentPage="orders" onNavigate={navigate} />
+}
+
+function ProductRoute() {
+  const navigate = useAppNavigate()
+  const { productId: productIdParam } = useParams()
+  const productId = Number(productIdParam)
+  const resolvedId = Number.isFinite(productId) ? productId : undefined
+
+  if (resolvedId === undefined) {
+    return <Navigate to={STORE_PATH} replace />
+  }
+
+  return (
+    <ProductDetails
+      key={resolvedId}
+      currentPage="product"
+      onNavigate={navigate}
+      productId={resolvedId}
+    />
+  )
+}
+
+function AppRoutes() {
+  const page = useCurrentPage()
+  useDocumentTitle()
+  useHashScroll()
+
+  useEffect(() => {
+    initAos()
   }, [])
+
+  useEffect(() => {
+    refreshAos()
+  }, [page])
+
+  return (
+    <Routes>
+      <Route path={HOME_PATH} element={<HomeRoute />} />
+      <Route path={ABOUT_PATH} element={<AboutRoute />} />
+      <Route path={STORE_PATH} element={<StoreRoute />} />
+      <Route path={CART_PATH} element={<CartRoute />} />
+      <Route path={CONTACT_PATH} element={<ContactRoute />} />
+      <Route path={CHECKOUT_PATH} element={<CheckoutRoute />} />
+      <Route path={ORDERS_PATH} element={<OrdersRoute />} />
+      <Route path="/product/:productId" element={<ProductRoute />} />
+      <Route path="*" element={<Navigate to={HOME_PATH} replace />} />
+    </Routes>
+  )
+}
+
+export default function App() {
+  const reducedMotion = prefersReducedMotion()
+  const [showIntro, setShowIntro] = useState(() => !reducedMotion)
+  const [isLeaving, setIsLeaving] = useState(false)
+  const contentRevealed = !showIntro || isLeaving
 
   useEffect(() => {
     if (reducedMotion) return
@@ -76,118 +205,9 @@ export default function App() {
   }, [showIntro, isLeaving])
 
   useEffect(() => {
-    const syncFromLocation = () => {
-      const nextLocation = getPageFromLocation()
-      setPage(nextLocation.page)
-      setProductId(nextLocation.productId)
-
-      const hash = window.location.hash
-      if (nextLocation.page === 'home' && hash) {
-        setPendingHash(hash)
-        return
-      }
-
-      setPendingHash(null)
-      if (nextLocation.page !== 'home') {
-        window.scrollTo({ top: 0, behavior: 'auto' })
-      }
-    }
-
-    window.addEventListener('popstate', syncFromLocation)
-    return () => window.removeEventListener('popstate', syncFromLocation)
-  }, [])
-
-  useEffect(() => {
-    initAos()
-  }, [])
-
-  useEffect(() => {
     if (showIntro) return
     refreshAos()
   }, [showIntro])
-
-  useEffect(() => {
-    if (showIntro) return
-    refreshAos()
-  }, [page, pendingHash, productId, showIntro])
-
-  useEffect(() => {
-    if (page !== 'home' || !pendingHash) return
-
-    const scrollToHash = () => {
-      const element = document.querySelector(pendingHash)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-        setPendingHash(null)
-        return true
-      }
-      return false
-    }
-
-    if (scrollToHash()) return
-
-    const timer = window.setTimeout(scrollToHash, 100)
-    return () => window.clearTimeout(timer)
-  }, [page, pendingHash])
-
-  useEffect(() => {
-    if (page === 'about') {
-      document.title = 'Trend | About Store'
-      return
-    }
-    if (page === 'store') {
-      document.title = 'Trend | Store'
-      return
-    }
-    if (page === 'cart') {
-      document.title = 'Trend | Cart'
-      return
-    }
-    if (page === 'product') {
-      document.title = 'Trend | Product Details'
-      return
-    }
-    if (page === 'contact') {
-      document.title = 'Trend | Contact Us'
-      return
-    }
-    if (page === 'checkout') {
-      document.title = 'Trend | Checkout'
-      return
-    }
-    if (page === 'orders') {
-      document.title = 'Trend | My Orders'
-      return
-    }
-    document.title = 'Trend | Fashion Store'
-  }, [page])
-
-  const renderPage = () => {
-    switch (page) {
-      case 'about':
-        return <About currentPage={page} onNavigate={navigate} />
-      case 'store':
-        return <Store currentPage={page} onNavigate={navigate} />
-      case 'cart':
-        return <Cart currentPage={page} onNavigate={navigate} />
-      case 'product':
-        return (
-          <ProductDetails
-            currentPage={page}
-            onNavigate={navigate}
-            productId={productId}
-          />
-        )
-      case 'contact':
-        return <Contact currentPage={page} onNavigate={navigate} />
-      case 'checkout':
-        return <Checkout currentPage={page} onNavigate={navigate} />
-      case 'orders':
-        return <Orders currentPage={page} onNavigate={navigate} />
-      default:
-        return <Home currentPage={page} onNavigate={navigate} />
-    }
-  }
 
   return (
     <>
@@ -198,7 +218,7 @@ export default function App() {
           contentRevealed ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
-        {renderPage()}
+        <AppRoutes />
       </div>
     </>
   )

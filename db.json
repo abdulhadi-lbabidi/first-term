@@ -8,6 +8,15 @@
       "avatar": "",
       "createdAt": "2026-07-12T08:16:00.497Z",
       "id": "ktIBuiLt_wA"
+    },
+    {
+      "fullName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "password": "1234567891",
+      "avatar": "",
+      "createdAt": "2026-07-13T08:56:18.203Z",
+      "id": "eHiG6kvBP40"
     }
   ],
   "products": [
@@ -495,6 +504,324 @@
       "status": "قيد المراجعة",
       "createdAt": "2026-07-12T09:51:48.876Z",
       "id": "zIP6iduZtEM"
+    },
+    {
+      "userId": "ktIBuiLt_wA",
+      "customerName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "address": "شارع الماركات، حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "XL",
+          "quantity": 1,
+          "id": "cpxIef0T-ZE"
+        }
+      ],
+      "subtotal": 499,
+      "delivery": 0,
+      "total": 499,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-12T12:58:22.254Z",
+      "id": "uiboDd5QLJI"
+    },
+    {
+      "userId": "ktIBuiLt_wA",
+      "customerName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "address": "شارع الماركات، حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "pcH64gOqKI0"
+        }
+      ],
+      "subtotal": 499,
+      "delivery": 0,
+      "total": 499,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-12T13:17:26.134Z",
+      "id": "xioMHLNhPJA"
+    },
+    {
+      "userId": "ktIBuiLt_wA",
+      "customerName": "joudy jresi",
+      "email": "joudy@gmail.com",
+      "phone": "0947754167",
+      "address": "حي حلب الجديدة",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Purple",
+            "value": "#7c3aed"
+          },
+          "selectedSize": "XL",
+          "quantity": 3,
+          "id": "_6QJ8j3iVrg"
+        }
+      ],
+      "subtotal": 1497,
+      "delivery": 0,
+      "total": 1497,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-12T20:22:26.463Z",
+      "id": "plhexxwBHtM"
+    },
+    {
+      "userId": "eHiG6kvBP40",
+      "customerName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "address": "حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "lPNRKS7WkDk"
+        }
+      ],
+      "subtotal": 499,
+      "delivery": 0,
+      "total": 499,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-13T08:56:38.157Z",
+      "id": "K3xEVnXJF4c"
+    },
+    {
+      "userId": "eHiG6kvBP40",
+      "customerName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "address": "Zürcherstrasse، 161",
+      "city": "Schlieren",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "Woyzb8UGXs4"
+        }
+      ],
+      "subtotal": 499,
+      "delivery": 0,
+      "total": 499,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-13T09:19:30.616Z",
+      "id": "VvAmItCF-xk"
+    },
+    {
+      "userId": "eHiG6kvBP40",
+      "customerName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "address": "شارع الماركات، حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "KI1gzNMu3Ak"
+        },
+        {
+          "productId": "2",
+          "code": "TRD-1002",
+          "name": "Classic Jacket",
+          "price": 379,
+          "image": "/images/product-2-2.jpg",
+          "selectedColor": {
+            "name": "Purple",
+            "value": "#6b21a8"
+          },
+          "selectedSize": "M",
+          "quantity": 1,
+          "id": "xmcuzSH6HAI"
+        }
+      ],
+      "subtotal": 878,
+      "delivery": 0,
+      "total": 878,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-13T10:44:33.501Z",
+      "id": "RayBB5nSFjU"
+    },
+    {
+      "userId": "eHiG6kvBP40",
+      "customerName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "address": "شارع الماركات، حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 2,
+          "id": "2Ex5VC8HEBw"
+        },
+        {
+          "productId": "5",
+          "code": "TRD-1005",
+          "name": "Premium Men's Shirt",
+          "price": 329,
+          "image": "/images/product-2-2.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#0f172a"
+          },
+          "selectedSize": "L",
+          "quantity": 1,
+          "id": "XV4bPCE_ch4"
+        }
+      ],
+      "subtotal": 1327,
+      "delivery": 0,
+      "total": 1327,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-13T11:04:48.373Z",
+      "id": "k99t7jV-L58"
+    },
+    {
+      "userId": "eHiG6kvBP40",
+      "customerName": "joudy jresi",
+      "email": "joudyjries7@gmail.com",
+      "phone": "0947754168",
+      "address": "شارع الماركات، حي تشرين",
+      "city": "حلب",
+      "paymentMethod": "cash",
+      "items": [
+        {
+          "productId": "1",
+          "code": "TRD-1001",
+          "name": "Elegant Silk Dress",
+          "price": 499,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#111111"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "NQbWLzrxn7I"
+        },
+        {
+          "productId": "2",
+          "code": "TRD-1002",
+          "name": "Classic Jacket",
+          "price": 379,
+          "image": "/images/product-2.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#18181b"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "F5USs7jPeR8"
+        },
+        {
+          "productId": "3",
+          "code": "TRD-1003",
+          "name": "Soft Chiffon Blouse",
+          "price": 249,
+          "image": "/images/product-3.jpg",
+          "selectedColor": {
+            "name": "White",
+            "value": "#ffffff"
+          },
+          "selectedSize": "XS",
+          "quantity": 1,
+          "id": "HgCPUqMo9K0"
+        },
+        {
+          "productId": "8",
+          "code": "TRD-1008",
+          "name": "Elegant Heels",
+          "price": 549,
+          "image": "/images/product-1.jpg",
+          "selectedColor": {
+            "name": "Black",
+            "value": "#1e1033"
+          },
+          "selectedSize": "S",
+          "quantity": 1,
+          "id": "5jlf3z7Qg1E"
+        }
+      ],
+      "subtotal": 1676,
+      "delivery": 0,
+      "total": 1676,
+      "status": "قيد المراجعة",
+      "createdAt": "2026-07-13T12:42:49.141Z",
+      "id": "NntfCej870M"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

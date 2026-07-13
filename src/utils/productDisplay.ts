@@ -50,6 +50,5 @@ export function mapProductToShowcase(product: Product): ShowcaseProduct {
     fallback: DEFAULT_PRODUCT_FALLBACK,
     colors: product.colors.map((color) => color.value),
     sizes: product.sizes,
-    badge: product.isNew ? 'new' : undefined,
   }
 }

@@ -1,4 +1,5 @@
 import type { AppPage } from '../types/navigation'
+import { isValidStoreCategory } from '../data/filters'
 
 export const ABOUT_PATH = '/about'
 export const STORE_PATH = '/store'
@@ -11,6 +12,21 @@ export const HOME_PATH = '/'
 export interface AppLocation {
   page: AppPage
   productId?: number
+  storeCategory?: string
+  storeSearch?: string
+}
+
+function getStoreCategoryFromSearch(search: string): string | undefined {
+  const category = new URLSearchParams(search).get('category')
+  if (!category || category === 'all' || !isValidStoreCategory(category)) {
+    return undefined
+  }
+  return category
+}
+
+function getStoreSearchFromSearch(search: string): string | undefined {
+  const query = new URLSearchParams(search).get('search')?.trim()
+  return query || undefined
 }
 
 export function getProductIdFromPath(pathname: string): number | undefined {
@@ -20,11 +36,18 @@ export function getProductIdFromPath(pathname: string): number | undefined {
   return Number.isFinite(id) ? id : undefined
 }
 
-export function getPageFromLocation(): AppLocation {
-  const pathname = window.location.pathname
-
+export function getPageFromLocation(
+  pathname = window.location.pathname,
+  search = window.location.search,
+): AppLocation {
   if (pathname === ABOUT_PATH) return { page: 'about' }
-  if (pathname === STORE_PATH) return { page: 'store' }
+  if (pathname === STORE_PATH) {
+    return {
+      page: 'store',
+      storeCategory: getStoreCategoryFromSearch(search),
+      storeSearch: getStoreSearchFromSearch(search),
+    }
+  }
   if (pathname === CART_PATH) return { page: 'cart' }
   if (pathname === CONTACT_PATH) return { page: 'contact' }
   if (pathname === CHECKOUT_PATH) return { page: 'checkout' }
@@ -36,12 +59,26 @@ export function getPageFromLocation(): AppLocation {
   return { page: 'home' }
 }
 
-export function buildAppUrl(
-  page: AppPage,
-  options?: { hash?: string; productId?: number },
-): string {
+type StoreUrlOptions = {
+  hash?: string
+  productId?: number
+  storeCategory?: string
+  storeSearch?: string
+}
+
+export function buildAppUrl(page: AppPage, options?: StoreUrlOptions): string {
   if (page === 'about') return ABOUT_PATH
-  if (page === 'store') return STORE_PATH
+  if (page === 'store') {
+    const params = new URLSearchParams()
+    if (options?.storeCategory && options.storeCategory !== 'all') {
+      params.set('category', options.storeCategory)
+    }
+    if (options?.storeSearch?.trim()) {
+      params.set('search', options.storeSearch.trim())
+    }
+    const query = params.toString()
+    return query ? `${STORE_PATH}?${query}` : STORE_PATH
+  }
   if (page === 'cart') return CART_PATH
   if (page === 'contact') return CONTACT_PATH
   if (page === 'checkout') return CHECKOUT_PATH
@@ -50,20 +87,4 @@ export function buildAppUrl(
     return `/product/${options.productId}`
   }
   return options?.hash ? `${HOME_PATH}${options.hash}` : HOME_PATH
-}
-
-export function syncHistory(
-  page: AppPage,
-  options?: { hash?: string; productId?: number },
-) {
-  const nextUrl = buildAppUrl(page, options)
-  const currentUrl = `${window.location.pathname}${window.location.hash}`
-
-  if (currentUrl !== nextUrl) {
-    window.history.pushState(
-      { page, hash: options?.hash ?? null, productId: options?.productId ?? null },
-      '',
-      nextUrl,
-    )
-  }
 }

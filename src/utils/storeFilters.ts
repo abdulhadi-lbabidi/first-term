@@ -38,11 +38,19 @@ function matchesPrice(price: number, priceMin: number, priceMax: number) {
   return price >= priceMin && price <= priceMax
 }
 
-export function filterProducts(products: Product[], filters: StoreFilters): Product[] {
-  const codeQuery = filters.codeSearch.trim().toLowerCase()
+export function filterProducts(
+  products: Product[],
+  filters: StoreFilters,
+  getProductName?: (product: Product) => string,
+): Product[] {
+  const searchQuery = filters.codeSearch.trim().toLowerCase()
 
   return products.filter((product) => {
-    if (codeQuery && !product.code.toLowerCase().includes(codeQuery)) return false
+    if (searchQuery) {
+      const codeMatch = product.code.toLowerCase().includes(searchQuery)
+      const nameMatch = getProductName?.(product).toLowerCase().includes(searchQuery) ?? false
+      if (!codeMatch && !nameMatch) return false
+    }
     if (filters.size && !product.sizes.includes(filters.size)) return false
     if (!matchesColor(product, filters.color, filters.customColor)) return false
     if (filters.category !== 'all' && product.categoryKey !== filters.category) {

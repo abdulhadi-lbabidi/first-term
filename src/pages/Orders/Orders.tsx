@@ -1,15 +1,16 @@
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../../components/Footer/Footer'
-import HeroBackground from '../../components/HeroBackground/HeroBackground'
-import Navbar from '../../components/Navbar/Navbar'
-import { ChevronDownIcon } from '../../components/icons/Icons'
-import ErrorState from '../../components/UiStates/ErrorState'
-import LoadingState from '../../components/UiStates/LoadingState'
+import Footer from '../../components/layout/Footer/Footer'
+import HeroBackground from '../../components/layout/HeroBackground/HeroBackground'
+import Navbar from '../../components/layout/Navbar/Navbar'
+import { ChevronDownIcon } from '../../components/common/icons/Icons'
+import ErrorState from '../../components/common/UiStates/ErrorState'
+import LoadingState from '../../components/common/UiStates/LoadingState'
 import { PAGE_PADDING } from '../../constants/layout'
 import { heroSlides } from '../../data/home'
 import { useAuth } from '../../context/AuthContext'
 import { useHeroCarousel } from '../../hooks/useHeroCarousel'
+import { usePriceFormat } from '../../hooks/usePriceFormat'
 import { getOrdersByUserId } from '../../services/ordersApi'
 import type { PageProps } from '../../types/navigation'
 import type { Order, OrderStatus } from '../../types/order'
@@ -46,17 +47,84 @@ function formatOrderId(id: number | string) {
   return raw.slice(0, 8).toUpperCase()
 }
 
+function OrderItemThumbs({
+  items,
+  orderId,
+  itemsCount,
+}: {
+  items: Order['items']
+  orderId: number | string
+  itemsCount: number
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex -space-x-2 rtl:space-x-reverse">
+        {items.slice(0, 3).map((item, itemIndex) => (
+          <div
+            key={`${orderId}-thumb-${itemIndex}`}
+            className="h-8 w-8 overflow-hidden rounded-lg border-2 border-white shadow-sm"
+          >
+            <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+          </div>
+        ))}
+      </div>
+      <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-bold text-purple-700">
+        {itemsCount}
+      </span>
+    </div>
+  )
+}
+
+function OrderProductsList({
+  order,
+  priceLocale,
+  currency,
+}: {
+  order: Order
+  priceLocale: string
+  currency: string
+}) {
+  const { t } = useTranslation()
+
+  return (
+    <div className="space-y-3">
+      <p className="text-sm font-extrabold text-[#1e1033]">{t('ordersPage.table.productsTitle')}</p>
+      <div className="space-y-3">
+        {order.items.map((item, itemIndex) => (
+          <div
+            key={`${order.id}-item-${itemIndex}`}
+            className="flex items-center gap-3 rounded-2xl border border-purple-100 bg-white p-3"
+          >
+            <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl border border-purple-100">
+              <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-bold text-[#1e1033]">{item.name}</p>
+              <p className="mt-0.5 text-xs text-[#7c6b92]">{item.code}</p>
+              <p className="mt-0.5 text-xs text-[#7c6b92]">
+                {item.selectedColor.name} · {item.selectedSize} ·{' '}
+                {t('ordersPage.quantity', { count: item.quantity })}
+              </p>
+            </div>
+            <p className="shrink-0 text-sm font-bold text-purple-700">
+              {formatProductPrice(item.price * item.quantity, priceLocale, currency)}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function Orders({ currentPage, onNavigate }: PageProps) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const { priceLocale, currency } = usePriceFormat()
   const { currentUser } = useAuth()
   const { activeSlide } = useHeroCarousel(heroSlides.length)
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [openOrderId, setOpenOrderId] = useState<number | string | null>(null)
-
-  const priceLocale = i18n.language === 'ar' ? 'ar-SA' : 'en-US'
-  const currency = t('store.currency')
 
   const stats = useMemo(
     () => [
@@ -102,7 +170,7 @@ export default function Orders({ currentPage, onNavigate }: PageProps) {
 
   return (
     <div className="flex min-h-svh flex-col">
-      <Navbar currentPage={currentPage} onNavigate={onNavigate} />
+      <Navbar overlay currentPage={currentPage} onNavigate={onNavigate} />
 
       <section className="relative overflow-hidden py-10 pt-[calc(72px+28px)] text-white max-md:py-8 max-md:pt-[calc(72px+20px)]">
         <HeroBackground activeSlide={activeSlide} />
@@ -190,197 +258,227 @@ export default function Orders({ currentPage, onNavigate }: PageProps) {
           )}
 
           {currentUser && !loading && !error && orders.length > 0 && (
-            <div
-              className="w-full overflow-hidden rounded-[2rem] border border-purple-100 bg-white/90 shadow-[0_25px_80px_rgba(168,85,247,0.14)] backdrop-blur-xl"
-              data-aos="fade-up"
-            >
-              <div className="w-full overflow-x-auto">
-                <table className="w-full min-w-full table-fixed border-collapse text-start">
-                  <thead>
-                    <tr className="bg-gradient-to-r from-[#1e1033] via-[#4c1d95] to-[#7c3aed] text-white">
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.order')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.date')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.customer')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.address')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.items')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.total')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.payment')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.status')}
-                      </th>
-                      <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
-                        {t('ordersPage.table.actions')}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orders.map((order, index) => {
-                      const isOpen = openOrderId === order.id
-                      const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0)
+            <>
+              <div className="space-y-4 lg:hidden" data-aos="fade-up">
+                {orders.map((order) => {
+                  const isOpen = openOrderId === order.id
+                  const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0)
 
-                      return (
-                        <Fragment key={order.id}>
-                          <tr
-                            className={`border-b border-purple-100/70 transition-colors duration-300 hover:bg-purple-50/50 ${
-                              index % 2 === 1 ? 'bg-[#faf7ff]/60' : 'bg-white'
-                            } ${isOpen ? 'bg-purple-50/70' : ''}`}
-                          >
-                            <td className="whitespace-nowrap px-4 py-4 lg:px-5">
-                              <p className="text-sm font-extrabold text-[#1e1033]">
-                                #{formatOrderId(order.id)}
-                              </p>
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-[#5b4d6d] lg:px-5">
+                  return (
+                    <article
+                      key={order.id}
+                      className="overflow-hidden rounded-[1.75rem] border border-purple-100 bg-white/95 shadow-[0_18px_50px_rgba(168,85,247,0.12)] backdrop-blur-xl"
+                    >
+                      <div className="flex items-start justify-between gap-3 border-b border-purple-100/80 bg-gradient-to-r from-[#1e1033] via-[#4c1d95] to-[#7c3aed] px-4 py-3.5 text-white">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-wider text-purple-200/80">
+                            {t('ordersPage.table.order')}
+                          </p>
+                          <p className="mt-0.5 text-base font-extrabold">#{formatOrderId(order.id)}</p>
+                        </div>
+                        <span
+                          className={`inline-flex shrink-0 whitespace-nowrap rounded-full border px-3 py-1 text-xs font-bold ${getStatusBadgeClass(order.status)}`}
+                        >
+                          {order.status}
+                        </span>
+                      </div>
+
+                      <div className="space-y-3.5 p-4">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#8b7fa0]">
+                              {t('ordersPage.table.date')}
+                            </p>
+                            <p className="mt-1 text-sm font-medium text-[#5b4d6d]">
                               {formatOrderDate(order.createdAt, priceLocale)}
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 lg:px-5">
-                              <p className="text-sm font-bold text-[#1e1033]">{order.customerName}</p>
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 lg:px-5">
-                              <p className="text-sm text-[#7c6b92]">
-                                {order.city} · {order.address}
-                              </p>
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 lg:px-5">
-                              <div className="flex items-center justify-center gap-2">
-                                <div className="flex -space-x-2 rtl:space-x-reverse">
-                                  {order.items.slice(0, 3).map((item, itemIndex) => (
-                                    <div
-                                      key={`${order.id}-thumb-${itemIndex}`}
-                                      className="h-8 w-8 overflow-hidden rounded-lg border-2 border-white shadow-sm"
-                                    >
-                                      <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        className="h-full w-full object-cover"
-                                      />
-                                    </div>
-                                  ))}
-                                </div>
-                                <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-bold text-purple-700">
-                                  {itemsCount}
-                                </span>
-                              </div>
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 text-sm font-extrabold text-purple-700 lg:px-5">
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#8b7fa0]">
+                              {t('ordersPage.table.total')}
+                            </p>
+                            <p className="mt-1 text-sm font-extrabold text-purple-700">
                               {formatProductPrice(order.total, priceLocale, currency)}
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 text-sm font-semibold text-[#5b4d6d] lg:px-5">
+                            </p>
+                          </div>
+                          <div className="col-span-2">
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#8b7fa0]">
+                              {t('ordersPage.table.address')}
+                            </p>
+                            <p className="mt-1 text-sm leading-relaxed text-[#7c6b92]">
+                              {order.city} · {order.address}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#8b7fa0]">
+                              {t('ordersPage.table.payment')}
+                            </p>
+                            <p className="mt-1 text-sm font-semibold text-[#5b4d6d]">
                               {getPaymentLabel(order.paymentMethod)}
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 lg:px-5">
-                              <span
-                                className={`inline-flex whitespace-nowrap rounded-full border px-3 py-1 text-xs font-bold ${getStatusBadgeClass(order.status)}`}
-                              >
-                                {order.status}
-                              </span>
-                            </td>
-                            <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
-                              <button
-                                type="button"
-                                onClick={() => toggleOrder(order.id)}
-                                aria-expanded={isOpen}
-                                className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-purple-50 text-purple-700 transition-all duration-300 hover:bg-purple-100 ${
-                                  isOpen ? 'rotate-180 bg-gradient-to-br from-purple-700 to-fuchsia-500 text-white' : ''
-                                }`}
-                              >
-                                <ChevronDownIcon />
-                              </button>
-                            </td>
-                          </tr>
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-semibold uppercase tracking-wide text-[#8b7fa0]">
+                              {t('ordersPage.table.items')}
+                            </p>
+                            <div className="mt-1.5">
+                              <OrderItemThumbs
+                                items={order.items}
+                                orderId={order.id}
+                                itemsCount={itemsCount}
+                              />
+                            </div>
+                          </div>
+                        </div>
 
-                          {isOpen && (
-                            <tr className="border-b border-purple-100/70 bg-[#faf7ff]/80">
-                              <td colSpan={9} className="px-5 py-5">
-                                <p className="mb-3 text-sm font-extrabold text-[#1e1033]">
-                                  {t('ordersPage.table.productsTitle')}
+                        <button
+                          type="button"
+                          onClick={() => toggleOrder(order.id)}
+                          aria-expanded={isOpen}
+                          className="flex w-full items-center justify-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-2.5 text-sm font-bold text-purple-700 transition-all duration-300 hover:bg-purple-100"
+                        >
+                          {isOpen ? t('ordersPage.hideDetails') : t('ordersPage.showDetails')}
+                          <span className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                            <ChevronDownIcon />
+                          </span>
+                        </button>
+
+                        {isOpen && (
+                          <div className="rounded-2xl border border-purple-100 bg-[#faf7ff]/80 p-3">
+                            <OrderProductsList
+                              order={order}
+                              priceLocale={priceLocale}
+                              currency={currency}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
+
+              <div
+                className="hidden w-full overflow-hidden rounded-[2rem] border border-purple-100 bg-white/90 shadow-[0_25px_80px_rgba(168,85,247,0.14)] backdrop-blur-xl lg:block"
+                data-aos="fade-up"
+              >
+                <div className="w-full overflow-x-auto">
+                  <table className="w-full min-w-full table-fixed border-collapse text-center">
+                    <thead>
+                      <tr className="bg-gradient-to-r from-[#1e1033] via-[#4c1d95] to-[#7c3aed] text-white">
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.order')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.date')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.address')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.items')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.total')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.payment')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.status')}
+                        </th>
+                        <th className="whitespace-nowrap px-4 py-4 text-center text-xs font-bold tracking-wide lg:px-5">
+                          {t('ordersPage.table.actions')}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((order, index) => {
+                        const isOpen = openOrderId === order.id
+                        const itemsCount = order.items.reduce((sum, item) => sum + item.quantity, 0)
+
+                        return (
+                          <Fragment key={order.id}>
+                            <tr
+                              className={`border-b border-purple-100/70 transition-colors duration-300 hover:bg-purple-50/50 ${
+                                index % 2 === 1 ? 'bg-[#faf7ff]/60' : 'bg-white'
+                              } ${isOpen ? 'bg-purple-50/70' : ''}`}
+                            >
+                              <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
+                                <p className="text-sm font-extrabold text-[#1e1033]">
+                                  #{formatOrderId(order.id)}
                                 </p>
-                                <div className="overflow-hidden rounded-2xl border border-purple-100 bg-white">
-                                  <table className="w-full border-collapse text-start">
-                                    <thead>
-                                      <tr className="border-b border-purple-100 bg-purple-50/80">
-                                        <th className="px-4 py-3 text-xs font-bold text-[#8b7fa0]">
-                                          {t('ordersPage.table.product')}
-                                        </th>
-                                        <th className="px-4 py-3 text-xs font-bold text-[#8b7fa0]">
-                                          {t('ordersPage.table.code')}
-                                        </th>
-                                        <th className="px-4 py-3 text-xs font-bold text-[#8b7fa0]">
-                                          {t('ordersPage.table.specs')}
-                                        </th>
-                                        <th className="px-4 py-3 text-end text-xs font-bold text-[#8b7fa0]">
-                                          {t('ordersPage.table.price')}
-                                        </th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {order.items.map((item, itemIndex) => (
-                                        <tr
-                                          key={`${order.id}-item-${itemIndex}`}
-                                          className="border-b border-purple-50 last:border-0 transition-colors hover:bg-purple-50/40"
-                                        >
-                                          <td className="px-4 py-3">
-                                            <div className="flex items-center gap-3">
-                                              <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-purple-100">
-                                                <img
-                                                  src={item.image}
-                                                  alt={item.name}
-                                                  className="h-full w-full object-cover"
-                                                />
-                                              </div>
-                                              <span className="text-sm font-bold text-[#1e1033]">
-                                                {item.name}
-                                              </span>
-                                            </div>
-                                          </td>
-                                          <td className="px-4 py-3 text-sm font-medium text-[#7c6b92]">
-                                            {item.code}
-                                          </td>
-                                          <td className="px-4 py-3 text-sm text-[#7c6b92]">
-                                            {item.selectedColor.name} · {item.selectedSize} ·{' '}
-                                            {t('ordersPage.quantity', { count: item.quantity })}
-                                          </td>
-                                          <td className="px-4 py-3 text-end text-sm font-bold text-purple-700">
-                                            {formatProductPrice(
-                                              item.price * item.quantity,
-                                              priceLocale,
-                                              currency,
-                                            )}
-                                          </td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-medium text-[#5b4d6d] lg:px-5">
+                                {formatOrderDate(order.createdAt, priceLocale)}
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
+                                <p className="text-sm text-[#7c6b92]">
+                                  {order.city} · {order.address}
+                                </p>
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
+                                <div className="flex justify-center">
+                                  <OrderItemThumbs
+                                    items={order.items}
+                                    orderId={order.id}
+                                    itemsCount={itemsCount}
+                                  />
                                 </div>
                               </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-extrabold text-purple-700 lg:px-5">
+                                {formatProductPrice(order.total, priceLocale, currency)}
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center text-sm font-semibold text-[#5b4d6d] lg:px-5">
+                                {getPaymentLabel(order.paymentMethod)}
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
+                                <span
+                                  className={`inline-flex whitespace-nowrap rounded-full border px-3 py-1 text-xs font-bold ${getStatusBadgeClass(order.status)}`}
+                                >
+                                  {order.status}
+                                </span>
+                              </td>
+                              <td className="whitespace-nowrap px-4 py-4 text-center lg:px-5">
+                                <button
+                                  type="button"
+                                  onClick={() => toggleOrder(order.id)}
+                                  aria-expanded={isOpen}
+                                  className={`inline-flex h-9 w-9 items-center justify-center rounded-full border border-purple-200 bg-purple-50 text-purple-700 transition-all duration-300 hover:bg-purple-100 ${
+                                    isOpen
+                                      ? 'rotate-180 bg-gradient-to-br from-purple-700 to-fuchsia-500 text-white'
+                                      : ''
+                                  }`}
+                                >
+                                  <ChevronDownIcon />
+                                </button>
+                              </td>
                             </tr>
-                          )}
-                        </Fragment>
-                      )
-                    })}
-                  </tbody>
-                </table>
+
+                            {isOpen && (
+                              <tr className="border-b border-purple-100/70 bg-[#faf7ff]/80">
+                                <td colSpan={8} className="px-5 py-5 text-start">
+                                  <OrderProductsList
+                                    order={order}
+                                    priceLocale={priceLocale}
+                                    currency={currency}
+                                  />
+                                </td>
+                              </tr>
+                            )}
+                          </Fragment>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </main>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

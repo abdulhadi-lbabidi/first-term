@@ -25,6 +25,9 @@
     "categoriesLabel": "التصنيفات",
     "slidesLabel": "شرائح الخلفية",
     "slideLabel": "الشريحة {{number}}",
+    "searchLabel": "البحث عن المنتجات بالاسم",
+    "searchPlaceholder": "ابحثي باسم المنتج...",
+    "searchButton": "بحث",
     "typingWords": [
       "فساتين",
       "جاكيتات",
@@ -550,8 +553,8 @@
     "filters": {
       "title": "الفلاتر",
       "subtitle": "صفي المنتجات حسب تفضيلاتك",
-      "codeSearch": "البحث برقم المنتج",
-      "codePlaceholder": "مثال: TRD-1001",
+      "codeSearch": "البحث بالاسم أو رقم المنتج",
+      "codePlaceholder": "اسم المنتج أو رقمه...",
       "size": "الحجم",
       "color": "اللون",
       "price": "السعر",
@@ -675,6 +678,7 @@
     "total": "الإجمالي",
     "checkout": "متابعة الدفع",
     "checkoutPending": "سيتم تنفيذ الدفع لاحقاً",
+    "loginRequiredWarning": "يجب تسجيل الدخول لمتابعة الدفع وإتمام طلبك. سجّلي دخولك أو أنشئي حساباً للمتابعة.",
     "addedToCart": "تمت إضافة المنتج إلى السلة",
     "removedFromCart": "تم حذف المنتج من السلة",
     "quantityUpdated": "تم تحديث الكمية"
@@ -716,6 +720,39 @@
       "cardNumber": "رقم البطاقة",
       "expiry": "تاريخ الانتهاء",
       "cvv": "CVV"
+    },
+    "location": {
+      "pickTitle": "اختيار الموقع من الخريطة",
+      "title": "تحديد موقع التوصيل",
+      "subtitle": "ابحثي عن العنوان أو استخدمي موقعك الحالي",
+      "searchLabel": "ابحث عن العنوان",
+      "searchPlaceholder": "مثال: دمشق، المزة، شارع...",
+      "useCurrent": "استخدام موقعي الحالي",
+      "locating": "جاري تحديد موقعك...",
+      "searching": "جاري البحث...",
+      "searchError": "تعذر البحث عن العنوان",
+      "reverseError": "تعذر تحديد العنوان من الإحداثيات",
+      "geolocationUnsupported": "المتصفح لا يدعم تحديد الموقع",
+      "geolocationDenied": "تم رفض إذن الموقع، يرجى السماح بالوصول",
+      "selectRequired": "يرجى اختيار موقع من النتائج أو الخريطة",
+      "selected": "الموقع المحدد",
+      "openInGoogle": "فتح في Google Maps",
+      "confirm": "تأكيد الموقع",
+      "cancel": "إلغاء",
+      "close": "إغلاق",
+      "mapTitle": "خريطة Google",
+      "applied": "تم تعبئة المدينة والعنوان تلقائياً"
+    },
+    "successModal": {
+      "title": "تم تأكيد طلبك بنجاح!",
+      "subtitle": "شكراً لثقتكِ بترند. طلبكِ الآن قيد المراجعة وسيصلكِ قريباً بإذن الله.",
+      "items": "عدد القطع",
+      "itemCount": "{{count}} قطعة",
+      "city": "مدينة التوصيل",
+      "total": "إجمالي الطلب",
+      "note": "يمكنكِ متابعة حالة طلبكِ من صفحة طلباتي في أي وقت.",
+      "viewOrders": "عرض طلباتي",
+      "continueShopping": "متابعة التسوق"
     }
   },
   "ordersPage": {

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SyntheticEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../../components/Footer/Footer'
-import HeroBackground from '../../components/HeroBackground/HeroBackground'
-import Navbar from '../../components/Navbar/Navbar'
+import Footer from '../../components/layout/Footer/Footer'
+import HeroBackground from '../../components/layout/HeroBackground/HeroBackground'
+import Navbar from '../../components/layout/Navbar/Navbar'
 import {
   aboutDifferenceFeatures,
   aboutDifferenceImage,
@@ -20,6 +20,7 @@ import {
 } from '../../data/aboutPage'
 import { heroSlides } from '../../data/home'
 import { useCountUp } from '../../hooks/useCountUp'
+import HeroCarouselDots from '../../components/layout/HeroCarouselDots/HeroCarouselDots'
 import { useHeroCarousel } from '../../hooks/useHeroCarousel'
 import { useInView } from '../../hooks/useInView'
 import type { AppPage, NavigateFn, PageProps } from '../../types/navigation'
@@ -98,30 +99,11 @@ function AboutHero({
         </div>
       </div>
 
-      <div
-        className="absolute inset-x-0 bottom-9 z-[3] flex justify-center gap-2.5 max-sm:bottom-6"
-        role="tablist"
-        aria-label={t('hero.slidesLabel')}
-      >
-        {heroSlides.map((slide, index) => {
-          const isActive = index === activeSlide
-          return (
-            <button
-              key={slide.id}
-              type="button"
-              role="tab"
-              aria-label={t('hero.slideLabel', { number: index + 1 })}
-              aria-selected={isActive}
-              onClick={() => goToSlide(index)}
-              className={`cursor-pointer rounded-full transition-all duration-400 ${
-                isActive
-                  ? 'h-2.5 w-8 border-0 bg-gradient-to-r from-violet-600 to-purple-500 shadow-[0_0_16px_rgba(167,139,250,0.5)]'
-                  : 'h-2.5 w-2.5 border border-white/20 bg-white/30 hover:bg-white/55'
-              }`}
-            />
-          )
-        })}
-      </div>
+      <HeroCarouselDots
+        slides={heroSlides}
+        activeSlide={activeSlide}
+        onGoToSlide={goToSlide}
+      />
     </section>
   )
 }
@@ -404,7 +386,7 @@ function StatCapsule({
     <article
       data-aos="zoom-in"
       data-aos-delay={aosDelay(index)}
-      className={`group relative rounded-[1.75rem] border border-white/10 bg-white/10 px-6 py-8 text-center backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-2 hover:border-fuchsia-400/25 hover:bg-white/15 hover:shadow-[0_20px_50px_rgba(168,85,247,0.25)] max-md:px-4 max-md:py-6 ${
+      className={`group relative w-full rounded-[1.75rem] border border-white/10 bg-white/10 px-6 py-8 text-center backdrop-blur-xl transition-all duration-500 ease-out hover:-translate-y-2 hover:border-fuchsia-400/25 hover:bg-white/15 hover:shadow-[0_20px_50px_rgba(168,85,247,0.25)] max-md:px-4 max-md:py-6 ${
         isInView ? 'animate-stat-pop' : ''
       }`}
       style={{ animationDelay: `${index * 120}ms` }}
@@ -451,9 +433,9 @@ function StatsSection() {
       </span>
 
       <div ref={ref} className="container relative">
-        <div className="flex flex-col items-stretch gap-6 lg:flex-row lg:items-center lg:gap-0">
+        <div className="grid grid-cols-2 gap-4 lg:flex lg:items-center lg:gap-0">
           {aboutStats.map((stat, index) => (
-            <div key={stat.id} className="flex flex-1 items-center">
+            <div key={stat.id} className="flex min-w-0 flex-1 items-center">
               {index > 0 && (
                 <div
                   className="mx-4 hidden h-16 w-px shrink-0 bg-gradient-to-b from-transparent via-fuchsia-400/40 to-transparent lg:block"
@@ -804,7 +786,7 @@ export default function About({ currentPage, onNavigate }: PageProps) {
         <DifferenceSection />
         <FinalCTA onNavigate={onNavigate} />
       </main>
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

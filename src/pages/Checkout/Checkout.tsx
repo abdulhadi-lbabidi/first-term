@@ -1,13 +1,20 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../../components/Footer/Footer'
-import Navbar from '../../components/Navbar/Navbar'
-import { useToast } from '../../components/Toast/Toast'
+import Footer from '../../components/layout/Footer/Footer'
+import Navbar from '../../components/layout/Navbar/Navbar'
+import { useToast } from '../../components/modals/Toast/Toast'
 import { PAGE_PADDING } from '../../constants/layout'
 import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
 import { createOrder } from '../../services/ordersApi'
 import type { PageProps } from '../../types/navigation'
+import LocationPickerModal from '../../components/modals/LocationPickerModal/LocationPickerModal'
+import OrderSuccessModal, {
+  type OrderSuccessSummary,
+} from '../../components/modals/OrderSuccessModal/OrderSuccessModal'
+import { MapPinIcon } from '../../components/common/icons/Icons'
+import { usePriceFormat } from '../../hooks/usePriceFormat'
+import type { LocationSelection } from '../../types/location'
 import { formatProductPrice } from '../../utils/productDisplay'
 
 interface CheckoutFormState {
@@ -45,12 +52,15 @@ function getInputClass(hasError: boolean) {
 }
 
 export default function Checkout({ currentPage, onNavigate }: PageProps) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const { priceLocale, currency } = usePriceFormat()
   const { currentUser } = useAuth()
   const { cartItems, cartTotal, clearCart } = useCart()
   const { showToast } = useToast()
 
   const [submitting, setSubmitting] = useState(false)
+  const [locationPickerOpen, setLocationPickerOpen] = useState(false)
+  const [orderSuccess, setOrderSuccess] = useState<OrderSuccessSummary | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<CheckoutFieldKey, string>>>({})
   const [form, setForm] = useState<CheckoutFormState>({
     customerName: '',
@@ -75,13 +85,10 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
   }, [currentUser])
 
   useEffect(() => {
-    if (cartItems.length === 0 && !submitting) {
+    if (cartItems.length === 0 && !submitting && !orderSuccess) {
       onNavigate('cart')
     }
-  }, [cartItems.length, onNavigate, submitting])
-
-  const priceLocale = i18n.language === 'ar' ? 'ar-SA' : 'en-US'
-  const currency = t('store.currency')
+  }, [cartItems.length, onNavigate, orderSuccess, submitting])
 
   const clearFieldError = (field: CheckoutFieldKey) => {
     setFieldErrors((prev) => {
@@ -90,6 +97,17 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
       delete next[field]
       return next
     })
+  }
+
+  const handleLocationConfirm = (selection: LocationSelection) => {
+    clearFieldError('city')
+    clearFieldError('address')
+    setForm((prev) => ({
+      ...prev,
+      city: selection.city || prev.city,
+      address: selection.address || selection.displayName,
+    }))
+    showToast(t('checkoutPage.location.applied'))
   }
 
   const validateForm = () => {
@@ -144,8 +162,11 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
       })
 
       await clearCart()
-      showToast(t('checkoutPage.successToast'))
-      window.setTimeout(() => onNavigate('orders'), 700)
+      setOrderSuccess({
+        itemCount: cartItems.length,
+        total: cartTotal,
+        city: form.city.trim(),
+      })
     } catch (err) {
       const message = err instanceof Error ? err.message : t('checkoutPage.error')
       showToast(message)
@@ -154,7 +175,7 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
     }
   }
 
-  if (cartItems.length === 0) return null
+  if (cartItems.length === 0 && !orderSuccess) return null
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -252,6 +273,7 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
                     <p className="mt-1.5 text-xs font-semibold text-red-600">{fieldErrors.phone}</p>
                   )}
                 </div>
+                <div className="sm:col-span-2 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] sm:items-end">
                 <div>
                   <label htmlFor="checkout-city" className={labelClass}>
                     {t('checkoutPage.fields.city')}
@@ -289,6 +311,18 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
                       {fieldErrors.address}
                     </p>
                   )}
+                </div>
+                <div className="flex sm:justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setLocationPickerOpen(true)}
+                    title={t('checkoutPage.location.pickTitle')}
+                    aria-label={t('checkoutPage.location.pickTitle')}
+                    className="inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-2xl border border-purple-200 bg-gradient-to-br from-purple-50 to-fuchsia-50 text-purple-700 shadow-sm transition-all duration-300 hover:scale-105 hover:border-purple-300 hover:bg-purple-100 hover:text-purple-800"
+                  >
+                    <MapPinIcon />
+                  </button>
+                </div>
                 </div>
               </div>
 
@@ -459,7 +493,26 @@ export default function Checkout({ currentPage, onNavigate }: PageProps) {
         </div>
       </main>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
+
+      <LocationPickerModal
+        isOpen={locationPickerOpen}
+        onClose={() => setLocationPickerOpen(false)}
+        onConfirm={handleLocationConfirm}
+      />
+
+      <OrderSuccessModal
+        isOpen={orderSuccess !== null}
+        summary={orderSuccess}
+        onViewOrders={() => {
+          setOrderSuccess(null)
+          onNavigate('orders')
+        }}
+        onContinueShopping={() => {
+          setOrderSuccess(null)
+          onNavigate('store')
+        }}
+      />
     </div>
   )
 }

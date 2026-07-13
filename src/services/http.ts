@@ -1,4 +1,6 @@
-export const API_URL = 'http://localhost:3001'
+import { API_URL } from '../constants/api'
+
+export { API_URL }
 
 export async function parseJsonResponse<T>(
   response: Response,

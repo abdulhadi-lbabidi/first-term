@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Footer from '../../components/Footer/Footer'
-import Navbar from '../../components/Navbar/Navbar'
+import Footer from '../../components/layout/Footer/Footer'
+import Navbar from '../../components/layout/Navbar/Navbar'
 import ProductColorSizePicker from '../../components/Product/ProductColorSizePicker'
 import ProductShowcaseCard from '../../components/Product/ProductShowcaseCard'
-import ProductGallery from '../../components/ProductGallery/ProductGallery'
-import ErrorState from '../../components/UiStates/ErrorState'
-import LoadingState from '../../components/UiStates/LoadingState'
+import ProductGallery from '../../components/Product/ProductGallery/ProductGallery'
+import ErrorState from '../../components/common/UiStates/ErrorState'
+import LoadingState from '../../components/common/UiStates/LoadingState'
 import { PAGE_PADDING } from '../../constants/layout'
 import { useAddProductToCart } from '../../hooks/useAddProductToCart'
-import { getProductById, getProducts } from '../../services/api'
+import { getProductById, getProducts } from '../../services/productsApi'
 import type { Product, ProductColor } from '../../types/product'
 import type { ProductPageProps } from '../../types/navigation'
 import {
@@ -17,6 +17,8 @@ import {
   getProductDisplay,
   mapProductToShowcase,
 } from '../../utils/productDisplay'
+import { usePriceFormat } from '../../hooks/usePriceFormat'
+
 import { getRelatedProducts } from '../../utils/storeFilters'
 
 export default function ProductDetails({
@@ -24,7 +26,8 @@ export default function ProductDetails({
   onNavigate,
   productId,
 }: ProductPageProps) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const { priceLocale, currency } = usePriceFormat()
   const { adding, submitAddToCart } = useAddProductToCart()
   const [product, setProduct] = useState<Product | null>(null)
   const [allProducts, setAllProducts] = useState<Product[]>([])
@@ -32,9 +35,6 @@ export default function ProductDetails({
   const [error, setError] = useState(false)
   const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null)
   const [selectedSize, setSelectedSize] = useState('')
-
-  const priceLocale = i18n.language === 'ar' ? 'ar-SA' : 'en-US'
-  const currency = t('store.currency')
 
   const loadProduct = useCallback(() => {
     if (productId === undefined) {
@@ -72,7 +72,7 @@ export default function ProductDetails({
         <main className="flex flex-1 items-center justify-center bg-gradient-to-b from-[#faf7ff] via-white to-[#f5f0ff] pt-[calc(72px+48px)]">
           <LoadingState />
         </main>
-        <Footer />
+        <Footer onNavigate={onNavigate} />
       </div>
     )
   }
@@ -107,7 +107,7 @@ export default function ProductDetails({
             )}
           </div>
         </main>
-        <Footer />
+        <Footer onNavigate={onNavigate} />
       </div>
     )
   }
@@ -227,7 +227,7 @@ export default function ProductDetails({
         </div>
       </main>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

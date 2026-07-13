@@ -25,6 +25,9 @@
     "categoriesLabel": "Categories",
     "slidesLabel": "Background slides",
     "slideLabel": "Slide {{number}}",
+    "searchLabel": "Search products by name",
+    "searchPlaceholder": "Search by product name...",
+    "searchButton": "Search",
     "typingWords": [
       "Dresses",
       "Jackets",
@@ -550,8 +553,8 @@
     "filters": {
       "title": "Filters",
       "subtitle": "Filter products by your preferences",
-      "codeSearch": "Search by product code",
-      "codePlaceholder": "Example: TRD-1001",
+      "codeSearch": "Search by name or code",
+      "codePlaceholder": "Product name or code...",
       "size": "Size",
       "color": "Color",
       "price": "Price",
@@ -675,6 +678,7 @@
     "total": "Total",
     "checkout": "Proceed to Checkout",
     "checkoutPending": "Checkout will be implemented later",
+    "loginRequiredWarning": "You need to sign in before proceeding to checkout and completing your order. Please log in or create an account to continue.",
     "addedToCart": "Product added to cart",
     "removedFromCart": "Product removed from cart",
     "quantityUpdated": "Quantity updated"
@@ -716,6 +720,39 @@
       "cardNumber": "Card Number",
       "expiry": "Expiry Date",
       "cvv": "CVV"
+    },
+    "location": {
+      "pickTitle": "Pick location from map",
+      "title": "Select Delivery Location",
+      "subtitle": "Search for an address or use your current location",
+      "searchLabel": "Search address",
+      "searchPlaceholder": "e.g. Damascus, Mazzeh, Street...",
+      "useCurrent": "Use my current location",
+      "locating": "Getting your location...",
+      "searching": "Searching...",
+      "searchError": "Could not search for the address",
+      "reverseError": "Could not resolve address from coordinates",
+      "geolocationUnsupported": "Geolocation is not supported in this browser",
+      "geolocationDenied": "Location permission denied. Please allow access",
+      "selectRequired": "Please select a location from the results",
+      "selected": "Selected location",
+      "openInGoogle": "Open in Google Maps",
+      "confirm": "Confirm location",
+      "cancel": "Cancel",
+      "close": "Close",
+      "mapTitle": "Google Map",
+      "applied": "City and address filled automatically"
+    },
+    "successModal": {
+      "title": "Your order is confirmed!",
+      "subtitle": "Thank you for choosing Trend. Your order is now under review and will reach you soon.",
+      "items": "Items",
+      "itemCount": "{{count}} items",
+      "city": "Delivery city",
+      "total": "Order total",
+      "note": "You can track your order status anytime from My Orders.",
+      "viewOrders": "View My Orders",
+      "continueShopping": "Continue Shopping"
     }
   },
   "ordersPage": {

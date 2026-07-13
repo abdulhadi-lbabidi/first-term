@@ -1,13 +1,17 @@
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import CartItemCard from '../../components/CartItemCard/CartItemCard'
-import Footer from '../../components/Footer/Footer'
-import Navbar from '../../components/Navbar/Navbar'
-import OrderSummary from '../../components/OrderSummary/OrderSummary'
-import { useToast } from '../../components/Toast/Toast'
-import ErrorState from '../../components/UiStates/ErrorState'
-import LoadingState from '../../components/UiStates/LoadingState'
+import AuthModal from '../../components/modals/AuthModal/AuthModal'
+import CartItemCard from '../../components/cart/CartItemCard/CartItemCard'
+import Footer from '../../components/layout/Footer/Footer'
+import Navbar from '../../components/layout/Navbar/Navbar'
+import OrderSummary from '../../components/cart/OrderSummary/OrderSummary'
+import { useToast } from '../../components/modals/Toast/Toast'
+import ErrorState from '../../components/common/UiStates/ErrorState'
+import LoadingState from '../../components/common/UiStates/LoadingState'
 import { PAGE_PADDING } from '../../constants/layout'
+import { useAuth } from '../../context/AuthContext'
 import { useCart } from '../../context/CartContext'
+import { usePriceFormat } from '../../hooks/usePriceFormat'
 import type { PageProps } from '../../types/navigation'
 
 function CartEmptyIcon() {
@@ -44,8 +48,12 @@ function CartEmptyIcon() {
 }
 
 export default function Cart({ currentPage, onNavigate }: PageProps) {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
+  const { priceLocale, currency } = usePriceFormat()
   const { showToast } = useToast()
+  const { currentUser } = useAuth()
+  const [authOpen, setAuthOpen] = useState(false)
+  const [authKey, setAuthKey] = useState(0)
   const {
     cartItems,
     cartCount,
@@ -57,9 +65,6 @@ export default function Cart({ currentPage, onNavigate }: PageProps) {
     decreaseQuantity,
     removeFromCart,
   } = useCart()
-
-  const priceLocale = i18n.language === 'ar' ? 'ar-SA' : 'en-US'
-  const currency = t('store.currency')
 
   const handleIncrease = async (itemId: number) => {
     try {
@@ -87,6 +92,27 @@ export default function Cart({ currentPage, onNavigate }: PageProps) {
       showToast(t('cart.error'))
     }
   }
+
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      showToast(t('cart.emptyTitle'))
+      return
+    }
+
+    if (!currentUser) {
+      setAuthKey((key) => key + 1)
+      setAuthOpen(true)
+      return
+    }
+
+    onNavigate('checkout')
+  }
+
+  const handleAuthSuccess = useCallback(() => {
+    onNavigate('checkout')
+  }, [onNavigate])
+
+  const closeAuth = useCallback(() => setAuthOpen(false), [])
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -169,20 +195,23 @@ export default function Cart({ currentPage, onNavigate }: PageProps) {
                 total={cartTotal}
                 priceLocale={priceLocale}
                 currency={currency}
-                onCheckout={() => {
-                  if (cartItems.length === 0) {
-                    showToast(t('cart.emptyTitle'))
-                    return
-                  }
-                  onNavigate('checkout')
-                }}
+                onCheckout={handleCheckout}
               />
             </div>
           )}
         </div>
       </main>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
+
+      <AuthModal
+        key={authKey}
+        isOpen={authOpen}
+        onClose={closeAuth}
+        initialMode="login"
+        warningMessage={t('cart.loginRequiredWarning')}
+        onSuccess={handleAuthSuccess}
+      />
     </div>
   )
 }

@@ -11,6 +11,8 @@ export type AppPage =
 export type NavigateOptions = {
   hash?: string
   productId?: number
+  storeCategory?: string
+  storeSearch?: string
 }
 
 export type NavigateFn = (page: AppPage, options?: string | NavigateOptions) => void
@@ -18,6 +20,11 @@ export type NavigateFn = (page: AppPage, options?: string | NavigateOptions) => 
 export interface PageProps {
   currentPage: AppPage
   onNavigate: NavigateFn
+}
+
+export interface StorePageProps extends PageProps {
+  initialCategory?: string
+  initialSearch?: string
 }
 
 export interface ProductPageProps extends PageProps {

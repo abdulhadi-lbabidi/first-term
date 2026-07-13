@@ -2,7 +2,6 @@ export interface OfferPosterData {
   id: string
   image: string
   code: string
-  href: string
   desktopHeight: string
   desktopOffset: string
   rotationClass: string
@@ -15,7 +14,6 @@ export const offerPosters: OfferPosterData[] = [
     id: 'discount-40',
     image: '/images/offer-1.jpg',
     code: 'TREND40',
-    href: '#store',
     desktopHeight: 'lg:h-[540px]',
     desktopOffset: 'lg:translate-y-0',
     rotationClass: 'rotate-[-2deg]',
@@ -26,7 +24,6 @@ export const offerPosters: OfferPosterData[] = [
     id: 'style-3',
     image: '/images/offer-2.jpg',
     code: 'STYLE3',
-    href: '#store',
     desktopHeight: 'lg:h-[460px]',
     desktopOffset: 'lg:translate-y-14',
     rotationClass: 'lg:rotate-[1deg]',
@@ -37,7 +34,6 @@ export const offerPosters: OfferPosterData[] = [
     id: 'new-launch',
     image: '/images/offer-3.jpg',
     code: 'NEWLOOK',
-    href: '#store',
     desktopHeight: 'lg:h-[540px]',
     desktopOffset: 'lg:translate-y-0',
     rotationClass: 'rotate-[2deg]',

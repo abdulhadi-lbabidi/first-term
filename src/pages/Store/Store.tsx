@@ -1,40 +1,49 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import AddToCartModal from '../../components/AddToCartModal/AddToCartModal'
-import Footer from '../../components/Footer/Footer'
-import HeroBackground from '../../components/HeroBackground/HeroBackground'
-import Navbar from '../../components/Navbar/Navbar'
+import Footer from '../../components/layout/Footer/Footer'
+import HeroBackground from '../../components/layout/HeroBackground/HeroBackground'
+import Navbar from '../../components/layout/Navbar/Navbar'
 import ProductShowcaseCard from '../../components/Product/ProductShowcaseCard'
-import ProductFilters from '../../components/ProductFilters/ProductFilters'
-import ErrorState from '../../components/UiStates/ErrorState'
-import LoadingState from '../../components/UiStates/LoadingState'
-import EmptyState from '../../components/UiStates/EmptyState'
+import ProductFilters from '../../components/Product/ProductFilters/ProductFilters'
+import ErrorState from '../../components/common/UiStates/ErrorState'
+import LoadingState from '../../components/common/UiStates/LoadingState'
+import EmptyState from '../../components/common/UiStates/EmptyState'
 import { PAGE_PADDING } from '../../constants/layout'
 import { DEFAULT_STORE_FILTERS, type StoreFilters } from '../../data/filters'
 import { heroSlides } from '../../data/home'
 import { useHeroCarousel } from '../../hooks/useHeroCarousel'
-import { getProducts } from '../../services/api'
+import { useAddProductToCart } from '../../hooks/useAddProductToCart'
+import { getProducts } from '../../services/productsApi'
 import type { Product } from '../../types/product'
-import type { PageProps } from '../../types/navigation'
+import type { StorePageProps } from '../../types/navigation'
 import { filterProducts } from '../../utils/storeFilters'
+import { usePriceFormat } from '../../hooks/usePriceFormat'
 import { getProductDisplay, mapProductToShowcase } from '../../utils/productDisplay'
 
-export default function Store({ currentPage, onNavigate }: PageProps) {
-  const { t, i18n } = useTranslation()
+export default function Store({
+  currentPage,
+  onNavigate,
+  initialCategory = 'all',
+  initialSearch = '',
+}: StorePageProps) {
+  const { t } = useTranslation()
+  const { priceLocale, currency } = usePriceFormat()
+  const { submitAddToCart } = useAddProductToCart()
   const { activeSlide } = useHeroCarousel(heroSlides.length)
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const [filters, setFilters] = useState<StoreFilters>(DEFAULT_STORE_FILTERS)
+  const [filters, setFilters] = useState<StoreFilters>(() => ({
+    ...DEFAULT_STORE_FILTERS,
+    category: initialCategory || 'all',
+    codeSearch: initialSearch,
+  }))
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [cartModalProduct, setCartModalProduct] = useState<Product | null>(null)
-
-  const priceLocale = i18n.language === 'ar' ? 'ar-SA' : 'en-US'
-  const currency = t('store.currency')
 
   const filteredProducts = useMemo(
-    () => filterProducts(products, filters),
-    [products, filters],
+    () =>
+      filterProducts(products, filters, (product) => t(`store.products.${product.id}.name`)),
+    [products, filters, t],
   )
 
   const stats = useMemo(
@@ -59,13 +68,30 @@ export default function Store({ currentPage, onNavigate }: PageProps) {
     loadProducts()
   }, [])
 
+  useEffect(() => {
+    setFilters({
+      ...DEFAULT_STORE_FILTERS,
+      category: initialCategory || 'all',
+      codeSearch: initialSearch || '',
+    })
+  }, [initialCategory, initialSearch])
+
   const handleReset = () => {
     setFilters(DEFAULT_STORE_FILTERS)
   }
 
+  const handleQuickAdd = (product: Product, slideIndex: number) => {
+    const color =
+      product.colors[slideIndex % product.colors.length] ?? product.colors[0]
+    const size =
+      product.sizes[slideIndex % product.sizes.length] ?? product.sizes[0]
+    if (!color || !size) return
+    void submitAddToCart(product, color, size, slideIndex)
+  }
+
   return (
     <div className="flex min-h-svh flex-col">
-      <Navbar currentPage={currentPage} onNavigate={onNavigate} />
+      <Navbar overlay currentPage={currentPage} onNavigate={onNavigate} />
 
       <section className="relative overflow-hidden py-10 pt-[calc(72px+28px)] text-white max-md:py-8 max-md:pt-[calc(72px+20px)]">
         <HeroBackground activeSlide={activeSlide} />
@@ -139,7 +165,7 @@ export default function Store({ currentPage, onNavigate }: PageProps) {
                 <ErrorState message={t('store.loadError')} onRetry={loadProducts} />
               )}
               {!loading && !error && filteredProducts.length > 0 && (
-                <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:items-stretch">
+                <div className="grid grid-cols-1 gap-7 md:grid-cols-2 md:items-stretch lg:grid-cols-3">
                   {filteredProducts.map((product, index) => {
                     const display = getProductDisplay(product, t, priceLocale, currency)
                     return (
@@ -151,7 +177,7 @@ export default function Store({ currentPage, onNavigate }: PageProps) {
                         displayPrice={display.price}
                         displayOldPrice={display.oldPrice}
                         onCardClick={() => onNavigate('product', { productId: product.id })}
-                        onCartClick={() => setCartModalProduct(product)}
+                        onCartClick={(slideIndex) => handleQuickAdd(product, slideIndex)}
                       />
                     )
                   })}
@@ -170,13 +196,7 @@ export default function Store({ currentPage, onNavigate }: PageProps) {
         </div>
       </main>
 
-      <Footer />
-
-      <AddToCartModal
-        product={cartModalProduct}
-        isOpen={cartModalProduct !== null}
-        onClose={() => setCartModalProduct(null)}
-      />
+      <Footer onNavigate={onNavigate} />
     </div>
   )
 }

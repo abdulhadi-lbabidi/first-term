@@ -2,8 +2,14 @@ import type { AuthUser, LoginPayload, RegisterPayload, User } from '../types/aut
 import { API_URL, parseJsonResponse } from './http'
 
 function toAuthUser(user: User): AuthUser {
-  const { password: _password, ...authUser } = user
-  return authUser
+  return {
+    id: user.id,
+    fullName: user.fullName,
+    email: user.email,
+    phone: user.phone,
+    avatar: user.avatar,
+    createdAt: user.createdAt,
+  }
 }
 
 export async function getUsers(): Promise<User[]> {

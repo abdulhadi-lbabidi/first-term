@@ -6,6 +6,12 @@ export const FILTER_CATEGORY_IDS = [
   'shoesBags',
 ] as const
 
+export type FilterCategoryId = (typeof FILTER_CATEGORY_IDS)[number]
+
+export function isValidStoreCategory(value: string | null | undefined): value is FilterCategoryId {
+  return FILTER_CATEGORY_IDS.includes(value as FilterCategoryId)
+}
+
 export const STORE_SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const
 
 export const STORE_FILTER_SWATCHES = [
