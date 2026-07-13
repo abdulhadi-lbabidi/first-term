@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useRoomFilters } from '../../hooks/useRoomFilters';
 import { Branch } from '../../types';
-import Input from '../ui/Input';
+import { Input } from '../ui/Input';
 import MultiSelect from '../ui/MultiSelect';
 import DualRangeSlider from '../ui/DualRangeSlider';
 import SelectWithIcon from '../ui/SelectWithIcon';

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { MapPin, Users, ChevronDown, User, Search } from 'lucide-react';
-import Button from '../ui/Button';
+import { Button } from '../ui/Button';
 import { Branch } from '../../types';
 
 interface HeroSectionProps {
@@ -50,9 +50,9 @@ export default function HeroSection({
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden -mt-24">
       {/* Background Image Overlay */}
       <div className="absolute inset-0 bg-black/45 z-10" />
-      <img 
-        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1920&q=90" 
-        alt="Luxury Resort" 
+      <img
+        src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1920&q=90"
+        alt="Luxury Resort"
         className="absolute inset-0 w-full h-full object-cover animate-slow-zoom"
         loading="lazy"
       />
@@ -67,14 +67,14 @@ export default function HeroSection({
             {currentLang === 'ar' ? 'اكتشف رقي الضيافة الفندقية' : 'Experience Timeless Luxury'}
           </h1>
           <p className="text-[14px] sm:text-[16px] lg:text-[18px] text-canvas/90 max-w-2xl mx-auto leading-relaxed font-light">
-            {currentLang === 'ar' 
+            {currentLang === 'ar'
               ? 'مجموعة من الغرف والأجنحة الفاخرة المصممة بعناية فائقة لتمنحك ملاذاً فريداً للراحة والاسترخاء.'
               : 'Premium rooms and suites designed around ultimate comfort, architectural beauty, and exceptional boutique hospitality.'}
           </p>
         </div>
 
         {/* Floating Search Bar */}
-        <form 
+        <form
           onSubmit={handleHeroSearch}
           className="w-full max-w-4xl mx-auto bg-black/35 backdrop-blur-md border border-white/20 dark:border-border-strong/10 p-4 lg:p-2.5 rounded-2xl lg:rounded-full shadow-2xl flex flex-col lg:flex-row items-center gap-4 lg:gap-2.5 text-left rtl:text-right"
         >
@@ -85,7 +85,7 @@ export default function HeroSection({
               <span className="text-[10px] text-white/50 block font-semibold uppercase tracking-wider mb-0.5">
                 {t('rooms.branchFilter')}
               </span>
-              <div 
+              <div
                 onClick={() => {
                   setIsBranchDropdownOpen(!isBranchDropdownOpen);
                   setIsCapacityDropdownOpen(false);
@@ -93,7 +93,7 @@ export default function HeroSection({
                 className="bg-transparent text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none"
               >
                 <span>
-                  {selectedBranch 
+                  {selectedBranch
                     ? (branches.find(b => b.id === selectedBranch)?.[currentLang === 'ar' ? 'nameAr' : 'nameEn'] || '')
                     : (currentLang === 'ar' ? 'جميع الفروع' : 'All Branches')}
                 </span>
@@ -101,7 +101,7 @@ export default function HeroSection({
               </div>
               {isBranchDropdownOpen && (
                 <div className="absolute left-0 mt-2.5 w-60 bg-black/85 backdrop-blur-md border border-white/10 rounded-xl shadow-xl overflow-hidden z-20 py-1 text-[13px] animate-fade-in select-none">
-                  <div 
+                  <div
                     onClick={() => {
                       setSelectedBranch('');
                       setIsBranchDropdownOpen(false);
@@ -111,8 +111,8 @@ export default function HeroSection({
                     {currentLang === 'ar' ? 'جميع الفروع' : 'All Branches'}
                   </div>
                   {branches.map(b => (
-                    <div 
-                      key={b.id} 
+                    <div
+                      key={b.id}
                       onClick={() => {
                         setSelectedBranch(b.id);
                         setIsBranchDropdownOpen(false);
@@ -134,7 +134,7 @@ export default function HeroSection({
               <span className="text-[10px] text-white/50 block font-semibold uppercase tracking-wider mb-0.5">
                 {t('rooms.capacityFilter')}
               </span>
-              <div 
+              <div
                 onClick={() => {
                   setIsCapacityDropdownOpen(!isCapacityDropdownOpen);
                   setIsBranchDropdownOpen(false);
@@ -142,7 +142,7 @@ export default function HeroSection({
                 className="bg-transparent text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none"
               >
                 <span>
-                  {selectedCapacity 
+                  {selectedCapacity
                     ? (currentLang === 'ar' ? `${selectedCapacity} أفراد` : `${selectedCapacity} Guests`)
                     : (currentLang === 'ar' ? 'الكل' : 'All')}
                 </span>
