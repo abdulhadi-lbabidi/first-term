@@ -25,6 +25,8 @@ const SEED_BRANCHES: Branch[] = [
     addressEn: 'Sheikh Zayed Road, Dubai, UAE',
     stars: 5,
     image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+    lat: 25.2048,
+    lng: 55.2708,
   },
   {
     id: 'istanbul-branch',
@@ -36,6 +38,8 @@ const SEED_BRANCHES: Branch[] = [
     addressEn: 'Sultanahmet District, Istanbul, Turkey',
     stars: 5,
     image: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1200&q=80',
+    lat: 41.0082,
+    lng: 28.9784,
   },
   {
     id: 'paris-branch',
@@ -47,6 +51,8 @@ const SEED_BRANCHES: Branch[] = [
     addressEn: 'Champs-Élysées, Paris, France',
     stars: 5,
     image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+    lat: 48.8566,
+    lng: 2.3522,
   },
 ];
 
@@ -194,8 +200,18 @@ const SEED_ROOMS: Room[] = [
 
 export class StorageService {
   static init(): void {
-    if (!localStorage.getItem(KEYS.BRANCHES)) {
+    const existingBranches = localStorage.getItem(KEYS.BRANCHES);
+    if (!existingBranches) {
       localStorage.setItem(KEYS.BRANCHES, JSON.stringify(SEED_BRANCHES));
+    } else {
+      try {
+        const parsed = JSON.parse(existingBranches) as Branch[];
+        if (parsed.length > 0 && parsed[0].lat === undefined) {
+          localStorage.setItem(KEYS.BRANCHES, JSON.stringify(SEED_BRANCHES));
+        }
+      } catch (e) {
+        localStorage.setItem(KEYS.BRANCHES, JSON.stringify(SEED_BRANCHES));
+      }
     }
     if (!localStorage.getItem(KEYS.ROOMS)) {
       localStorage.setItem(KEYS.ROOMS, JSON.stringify(SEED_ROOMS));

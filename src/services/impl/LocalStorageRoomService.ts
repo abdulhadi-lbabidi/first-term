@@ -71,12 +71,16 @@ export class LocalStorageRoomService implements IRoomService {
 
       const bookings = StorageService.getBookings();
       rooms = rooms.filter(r => {
-        const hasConflict = bookings.some(b =>
-          b.roomId === r.id &&
-          b.status === 'confirmed' &&
-          startAt < b.endAt &&
-          endAt > b.startAt
-        );
+        const hasConflict = bookings.some(b => {
+          if (b.roomId !== r.id || b.status !== 'confirmed') return false;
+          
+          const bStart = new Date(b.startAt).getTime();
+          const bEnd = new Date(b.endAt).getTime();
+          const filterStart = new Date(startAt).getTime();
+          const filterEnd = new Date(endAt).getTime();
+          
+          return filterStart < bEnd && filterEnd > bStart;
+        });
         return !hasConflict;
       });
     }

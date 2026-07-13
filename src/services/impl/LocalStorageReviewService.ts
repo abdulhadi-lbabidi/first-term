@@ -51,6 +51,39 @@ export class LocalStorageReviewService implements IReviewService {
     return newReview;
   }
 
+  async updateReview(reviewId: string, userId: string, rating: number, comment: string): Promise<Review> {
+    const reviews = StorageService.getReviews();
+    const reviewIndex = reviews.findIndex(r => r.id === reviewId);
+
+    if (reviewIndex === -1) {
+      throw new Error('التقييم غير موجود / Review not found');
+    }
+
+    if (reviews[reviewIndex].userId !== userId) {
+      throw new Error('غير مصرح لك بتعديل هذا التقييم / Unauthorized to edit this review');
+    }
+
+    reviews[reviewIndex].rating = rating;
+    reviews[reviewIndex].comment = comment;
+
+    StorageService.setReviews(reviews);
+
+    // Update the room's stars average
+    const roomId = reviews[reviewIndex].roomId;
+    const rooms = StorageService.getRooms();
+    const roomIndex = rooms.findIndex(r => r.id === roomId);
+    if (roomIndex !== -1) {
+      const roomReviews = reviews.filter(r => r.roomId === roomId);
+      const sum = roomReviews.reduce((acc, curr) => acc + curr.rating, 0);
+      const average = Math.round((sum / roomReviews.length) * 10) / 10;
+
+      rooms[roomIndex].stars = Math.max(1, Math.min(5, Math.round(average)));
+      StorageService.set('vh_v1_rooms', rooms);
+    }
+
+    return reviews[reviewIndex];
+  }
+
   async getReviewsByRoomId(roomId: string): Promise<Review[]> {
     const reviews = StorageService.getReviews();
     const users = StorageService.getUsers();

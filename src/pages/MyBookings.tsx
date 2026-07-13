@@ -144,6 +144,8 @@ export default function MyBookings() {
                         <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
                         <span>{dayjs(booking.checkInDate).format('DD MMM YYYY')} &rarr; {dayjs(booking.checkOutDate).format('DD MMM YYYY')}</span>
                         <span className="opacity-60">({t('common.nights', { count: booking.nights })})</span>
+                        <span className="opacity-40">&bull;</span>
+                        <span className="opacity-80">{booking.guests} {currentLang === 'ar' ? 'ضيوف' : 'Guests'}</span>
                       </span>
                     </div>
 
@@ -173,36 +175,26 @@ export default function MyBookings() {
                     </div>
                   </div>
 
-                  {/* Clean Action Row */}
-                  {!isCancelled && !isPaid && (
-                    <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-border/30 dark:border-border-strong/10 mt-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => handleCancelBooking(booking.id)}
-                        className="text-error border-error/20 hover:bg-error/5"
-                      >
-                        <XCircle className="w-3.5 h-3.5 mr-1 rtl:ml-1 rtl:mr-0" />
-                        <span>{t('bookings.cancelBtn')}</span>
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        onClick={() => handlePayBooking(booking.id)}
-                      >
-                        <CreditCard className="w-3.5 h-3.5 mr-1 rtl:ml-1 rtl:mr-0" />
-                        <span>{t('bookings.payBtn')}</span>
-                      </Button>
-                    </div>
-                  )}
-
-                  {!isCancelled && isPaid && (
-                    <div className="flex justify-between items-center pt-3 border-t border-border/30 dark:border-border-strong/10 mt-3">
+                  {/* Unified Action Row */}
+                  <div className={`flex flex-wrap items-center gap-2.5 pt-3 border-t border-border/30 dark:border-border-strong/10 mt-3 ${!isCancelled && isPaid ? 'justify-between' : 'justify-end'}`}>
+                    
+                    {/* Status Badge on Left for Paid */}
+                    {!isCancelled && isPaid && (
                       <span className="text-[12px] text-success font-medium flex items-center gap-1.5 bg-success/5 px-3 py-1.5 rounded-full">
                         <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
                         <span>{currentLang === 'ar' ? 'تم الدفع والـتأكيد' : 'Paid & Confirmed'}</span>
                       </span>
-                      {!dayjs().isAfter(dayjs(booking.checkInDate)) && (
+                    )}
+
+                    {/* Action Buttons on Right */}
+                    <div className="flex items-center gap-2.5 rtl:flex-row-reverse">
+                      <Link to={`/${currentLang}/rooms/${booking.room.id}`}>
+                        <Button size="sm" variant="outline">
+                          {currentLang === 'ar' ? 'عرض الغرفة' : 'View Room'}
+                        </Button>
+                      </Link>
+
+                      {!isCancelled && !dayjs().isAfter(dayjs(booking.checkInDate).subtract(24, 'hour')) && (
                         <Button
                           size="sm"
                           variant="outline"
@@ -213,8 +205,19 @@ export default function MyBookings() {
                           <span>{t('bookings.cancelBtn')}</span>
                         </Button>
                       )}
+
+                      {!isCancelled && !isPaid && (
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          onClick={() => handlePayBooking(booking.id)}
+                        >
+                          <CreditCard className="w-3.5 h-3.5 mr-1 rtl:ml-1 rtl:mr-0" />
+                          <span>{t('bookings.payBtn')}</span>
+                        </Button>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             );

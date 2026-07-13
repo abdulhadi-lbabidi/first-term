@@ -4,6 +4,7 @@
     "slogan": "Stay Beyond Expectations",
     "home": "Home",
     "rooms": "Rooms",
+    "map": "Map",
     "branches": "Branches",
     "about": "About",
     "contact": "Contact",
@@ -99,7 +100,9 @@
     "submitReview": "Submit Review",
     "recommendations": "Recommended For You",
     "available": "Available",
-    "unavailable": "Unavailable"
+    "unavailable": "Unavailable",
+    "noBookingReview": "You must book this room to leave a review.",
+    "alreadyReviewed": "You have already reviewed your stay for this room."
   },
   "bookings": {
     "title": "Confirm Your Stay",

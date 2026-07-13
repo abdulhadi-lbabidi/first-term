@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Mail, Phone, MapPin, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, CheckCircle2, AlertCircle, Send, Map } from 'lucide-react';
+import { Input } from '../components/ui/Input';
 
 export default function Contact() {
   const { t, i18n } = useTranslation();
@@ -33,177 +34,169 @@ export default function Contact() {
   };
 
   return (
-    <div className="font-interfaceEn max-w-7xl mx-auto px-6 space-y-16">
-      {/* Header */}
-      <section className="text-center max-w-2xl mx-auto space-y-4 mt-6">
+    <div className={`max-w-7xl mx-auto px-6 space-y-16 py-12 ${currentLang === 'ar' ? 'font-interfaceAr' : 'font-interfaceEn'}`}>
+      
+      {/* Hero Section */}
+      <section className="text-center max-w-3xl mx-auto space-y-4">
         <span className="text-[13px] font-semibold text-primary uppercase tracking-widest block">
           {t('common.contact')}
         </span>
-        <h1 className="font-serif-display text-4xl lg:text-5xl font-semibold text-ink dark:text-canvas my-0">
-          {currentLang === 'ar' ? 'يسعدنا دائماً التواصل معك' : 'We Look Forward to Your Message'}
+        <h1 className="font-serif-display text-4xl lg:text-5xl font-bold text-ink dark:text-canvas my-0 leading-tight">
+          {currentLang === 'ar' ? 'نحن هنا لخدمتك' : 'At Your Service'}
         </h1>
-        <p className="text-[15px] text-body/80 dark:text-canvas/70 leading-relaxed font-light">
+        <p className="text-[15px] text-body/80 dark:text-canvas/70 leading-relaxed font-light mt-4">
           {currentLang === 'ar'
-            ? 'سواء كنت ترغب في الاستفسار عن حجز حالي أو مشاركتنا ملاحظاتك، فريق الكونسيرج متاح لمساعدتك.'
-            : 'Whether you require assistance with a current booking, or wish to share feedback, our concierge team is always at your disposal.'}
+            ? 'فريق العناية بالضيوف مكرس لتلبية أدق تفاصيل إقامتك والإجابة على كافة استفساراتك على مدار الساعة لضمان تجربة لا تُنسى.'
+            : 'Our dedicated Guest Relations team is at your complete disposal to arrange every detail of your stay and address any inquiries around the clock.'}
         </p>
       </section>
 
-      {/* Grid: Contact Info (40%) vs Form (60%) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      {/* Main Layout Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
         
-        {/* Contact Info Panels (40%) */}
-        <div className="lg:col-span-5 bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-2xl p-8 shadow-sm space-y-8 text-left rtl:text-right">
-          <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas pb-3 border-b border-border/40 dark:border-border-strong/10">
-            {currentLang === 'ar' ? 'معلومات الاتصال' : 'Concierge Desk'}
-          </h3>
+        {/* Left Side: Visual & Contact Info */}
+        <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
           
-          <ul className="space-y-6">
-            <li className="flex items-start space-x-4 rtl:space-x-reverse">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[14px] font-semibold text-ink dark:text-canvas">
-                  {currentLang === 'ar' ? 'المقر الرئيسي' : 'Headquarters'}
-                </h4>
-                <p className="text-[13.5px] text-muted leading-relaxed font-light">
-                  {currentLang === 'ar' ? 'شارع الشيخ زايد، دبي، دولة الإمارات العربية المتحدة' : 'Sheikh Zayed Road, Dubai, UAE'}
-                </p>
-              </div>
-            </li>
+          <div className="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg border border-border/20">
+            <img 
+              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80" 
+              alt="Hotel Entrance" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="absolute bottom-6 left-6 right-6 text-white rtl:text-right">
+              <h3 className="font-serif-display text-2xl font-bold mb-1">
+                {currentLang === 'ar' ? 'المقر الرئيسي' : 'Headquarters'}
+              </h3>
+              <p className="text-sm text-white/80 flex items-center gap-2 rtl:flex-row-reverse rtl:justify-end">
+                <MapPin className="w-4 h-4" />
+                {currentLang === 'ar' ? 'شارع الشيخ زايد، دبي، الإمارات' : 'Sheikh Zayed Road, Dubai, UAE'}
+              </p>
+            </div>
+          </div>
 
-            <li className="flex items-start space-x-4 rtl:space-x-reverse">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Phone className="w-5 h-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[14px] font-semibold text-ink dark:text-canvas">
-                  {currentLang === 'ar' ? 'رقم الهاتف' : 'Telephone'}
-                </h4>
-                <p className="text-[13.5px] text-muted font-light">+971 4 123 4567</p>
-              </div>
-            </li>
+          <div className="bg-canvas/50 dark:bg-body/30 border border-border/40 dark:border-border-strong/15 rounded-3xl p-8 shadow-[0_8px_30px_rgba(0,0,0,0.02)] rtl:text-right">
+            <h4 className="font-serif-display text-xl font-bold text-ink dark:text-canvas mb-6 pb-4 border-b border-border/40 dark:border-border-strong/10">
+              {currentLang === 'ar' ? 'فريق العناية بالضيوف' : 'Guest Relations'}
+            </h4>
+            
+            <ul className="space-y-6">
+              <li className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-ink border border-border/40 dark:border-border-strong/10 shadow-sm flex items-center justify-center text-primary shrink-0">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div className="space-y-1 pt-1 text-left rtl:text-right">
+                  <span className="text-[12px] font-semibold text-muted uppercase tracking-wider">
+                    {currentLang === 'ar' ? 'رقم الهاتف' : 'Telephone'}
+                  </span>
+                  <p className="text-[15px] font-medium text-ink dark:text-canvas"><bdi>+971 4 123 4567</bdi></p>
+                </div>
+              </li>
 
-            <li className="flex items-start space-x-4 rtl:space-x-reverse">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                <Mail className="w-5 h-5" />
-              </div>
-              <div className="space-y-1">
-                <h4 className="text-[14px] font-semibold text-ink dark:text-canvas">
-                  {currentLang === 'ar' ? 'البريد الإلكتروني' : 'Electronic Mail'}
-                </h4>
-                <p className="text-[13.5px] text-muted font-light">concierge@vercelhotels.com</p>
-              </div>
-            </li>
-          </ul>
+              <li className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-ink border border-border/40 dark:border-border-strong/10 shadow-sm flex items-center justify-center text-primary shrink-0">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div className="space-y-1 pt-1 text-left rtl:text-right">
+                  <span className="text-[12px] font-semibold text-muted uppercase tracking-wider">
+                    {currentLang === 'ar' ? 'البريد الإلكتروني' : 'Electronic Mail'}
+                  </span>
+                  <p className="text-[15px] font-medium text-ink dark:text-canvas">reservations@vercelhotels.com</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
         </div>
 
-        {/* Contact Form (60%) */}
-        <div className="lg:col-span-7 bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-2xl p-8 shadow-sm text-left rtl:text-right">
+        {/* Right Side: Contact Form */}
+        <div className="lg:col-span-7 bg-white dark:bg-ink border border-border dark:border-border-strong/15 rounded-3xl p-8 lg:p-12 shadow-[0_8px_30px_rgba(0,0,0,0.03)] text-left rtl:text-right relative overflow-hidden">
+          {/* Subtle background decoration */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
           {formSuccess ? (
-            <div className="text-center py-8 space-y-4">
-              <div className="w-14 h-14 bg-success/10 rounded-full flex items-center justify-center text-success mx-auto">
-                <CheckCircle2 className="w-8 h-8" />
+            <div className="h-full flex flex-col items-center justify-center text-center py-12 space-y-5 animate-fade-in relative z-10">
+              <div className="w-20 h-20 bg-success/10 border border-success/20 rounded-full flex items-center justify-center text-success mx-auto shadow-sm">
+                <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas">
+              <h3 className="font-serif-display text-3xl font-bold text-ink dark:text-canvas">
                 {currentLang === 'ar' ? 'تم إرسال رسالتك بنجاح' : 'Message Sent Successfully'}
               </h3>
-              <p className="text-[14px] text-muted max-w-sm mx-auto leading-relaxed">
+              <p className="text-[15px] text-muted max-w-sm mx-auto leading-relaxed">
                 {currentLang === 'ar'
-                  ? 'شكراً لتواصلك معنا. سيقوم فريق الكونسيرج بالرد على رسالتك خلال 24 ساعة.'
-                  : 'Thank you for reaching out. Our concierge desk will review your inquiry and get back to you within 24 hours.'}
+                  ? 'شكراً لتواصلك معنا. سيقوم فريق العناية بالضيوف بمراجعة طلبك والرد عليك خلال 24 ساعة.'
+                  : 'Thank you for reaching out. Our Guest Relations team will review your inquiry and get back to you within 24 hours.'}
               </p>
               <button
                 onClick={() => setFormSuccess(false)}
-                className="bg-primary hover:bg-primary-hover text-white text-[13px] font-semibold px-6 py-2.5 rounded-full transition-luxury shadow-sm"
+                className="mt-6 bg-ink dark:bg-canvas hover:bg-ink-hover dark:hover:bg-canvas-hover text-canvas dark:text-ink text-[14px] font-semibold px-8 py-3 rounded-full transition-luxury shadow-md"
               >
                 {currentLang === 'ar' ? 'إرسال رسالة أخرى' : 'Send Another Message'}
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas pb-3 border-b border-border/40 dark:border-border-strong/10">
-                {currentLang === 'ar' ? 'أرسل لنا استفسارك' : 'Contact Concierge'}
-              </h3>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 relative z-10">
+              <div className="mb-8">
+                <h3 className="font-serif-display text-2xl lg:text-3xl font-bold text-ink dark:text-canvas mb-2">
+                  {currentLang === 'ar' ? 'أرسل لنا استفسارك' : 'Send an Inquiry'}
+                </h3>
+                <p className="text-sm text-muted">
+                  {currentLang === 'ar' ? 'يرجى تعبئة النموذج أدناه وسيقوم فريقنا بالتواصل معك قريباً.' : 'Please fill out the form below and our team will contact you shortly.'}
+                </p>
+              </div>
 
-              {/* Name */}
-              <div className="space-y-1.5">
-                <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                  {currentLang === 'ar' ? 'الاسم الكامل' : 'Full Name'}
-                </label>
-                <input
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Input
                   type="text"
+                  label={currentLang === 'ar' ? 'الاسم الكامل' : 'Full Name'}
+                  error={errors.name?.message}
                   {...register('name')}
-                  className="w-full h-11 px-4 bg-canvas/30 dark:bg-body/10 border border-border dark:border-border-strong/20 focus:border-primary rounded-xl text-[14px] outline-none transition-luxury"
-                  placeholder="Ariyan"
                 />
-                {errors.name && (
-                  <span className="text-[12px] text-error font-medium flex items-center space-x-1 rtl:space-x-reverse">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{errors.name.message}</span>
-                  </span>
-                )}
-              </div>
-
-              {/* Email */}
-              <div className="space-y-1.5">
-                <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                  {t('auth.emailLabel')}
-                </label>
-                <input
+                <Input
                   type="email"
+                  label={t('auth.emailLabel')}
+                  error={errors.email?.message}
                   {...register('email')}
-                  className="w-full h-11 px-4 bg-canvas/30 dark:bg-body/10 border border-border dark:border-border-strong/20 focus:border-primary rounded-xl text-[14px] outline-none transition-luxury"
-                  placeholder="concierge@luxury.com"
-                />
-                {errors.email && (
-                  <span className="text-[12px] text-error font-medium flex items-center space-x-1 rtl:space-x-reverse">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{errors.email.message}</span>
-                  </span>
-                )}
-              </div>
-
-              {/* Phone */}
-              <div className="space-y-1.5">
-                <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                  {t('auth.phoneLabel')}
-                </label>
-                <input
-                  type="text"
-                  {...register('phone')}
-                  className="w-full h-11 px-4 bg-canvas/30 dark:bg-body/10 border border-border dark:border-border-strong/20 focus:border-primary rounded-xl text-[14px] outline-none transition-luxury"
-                  placeholder="+971 50 123 4567"
                 />
               </div>
 
-              {/* Message */}
-              <div className="space-y-1.5">
-                <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
+              <Input
+                type="text"
+                label={t('auth.phoneLabel')}
+                error={errors.phone?.message}
+                {...register('phone')}
+              />
+
+              <div className="space-y-1.5 flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-ink dark:text-canvas">
                   {currentLang === 'ar' ? 'الرسالة' : 'Your Inquiry'}
                 </label>
                 <textarea
                   rows={5}
                   {...register('message')}
-                  className="w-full p-4 bg-canvas/30 dark:bg-body/10 border border-border dark:border-border-strong/20 focus:border-primary rounded-xl text-[14px] outline-none transition-luxury"
-                  placeholder={currentLang === 'ar' ? 'اكتب استفسارك هنا بالتفصيل...' : 'Please describe your request in detail...'}
+                  className="w-full min-h-[140px] p-4 bg-transparent border border-input focus:border-primary focus:ring-3 focus:ring-primary/20 rounded-xl text-base outline-none transition-all dark:bg-input/30"
+                  placeholder={currentLang === 'ar' ? 'اكتب تفاصيل طلبك أو استفسارك هنا...' : 'Please describe your request in detail...'}
                 />
                 {errors.message && (
-                  <span className="text-[12px] text-error font-medium flex items-center space-x-1 rtl:space-x-reverse">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{errors.message.message}</span>
-                  </span>
+                  <p className="text-[12px] text-destructive font-medium mt-1">
+                    {errors.message.message}
+                  </p>
                 )}
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 rounded-full transition-luxury shadow-md flex items-center justify-center disabled:opacity-50 mt-2"
+                className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 lg:h-14 rounded-full transition-all shadow-md flex items-center justify-center gap-2 disabled:opacity-50 mt-4 text-[15px]"
               >
-                {isSubmitting ? t('common.submitting') : (currentLang === 'ar' ? 'إرسال الرسالة' : 'Send Inquiry')}
+                {isSubmitting ? (
+                  currentLang === 'ar' ? 'جاري الإرسال...' : 'Sending...'
+                ) : (
+                  <>
+                    <span>{currentLang === 'ar' ? 'إرسال الرسالة' : 'Send Inquiry'}</span>
+                    <Send className="w-4 h-4 rtl:rotate-180" />
+                  </>
+                )}
               </button>
             </form>
           )}

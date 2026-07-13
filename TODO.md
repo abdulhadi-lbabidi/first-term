@@ -1,27 +1,49 @@
-# new tasks 
-- [ ] home
-    - [ ] hero
-        - [ ] تغيير الخلفية لتكون فخمة مع مراعات ان يكون النصامامها مقرواء وفيه تباين
-    - [ ] الفقرة الثانية تحسن الخطوط والنصوص
+# tasks code
 - [ ] rooms
-    - [ ] detils:
-        - [ ] review view only 3 review & view all for butn
-        - [ ] booking use shadcn ui
-            - fix bug
-        - [ ] cols 5
-            3 - images & الوصف ومزايا والخريطة والتقييم
-            2 - booking & information  
-    - [ ] filters
-        - [ ] الفلترة عبر التاريخ
-        -   
-    - [ ] Card: الصورة وقت الهوفر يجب التركيز على النصوص
-        - مكون عرضي يتفعل على اساس عرض المكونات 
-- [ ] footer: تحسين التصميم  وجعله احترافي
-- [ ] about: 
-- [ ] responsive design for all pages
-- [ ] to i18n for <span>Simulated Secure Payment - SSL Encrypted</span>
-- [ ] booking 
-    - [ ] تحسين الصفحة لتكون اكثر احترافية
-    - [ ] اضهر زر الغاء الحجز واخفيه قبل 24 ساعة
-    
-- [ ] الملف الشخصي تحسين كمان
+    - [ ] add capcity in hotil
+    - [ ] detils:   
+        - [ ] booking: اصلاح الوان يوم الحجز
+            - الاحمر مع خط محجوز كامل ولا يمكن الضغط عليها
+            - البيج هو اللون الذي يمكن التحديد منه الى يوم سابق او تالي اذا متاح
+            - الرمادي منتهي المدة
+            - التاريخ اذا كان اليوم الذي بعده او قبله غير متاح كمان اذا اليوم غير متاخ
+- [ ] filter 
+    - [ ] date
+    - [ ] bug filter and scroll bad
+    - [ ] capcity
+- [ ] video record
+# testing responsiv for all pages
+- [ ] home
+- [ ] rooms
+- [ ] room details
+- [ ] room details - all images 
+- [ ] room details - booking 
+- [ ] room details - review
+- [ ] booking
+- [ ] footer
+- [ ] about
+- [ ] all forms 
+# testing all features
+- [x] SEO
+- [ ] Security 
+- [ ] performance
+# testing content
+- [ ] about
+- [ ] contact
+- [ ] footer
+- [ ] terms 
+- [ ] privacy
+- [ ] home
+- [ ] UX writer
+    - rooms
+    - room
+    - booking
+    - header
+    - footer
+    - about
+    - contact
+    - terms
+    - privacy
+    - not found page
+    - booking form
+    - full report from UX writer

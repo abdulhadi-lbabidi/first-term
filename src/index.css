@@ -22,7 +22,7 @@
   --color-error: #B94A48;
 
   --font-display-en: "Cormorant Garamond", "Playfair Display", serif;
-  --font-interface-en: "Cormorant Garamond", "Playfair Display", serif;
+  --font-interface-en: "Inter", sans-serif;
   --font-display-ar: "Noto Naskh Arabic", serif;
   --font-interface-ar: "Noto Naskh Arabic", serif;
 }
@@ -283,3 +283,6 @@ body {
     @apply font-sans;
   }
 }
+/* NProgress Styles */
+#nprogress .bar { background: var(--color-primary) !important; }
+#nprogress .peg { box-shadow: 0 0 10px var(--color-primary), 0 0 5px var(--color-primary) !important; }

@@ -1,5 +1,7 @@
 import * as React from "react"
+import { useState } from "react"
 import { Input as InputPrimitive } from "@base-ui/react/input"
+import { Eye, EyeOff } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -10,6 +12,10 @@ interface InputProps extends React.ComponentProps<"input"> {
 }
 
 function Input({ className, type, label, error, icon, ...props }: InputProps) {
+  const [showPassword, setShowPassword] = useState(false)
+  const isPassword = type === "password"
+  const currentType = isPassword ? (showPassword ? "text" : "password") : type
+
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
@@ -24,7 +30,7 @@ function Input({ className, type, label, error, icon, ...props }: InputProps) {
           </span>
         )}
         <InputPrimitive
-          type={type}
+          type={currentType}
           data-slot="input"
           aria-invalid={!!error}
           className={cn(
@@ -36,10 +42,20 @@ function Input({ className, type, label, error, icon, ...props }: InputProps) {
             "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20",
             "dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
             icon ? "pl-9 pr-3 rtl:pl-3 rtl:pr-9" : "px-3",
+            isPassword ? "pr-10 rtl:pl-10 rtl:pr-3" : "",
             className
           )}
           {...props}
         />
+        {isPassword && (
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-ink dark:hover:text-canvas transition-colors rtl:right-auto rtl:left-3"
+          >
+            {showPassword ? <EyeOff className="w-4.5 h-4.5" /> : <Eye className="w-4.5 h-4.5" />}
+          </button>
+        )}
       </div>
       {error && (
         <p className="text-[12px] text-destructive font-medium">{error}</p>

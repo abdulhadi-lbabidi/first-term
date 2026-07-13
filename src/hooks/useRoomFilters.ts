@@ -18,18 +18,18 @@ export function useRoomFilters() {
   }), [searchParams]);
 
   // Update filters in search parameters
-  const updateFilters = (newFilters: RoomFilterOptions) => {
-    const params = new URLSearchParams(searchParams);
-
-    Object.entries(newFilters).forEach(([key, value]) => {
-      if (value === undefined || value === null || value === '' || value === 0) {
-        params.delete(key);
-      } else {
-        params.set(key, String(value));
-      }
+  const updateFilters = (newFilters: Partial<RoomFilterOptions>) => {
+    setSearchParams(prev => {
+      const params = new URLSearchParams(prev);
+      Object.entries(newFilters).forEach(([key, value]) => {
+        if (value === undefined || value === null || value === '' || value === 0) {
+          params.delete(key);
+        } else {
+          params.set(key, String(value));
+        }
+      });
+      return params;
     });
-
-    setSearchParams(params);
   };
 
   // Get active filters count (excluding default/empty ones)

@@ -17,6 +17,8 @@ export interface Branch {
   addressEn: string;
   stars: number; // 1-5
   image: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface Room {
@@ -44,6 +46,7 @@ export interface Booking {
   checkOutDate: string; // YYYY-MM-DD
   checkInTime: string; // e.g., "14:00"
   checkOutTime: string; // e.g., "12:00"
+  guests: number;
   startAt: string; // ISO 8601 Timestamp
   endAt: string; // ISO 8601 Timestamp
   nights: number;

@@ -20,7 +20,7 @@ export default function DualRangeSlider({
   const minValRef = useRef(minVal);
   const maxValRef = useRef(maxVal);
   const range = useRef<HTMLDivElement>(null);
-  
+
   const isRtl = currentLang === 'ar';
 
   // Convert to percentage
@@ -76,7 +76,7 @@ export default function DualRangeSlider({
           onChange({ min: value, max: maxVal });
           minValRef.current = value;
         }}
-        className="thumb thumb--left"
+        className="thumb thumb--left mt-1.5"
         style={{ zIndex: minVal > max - 100 ? 5 : undefined }}
       />
       <input
@@ -90,7 +90,7 @@ export default function DualRangeSlider({
           onChange({ min: minVal, max: value });
           maxValRef.current = value;
         }}
-        className="thumb thumb--right"
+        className="thumb thumb--right mt-1.5"
       />
 
       {/* Custom Slider Track */}
@@ -101,8 +101,8 @@ export default function DualRangeSlider({
 
       {/* Min/Max indicators */}
       <div className="flex justify-between items-center text-[13px] font-semibold text-ink/80 dark:text-canvas/80 mt-6 select-none font-interfaceEn">
-        <span>{isRtl ? `${minVal} درهم` : `$${minVal}`}</span>
-        <span>{isRtl ? `${maxVal} درهم` : `$${maxVal}`}</span>
+        <span>{`$${minVal}`}</span>
+        <span>{`$${maxVal}`}</span>
       </div>
     </div>
   );

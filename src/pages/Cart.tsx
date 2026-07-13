@@ -17,13 +17,14 @@ interface CartItemWithDetails {
   totalPrice: number;
   room: Room;
   branch?: Branch;
+  guests: number;
 }
 
 export default function Cart() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const currentLang = lang || 'en';
-  
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -75,7 +76,16 @@ export default function Cart() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 font-interfaceEn">
+    <div className="relative min-h-screen py-6 lg:py-12 overflow-hidden">
+      {/* Decorative Background Pattern */}
+      <div className="absolute inset-0 opacity-[0.06] dark:opacity-0 pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='34' height='34' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23000000'/%3E%3C/svg%3E")` }} />
+      <div className="absolute inset-0 opacity-0 dark:opacity-[0.15] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='34' height='34' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")` }} />
+      
+      {/* Subtle Background Glows */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 dark:bg-primary/20 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/10 dark:bg-primary/20 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 font-interfaceEn">
       {/* Header */}
       <h1 className="font-serif-display text-3xl lg:text-4xl font-semibold text-ink dark:text-canvas mb-8 text-left rtl:text-right mt-6">
         {t('bookings.cartTitle')}
@@ -87,21 +97,21 @@ export default function Cart() {
           <div className="lg:col-span-8 space-y-6">
             {itemsWithDetails.map((item) => {
               const roomName = currentLang === 'ar' ? item.room.nameAr : item.room.nameEn;
-              const branchName = item.branch 
+              const branchName = item.branch
                 ? (currentLang === 'ar' ? item.branch.nameAr : item.branch.nameEn)
                 : '';
-              
+
               return (
-                <div 
-                  key={item.id} 
+                <div
+                  key={item.id}
                   className="bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row gap-5 items-center md:items-start text-left rtl:text-right relative"
                 >
                   {/* Room Image */}
                   <div className="w-full md:w-32 aspect-[4/3] rounded-xl overflow-hidden bg-canvas/30 shrink-0">
-                    <img 
-                      src={item.room.images[0]} 
-                      alt={roomName} 
-                      className="w-full h-full object-cover" 
+                    <img
+                      src={item.room.images[0]}
+                      alt={roomName}
+                      className="w-full h-full object-cover"
                     />
                   </div>
 
@@ -113,7 +123,7 @@ export default function Cart() {
                     <h3 className="font-serif-display text-lg font-semibold text-ink dark:text-canvas">
                       {roomName}
                     </h3>
-                    
+
                     {/* Dates */}
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[13px] text-muted font-medium pt-1">
                       <span className="flex items-center space-x-1.5 rtl:space-x-reverse">
@@ -121,6 +131,8 @@ export default function Cart() {
                         <span>{dayjs(item.checkIn).format('DD MMM YYYY')} &rarr; {dayjs(item.checkOut).format('DD MMM YYYY')}</span>
                       </span>
                       <span>({t('common.nights', { count: item.days })})</span>
+                      <span className="text-muted/50">&bull;</span>
+                      <span>{item.guests} {currentLang === 'ar' ? 'ضيوف' : 'Guests'}</span>
                     </div>
                   </div>
 
@@ -130,7 +142,7 @@ export default function Cart() {
                       <span className="text-[12px] text-muted block">{t('bookings.totalPrice')}</span>
                       <span className="font-serif-display text-xl font-bold text-ink dark:text-canvas">${item.totalPrice}</span>
                     </div>
-                    
+
                     <button
                       onClick={() => handleRemove(item.id)}
                       className="p-2 text-muted hover:text-error dark:hover:text-error transition-colors rounded-full hover:bg-error/5"
@@ -182,7 +194,7 @@ export default function Cart() {
           <p className="text-[14px] text-muted mb-6 leading-relaxed">
             {t('bookings.cartEmpty')}
           </p>
-          <Link 
+          <Link
             to={`/${currentLang}/rooms`}
             className="bg-primary hover:bg-primary-hover text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-luxury inline-block"
           >
@@ -190,6 +202,7 @@ export default function Cart() {
           </Link>
         </div>
       )}
+      </div>
     </div>
   );
 }

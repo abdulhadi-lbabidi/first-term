@@ -72,6 +72,7 @@ export default function Navbar() {
   const navLinks = [
     { name: t('common.home'), path: `/${currentLang}` },
     { name: t('common.rooms'), path: `/${currentLang}/rooms` },
+    { name: t('common.map'), path: `/${currentLang}/map` },
     { name: t('common.about'), path: `/${currentLang}/about` },
     { name: t('common.contact'), path: `/${currentLang}/contact` },
   ];

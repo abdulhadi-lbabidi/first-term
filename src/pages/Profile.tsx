@@ -7,7 +7,7 @@ import * as z from 'zod';
 import { authService } from '../services';
 import { useAppDispatch, useAppSelector } from '../store';
 import { updateProfileSuccess } from '../store/authSlice';
-import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck } from 'lucide-react';
+import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck, Mail, Lock } from 'lucide-react';
 import { bookingService } from '../services';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
@@ -16,7 +16,7 @@ export default function Profile() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const currentLang = lang || 'en';
-  
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
@@ -40,7 +40,9 @@ export default function Profile() {
 
   const profileSchema = z.object({
     fullName: z.string().min(1, t('auth.validation.nameRequired')),
+    email: z.string().email(t('auth.validation.emailInvalid')).optional(),
     phone: z.string().optional(),
+    password: z.string().optional(),
   });
 
   type ProfileForm = z.infer<typeof profileSchema>;
@@ -49,7 +51,9 @@ export default function Profile() {
     resolver: zodResolver(profileSchema),
     defaultValues: {
       fullName: user?.fullName || '',
+      email: user?.email || '',
       phone: user?.phone || '',
+      password: '',
     }
   });
 
@@ -58,7 +62,9 @@ export default function Profile() {
     if (user) {
       reset({
         fullName: user.fullName,
+        email: user.email,
         phone: user.phone || '',
+        password: '',
       });
     }
   }, [user, reset]);
@@ -69,7 +75,7 @@ export default function Profile() {
     if (!user) return;
 
     try {
-      const updatedUser = await authService.updateProfile(user.id, data.fullName, data.phone);
+      const updatedUser = await authService.updateProfile(user.id, data.fullName, data.phone, data.email, data.password);
       dispatch(updateProfileSuccess(updatedUser));
       setFormSuccess(currentLang === 'ar' ? 'تم تحديث الملف الشخصي بنجاح' : 'Profile updated successfully');
     } catch (err: any) {
@@ -80,9 +86,9 @@ export default function Profile() {
   if (!user) return null;
 
   return (
-        <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
+    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left rtl:text-right">
-        
+
         {/* Left Sidebar: Profile Card */}
         <div className="md:col-span-1 space-y-6">
           <div className="bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-3xl p-8 shadow-sm text-center">
@@ -94,13 +100,13 @@ export default function Profile() {
               {user.fullName}
             </h1>
             <p className="text-[13px] text-muted font-mono mt-1">{user.email}</p>
-            
+
             <div className="mt-6 pt-6 border-t border-border/40 dark:border-border-strong/10 grid grid-cols-2 gap-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-ink dark:text-canvas">{bookingCount}</p>
                 <p className="text-[11px] font-semibold text-muted uppercase tracking-wider">{currentLang === 'ar' ? 'حجوزات' : 'Bookings'}</p>
               </div>
-              <div className="text-center">
+              <div className="text-center flex justify-between flex-col">
                 <p className="text-2xl font-bold text-success flex justify-center"><ShieldCheck className="w-6 h-6" /></p>
                 <p className="text-[11px] font-semibold text-muted uppercase tracking-wider">{currentLang === 'ar' ? 'مؤكد' : 'Verified'}</p>
               </div>
@@ -124,10 +130,25 @@ export default function Profile() {
                   {...register('fullName')}
                 />
                 <Input
+                  type="email"
+                  label={currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email'}
+                  error={errors.email?.message}
+                  icon={<Mail className="w-4.5 h-4.5 text-muted" />}
+                  {...register('email')}
+                />
+                <Input
                   type="text"
                   label={t('auth.phoneLabel')}
                   icon={<Phone className="w-4.5 h-4.5 text-muted" />}
                   {...register('phone')}
+                />
+                <Input
+                  type="password"
+                  label={currentLang === 'ar' ? 'كلمة المرور الجديدة (اختياري)' : 'New Password (Optional)'}
+                  error={errors.password?.message}
+                  icon={<Lock className="w-4.5 h-4.5 text-muted" />}
+                  placeholder="••••••••"
+                  {...register('password')}
                 />
               </div>
 

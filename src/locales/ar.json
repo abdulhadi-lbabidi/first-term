@@ -4,6 +4,7 @@
     "slogan": "إقامة تصنع الذكريات",
     "home": "الرئيسية",
     "rooms": "الغرف",
+    "map": "الخريطة",
     "branches": "الفروع",
     "about": "حولنا",
     "contact": "تواصل معنا",
@@ -99,7 +100,9 @@
     "submitReview": "إرسال التقييم",
     "recommendations": "مقترح لك خصيصاً",
     "available": "متاحة",
-    "unavailable": "غير متاحة"
+    "unavailable": "غير متاحة",
+    "noBookingReview": "يجب عليك حجز هذه الغرفة لتتمكن من تقييمها.",
+    "alreadyReviewed": "لقد قمت بتقييم إقامتك في هذه الغرفة مسبقاً."
   },
   "bookings": {
     "title": "تأكيد تفاصيل إقامتك",

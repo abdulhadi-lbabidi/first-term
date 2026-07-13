@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Outlet, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../store';
-import { setLanguage } from '../store/uiSlice';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
+import { useAppDispatch } from '../../store';
+import { setLanguage } from '../../store/uiSlice';
+import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
 
 export default function MainLayout() {
   const { lang } = useParams<{ lang: string }>();

@@ -18,18 +18,21 @@ export default function FeaturedSection({
   t
 }: FeaturedSectionProps) {
   return (
-    <section className="py-24 bg-surface-soft/40 dark:bg-body/5 border-y border-border/20 dark:border-border-strong/10">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative py-24 bg-surface-soft/40 dark:bg-body/5 border-y border-border/20 dark:border-border-strong/10 overflow-hidden">
+      {/* Decorative Light Mode Pattern */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-0 pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23000000'/%3E%3C/svg%3E")` }} />
+      {/* Decorative Dark Mode Pattern */}
+      <div className="absolute inset-0 opacity-0 dark:opacity-[0.06] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")` }} />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12">
           <div className="space-y-3 text-left rtl:text-right">
-            <span className="text-[13px] font-semibold text-primary tracking-widest uppercase block">
-              {t('rooms.recommendations')}
-            </span>
+
             <h2 className="font-serif-display text-3xl lg:text-4xl font-semibold text-ink dark:text-canvas">
               {currentLang === 'ar' ? 'غرف وأجنحة مميزة' : 'Featured Suites & Rooms'}
             </h2>
           </div>
-          <Link 
+          <Link
             to={`/${currentLang}/rooms`}
             className="mt-4 md:mt-0 bg-primary hover:bg-primary-hover text-white text-[14px] font-semibold px-6 py-2.5 rounded-full transition-luxury shadow-sm"
           >

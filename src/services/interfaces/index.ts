@@ -5,7 +5,7 @@ export interface IAuthService {
   login(email: string, password: string): Promise<User>;
   logout(): Promise<void>;
   getCurrentUser(): User | null;
-  updateProfile(userId: string, fullName: string, phone?: string): Promise<User>;
+  updateProfile(userId: string, fullName: string, phone?: string, email?: string, password?: string): Promise<User>;
 }
 
 export interface IRoomService {
@@ -17,7 +17,7 @@ export interface IRoomService {
 }
 
 export interface IBookingService {
-  createBooking(userId: string, roomId: string, checkIn: string, checkOut: string): Promise<Booking>;
+  createBooking(userId: string, roomId: string, checkIn: string, checkOut: string, guests: number): Promise<Booking>;
   getBookings(userId: string): Promise<Booking[]>;
   getBookingById(id: string): Promise<Booking | null>;
   cancelBooking(bookingId: string): Promise<Booking>;
@@ -26,6 +26,7 @@ export interface IBookingService {
 
 export interface IReviewService {
   addReview(userId: string, roomId: string, rating: number, comment: string): Promise<Review>;
+  updateReview(reviewId: string, userId: string, rating: number, comment: string): Promise<Review>;
   getReviewsByRoomId(roomId: string): Promise<Review[]>;
   getAverageRating(roomId: string): Promise<number>;
 }

@@ -38,13 +38,12 @@ export default function HeroSection({
 
   return (
     <section className="relative h-screen w-full flex items-center justify-center overflow-hidden -mt-24">
-      {/* Background Gradient Overlay — enhanced for luxurious feel and better text contrast */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80 z-10 mix-blend-multiply" />
-      <div className="absolute inset-0 bg-black/20 z-10" />
+      {/* Background Gradient Overlay — dark and luxurious for maximum text contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#110e09]/90 via-[#110e09]/70 to-[#110e09]/95 z-10" />
       <img
-        src="https://images.unsplash.com/photo-1551882547-ff40c0d1398c?auto=format&fit=crop&w=1920&q=80"
+        src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=1920&q=80"
         alt="Luxury Resort"
-        className="absolute inset-0 w-full h-full object-cover animate-slow-zoom"
+        className="absolute inset-0 w-full h-full object-cover animate-slow-zoom brightness-75"
         loading="lazy"
       />
 
@@ -80,7 +79,7 @@ export default function HeroSection({
             <div className="flex items-center gap-2.5 px-4 w-full lg:w-1/3 border-b lg:border-b-0 lg:border-e border-white/15 dark:border-border-strong/10 pb-3 lg:pb-0">
               <PopoverTrigger
                 render={
-                  <div className="bg-transparent flex flex-row text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none" />
+                  <div className="bg-transparent gap-4 flex flex-row text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none" />
                 }
               >
                 <MapPin className="w-5 h-5 text-primary shrink-0" />
@@ -128,7 +127,7 @@ export default function HeroSection({
             <div className="flex items-center gap-2.5 px-4 w-full lg:w-1/4 border-b lg:border-b-0 lg:border-e border-white/15 dark:border-border-strong/10 pb-3 lg:pb-0">
               <PopoverTrigger
                 render={
-                  <div className="bg-transparent text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none" />
+                  <div className="bg-transparent gap-4 text-white text-[14px] w-full outline-none border-none font-medium cursor-pointer flex items-center justify-between gap-1 select-none" />
                 }
               >
                 <Users className="w-5 h-5 text-primary shrink-0" />
@@ -196,7 +195,7 @@ export default function HeroSection({
           </Popover>
 
           {/* Search query input */}
-          <div className="flex items-center gap-2.5 px-4 w-full lg:w-2/5 pb-2 lg:pb-0">
+          <div className="flex items-center gap-4 px-4 w-full lg:w-2/5 pb-2 lg:pb-0">
             <Search className="w-5 h-5 text-primary shrink-0" />
             <div className="w-full">
               <TextLang

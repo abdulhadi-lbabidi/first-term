@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { hotelSettings } from '../../config/hotelSettings';
 
 export class LocalStorageBookingService implements IBookingService {
-  async createBooking(userId: string, roomId: string, checkInDate: string, checkOutDate: string): Promise<Booking> {
+  async createBooking(userId: string, roomId: string, checkInDate: string, checkOutDate: string, guests: number): Promise<Booking> {
     const rooms = StorageService.getRooms();
     const roomIndex = rooms.findIndex(r => r.id === roomId);
     
@@ -58,6 +58,7 @@ export class LocalStorageBookingService implements IBookingService {
       startAt,
       endAt,
       nights,
+      guests,
       totalPrice,
       status: 'confirmed',
       paymentStatus: 'unpaid',

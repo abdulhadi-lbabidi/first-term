@@ -73,7 +73,7 @@ export default function Rooms() {
       <div className="lg:grid lg:grid-cols-4 gap-8">
         {/* Desktop Sidebar Filters */}
         {showFilters && (
-          <div className="hidden lg:block lg:col-span-1">
+          <div className="hidden lg:block lg:col-span-1 sticky top-[100px] self-start max-h-[calc(100vh-120px)] overflow-y-auto pr-2 pb-4">
             <FilterSidebar branches={branches} />
           </div>
         )}

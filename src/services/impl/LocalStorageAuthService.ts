@@ -60,7 +60,7 @@ export class LocalStorageAuthService implements IAuthService {
     return StorageService.getCurrentUser();
   }
 
-  async updateProfile(userId: string, fullName: string, phone?: string): Promise<User> {
+  async updateProfile(userId: string, fullName: string, phone?: string, email?: string, password?: string): Promise<User> {
     const users = StorageService.getUsers();
     const userIndex = users.findIndex(u => u.id === userId);
     
@@ -68,10 +68,25 @@ export class LocalStorageAuthService implements IAuthService {
       throw new Error('المستخدم غير موجود / User not found');
     }
 
+    // Check if new email is already taken by another user
+    if (email && email.toLowerCase() !== users[userIndex].email.toLowerCase()) {
+      const emailExists = users.some(u => u.id !== userId && u.email.toLowerCase() === email.toLowerCase());
+      if (emailExists) {
+        throw new Error('البريد الإلكتروني مسجل مسبقاً / Email already exists');
+      }
+    }
+
+    let updatedPassword = users[userIndex].password;
+    if (password && password.trim() !== '') {
+      updatedPassword = await hashPassword(password);
+    }
+
     const updatedUser = {
       ...users[userIndex],
       fullName,
       phone,
+      ...(email && { email }),
+      password: updatedPassword,
     };
 
     users[userIndex] = updatedUser;

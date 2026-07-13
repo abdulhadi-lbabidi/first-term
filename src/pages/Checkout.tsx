@@ -50,7 +50,8 @@ export default function Checkout() {
           user.id,
           item.roomId,
           item.checkIn,
-          item.checkOut
+          item.checkOut,
+          item.guests
         );
         latestBookingId = booking.id;
 

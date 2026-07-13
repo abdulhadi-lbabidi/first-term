@@ -37,23 +37,29 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-ink text-canvas pt-20 pb-10 border-t border-border-strong/10 font-interfaceEn">
+    <>
       {/* Newsletter Section */}
-      <div className="max-w-7xl mx-auto px-6 mb-20 border-b border-canvas/10 pb-16 text-center text-left rtl:text-right">
-        <div className="bg-canvas/5 border border-canvas/10 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="space-y-3 text-left rtl:text-right md:max-w-xl">
+      <div className="max-w-7xl mx-auto px-6 border-b border-canvas/10 pb-16 text-center text-left rtl:text-right">
+        <div className="relative overflow-hidden border border-canvas/10 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl">
+          {/* Background Pattern & Gradient */}
+          <div className="absolute inset-0 z-0 bg-ink">
+            <div className="absolute inset-0 bg-gradient-to-br from-ink via-ink/95 to-primary/20" />
+            <div className="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='34' height='34' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")` }} />
+          </div>
+
+          <div className="relative z-10 space-y-3 text-left rtl:text-right md:max-w-xl">
             <h3 className="font-serif-display text-2xl lg:text-3xl font-bold text-canvas">
               {currentLang === 'ar' ? 'اشترك في نشرتنا الإخبارية' : 'Subscribe to our Newsletter'}
             </h3>
             <p className="text-[14px] text-canvas/70 font-light">
-              {currentLang === 'ar' 
-                ? 'احصل على آخر العروض الحصرية وأخبار الفندق المميزة مباشرة في بريدك الإلكتروني.' 
+              {currentLang === 'ar'
+                ? 'احصل على آخر العروض الحصرية وأخبار الفندق المميزة مباشرة في بريدك الإلكتروني.'
                 : 'Get the latest exclusive offers and premium updates delivered straight to your inbox.'}
             </p>
           </div>
-          <div className="w-full md:w-auto flex-1 max-w-md flex items-center gap-2">
-            <input 
-              type="email" 
+          <div className="relative z-10 w-full md:w-auto flex-1 max-w-md flex items-center gap-2">
+            <input
+              type="email"
               placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Your email address'}
               className="w-full bg-canvas/10 border border-canvas/20 focus:border-primary text-canvas rounded-full px-6 py-3.5 text-[14px] outline-none transition-all placeholder:text-canvas/40"
             />
@@ -64,99 +70,112 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left rtl:text-right">
-        {/* Brand & About Us Block (Spans 2 columns on desktop) */}
-        <div className="space-y-6 lg:col-span-2">
-          <Link 
-            to={`/${currentLang}`} 
-            className="flex items-center gap-2.5 group select-none hover:text-primary transition-colors"
-          >
-            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary border border-primary/25 shadow-sm">
-              <Crown className="w-6 h-6 fill-current" />
+      <footer className="relative bg-ink text-canvas pt-20 pb-10 border-t border-border-strong/10 font-interfaceEn overflow-hidden">
+        {/* Decorative Background Pattern */}
+        <div className="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-overlay"
+          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='34' height='34' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='3' cy='3' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")` }} />
+
+        <div className="max-w-7xl bg-ink mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-left rtl:text-right">
+          {/* Brand & About Us Block (Spans 2 columns on desktop) */}
+          <div className="space-y-6 lg:col-span-2">
+            <Link
+              to={`/${currentLang}`}
+              className="flex items-center gap-2.5 group select-none hover:text-primary transition-colors"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary border border-primary/25 shadow-sm">
+                <Crown className="w-6 h-6 fill-current" />
+              </div>
+              <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
+                Vercel Hotels
+              </span>
+            </Link>
+            <div className="space-y-4">
+              <p className="text-[14px] text-canvas/85 font-medium italic">
+                {t('common.footerText')}
+              </p>
+              <p className="text-[14px] text-canvas/70 leading-relaxed max-w-xl font-light">
+                {currentLang === 'ar'
+                  ? 'نهدف إلى تقديم تجارب إقامة فندقية فاخرة تجمع بين الراحة والجمال العصري والخدمة الشخصية الراقية. بدأت سلسلة فنادق فيرسيل برؤية واضحة لتقديم مفهوم جديد للضيافة الفنّية والاستثنائية.'
+                  : 'Our mission is to deliver premium, tailor-made lodging experiences combining architectural design with personal hospitality. Every detail at Vercel Hotels is curated to represent luxury, peace, and exceptional boutique service.'}
+              </p>
             </div>
-            <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
-              Vercel Hotels
-            </span>
-          </Link>
-          <div className="space-y-4">
-            <p className="text-[14px] text-canvas/85 font-medium italic">
-              {t('common.footerText')}
-            </p>
-            <p className="text-[14px] text-canvas/70 leading-relaxed max-w-xl font-light">
-              {currentLang === 'ar'
-                ? 'نهدف إلى تقديم تجارب إقامة فندقية فاخرة تجمع بين الراحة والجمال العصري والخدمة الشخصية الراقية. بدأت سلسلة فنادق فيرسيل برؤية واضحة لتقديم مفهوم جديد للضيافة الفنّية والاستثنائية.'
-                : 'Our mission is to deliver premium, tailor-made lodging experiences combining architectural design with personal hospitality. Every detail at Vercel Hotels is curated to represent luxury, peace, and exceptional boutique service.'}
-            </p>
+            <div className="flex items-center space-x-4 pt-2">
+              {socialLinks.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-10 h-10 rounded-full border border-canvas/20 flex items-center justify-center text-canvas/70 hover:text-primary hover:border-primary transition-all duration-300"
+                >
+                  {social.icon}
+                </a>
+              ))}
+            </div>
           </div>
-          <div className="flex items-center space-x-4 pt-2">
-            {socialLinks.map((social, i) => (
-              <a
-                key={i}
-                href={social.href}
-                target="_blank"
-                rel="noreferrer"
-                className="w-10 h-10 rounded-full border border-canvas/20 flex items-center justify-center text-canvas/70 hover:text-primary hover:border-primary transition-all duration-300"
-              >
-                {social.icon}
-              </a>
-            ))}
+
+          {/* Quick Links / Branches */}
+          <div className="space-y-6">
+            <h4 className="font-serif-display text-lg font-medium text-primary tracking-wide uppercase">
+              {t('common.branches')}
+            </h4>
+            <ul className="space-y-3 text-[14px] text-canvas/70">
+              <li>
+                <Link to={`/${currentLang}/rooms?branch=dubai-branch`} className="hover:text-primary transition-colors">
+                  {currentLang === 'ar' ? 'فرع دبي' : 'Vercel Dubai'}
+                </Link>
+              </li>
+              <li>
+                <Link to={`/${currentLang}/rooms?branch=istanbul-branch`} className="hover:text-primary transition-colors">
+                  {currentLang === 'ar' ? 'فرع إسطنبول' : 'Vercel Istanbul'}
+                </Link>
+              </li>
+              <li>
+                <Link to={`/${currentLang}/rooms?branch=paris-branch`} className="hover:text-primary transition-colors">
+                  {currentLang === 'ar' ? 'فرع باريس' : 'Vercel Paris'}
+                </Link>
+              </li>
+              <li className="pt-2">
+                <Link to={`/${currentLang}/map`} className="hover:text-primary transition-colors flex items-center gap-2 text-primary font-medium">
+                  <MapPin className="w-4 h-4" />
+                  {currentLang === 'ar' ? 'خريطة الفروع' : 'Branches Map'}
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div className="space-y-6 col-span-1">
+            <h4 className="font-serif-display text-lg font-medium text-primary tracking-wide uppercase">
+              {t('common.contact')}
+            </h4>
+            <ul className="space-y-4 text-[14px] text-canvas/70">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary shrink-0" />
+                <span>
+                  {currentLang === 'ar' ? 'شارع الشيخ زايد، دبي، دولة الإمارات العربية المتحدة' : 'Sheikh Zayed Road, Dubai, UAE'}
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-primary shrink-0" />
+                <span dir="ltr" className="inline-block text-left font-interfaceEn select-all">
+                  +971 4 123 4567
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-primary shrink-0" />
+                <span className="select-all">concierge@vercelhotels.com</span>
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Quick Links / Branches */}
-        <div className="space-y-6">
-          <h4 className="font-serif-display text-lg font-medium text-primary tracking-wide uppercase">
-            {t('common.branches')}
-          </h4>
-          <ul className="space-y-3 text-[14px] text-canvas/70">
-            <li>
-              <Link to={`/${currentLang}/rooms?branch=dubai-branch`} className="hover:text-primary transition-colors">
-                {currentLang === 'ar' ? 'فرع دبي' : 'Vercel Dubai'}
-              </Link>
-            </li>
-            <li>
-              <Link to={`/${currentLang}/rooms?branch=istanbul-branch`} className="hover:text-primary transition-colors">
-                {currentLang === 'ar' ? 'فرع إسطنبول' : 'Vercel Istanbul'}
-              </Link>
-            </li>
-            <li>
-              <Link to={`/${currentLang}/rooms?branch=paris-branch`} className="hover:text-primary transition-colors">
-                {currentLang === 'ar' ? 'فرع باريس' : 'Vercel Paris'}
-              </Link>
-            </li>
-          </ul>
+        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-canvas/10 text-center text-[13px] text-canvas/40 flex flex-col md:flex-row items-center justify-between">
+          <p>&copy; {new Date().getFullYear()} {t('common.hotelName')}. All rights reserved.</p>
+          <p className="mt-2 md:mt-0 font-serif-display italic tracking-wider">Designed for Qotayba </p>
         </div>
+      </footer>
+    </>
 
-        {/* Contact Info */}
-        <div className="space-y-6 col-span-1">
-          <h4 className="font-serif-display text-lg font-medium text-primary tracking-wide uppercase">
-            {t('common.contact')}
-          </h4>
-          <ul className="space-y-4 text-[14px] text-canvas/70">
-            <li className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-primary shrink-0" />
-              <span>
-                {currentLang === 'ar' ? 'شارع الشيخ زايد، دبي، دولة الإمارات العربية المتحدة' : 'Sheikh Zayed Road, Dubai, UAE'}
-              </span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-primary shrink-0" />
-              <span dir="ltr" className="inline-block text-left font-interfaceEn select-all">
-                +971 4 123 4567
-              </span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-primary shrink-0" />
-              <span className="select-all">concierge@vercelhotels.com</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-canvas/10 text-center text-[13px] text-canvas/40 flex flex-col md:flex-row items-center justify-between">
-        <p>&copy; {new Date().getFullYear()} {t('common.hotelName')}. All rights reserved.</p>
-        <p className="mt-2 md:mt-0 font-serif-display italic tracking-wider">Designed for Qotayba </p>
-      </div>
-    </footer>
   );
 }

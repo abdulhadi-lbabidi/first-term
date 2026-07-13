@@ -57,7 +57,7 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
           />
           <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500" />
         </div>
-        
+
         <div className="p-6 md:p-8 md:w-3/5 flex flex-col justify-center space-y-4">
           <div className="flex items-center justify-between gap-2">
             <span className="text-[12px] font-bold text-primary tracking-wider uppercase">
@@ -87,7 +87,7 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
               <span>{room.size} m²</span>
             </div>
           </div>
-          
+
           <div className="pt-4 mt-auto flex items-center justify-between border-t border-border/40 dark:border-border-strong/10">
             <div className="flex items-baseline space-x-1 rtl:space-x-reverse font-interfaceEn">
               <span className="text-2xl font-bold text-ink dark:text-canvas">${room.pricePerNight}</span>
@@ -139,7 +139,7 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
         </div>
 
         {/* Room Title - Ensure image hover dims/focuses text */}
-        
+
         <h3 className="font-serif-display text-xl lg:text-2xl font-bold tracking-wide text-white line-clamp-1 leading-tight my-0 group-hover:text-primary transition-colors duration-300">
           {roomName}
         </h3>
