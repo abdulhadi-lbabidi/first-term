@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StorageService } from '../services';
+import { StorageService } from '@/services';
 
 export interface CartItem {
   id: string; // unique item id inside the cart

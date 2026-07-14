@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../../store';
-import { toggleTheme, setLanguage, setMobileSidebar } from '../../store/uiSlice';
-import { logoutSuccess } from '../../store/authSlice';
-import { authService } from '../../services';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { toggleTheme, setLanguage, setMobileSidebar } from '@/store/uiSlice';
+import { logoutSuccess } from '@/store/authSlice';
+import { authService } from '@/services';
 import {
   Sun,
   Menu,

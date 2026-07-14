@@ -57,13 +57,13 @@ export default function Footer() {
                 : 'Get the latest exclusive offers and premium updates delivered straight to your inbox.'}
             </p>
           </div>
-          <div className="relative z-10 w-full md:w-auto flex-1 max-w-md flex items-center gap-2">
+          <div className="relative z-10 w-full flex-1 max-w-md flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <input
               type="email"
               placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Enter your email address'}
               className="w-full bg-canvas/10 border border-canvas/20 focus:border-primary text-canvas rounded-full px-6 py-3.5 text-[14px] outline-none transition-all placeholder:text-canvas/40"
             />
-            <button className="bg-primary hover:bg-primary-hover text-white px-6 py-3.5 rounded-full font-semibold text-[14px] transition-all whitespace-nowrap">
+            <button className="bg-primary hover:bg-primary-hover text-white px-6 py-3.5 rounded-full font-semibold text-[14px] transition-all whitespace-nowrap w-full sm:w-auto">
               {currentLang === 'ar' ? 'اشتراك' : 'Subscribe'}
             </button>
           </div>
@@ -170,9 +170,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-canvas/10 text-center text-[13px] text-canvas/40 flex flex-col md:flex-row items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-canvas/10 text-center text-[13px] text-canvas/40 flex flex-col md:flex-row items-center justify-between gap-4">
           <p>&copy; {new Date().getFullYear()} {t('common.hotelName')}. All rights reserved.</p>
-          <p className="mt-2 md:mt-0 font-serif-display italic tracking-wider">Designed for Qotayba </p>
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 font-medium">
+            <Link to={`/${currentLang}/privacy`} className="hover:text-primary transition-colors">{currentLang === 'ar' ? 'سياسة الخصوصية' : 'Privacy Policy'}</Link>
+            <Link to={`/${currentLang}/terms`} className="hover:text-primary transition-colors">{currentLang === 'ar' ? 'الشروط والأحكام' : 'Terms & Conditions'}</Link>
+          </div>
+          <p className="font-serif-display italic tracking-wider">Designed for Qotayba </p>
         </div>
       </footer>
     </>

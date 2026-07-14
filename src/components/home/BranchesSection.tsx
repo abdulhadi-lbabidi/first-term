@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Star } from 'lucide-react';
-import { Branch } from '../../types';
+import { Branch } from '@/types';
 
 interface BranchesSectionProps {
   branches: Branch[];
@@ -25,15 +25,15 @@ export default function BranchesSection({ branches, currentLang, t }: BranchesSe
           const name = currentLang === 'ar' ? branch.nameAr : branch.nameEn;
           const city = currentLang === 'ar' ? branch.cityAr : branch.cityEn;
           return (
-            <Link 
-              key={branch.id} 
+            <Link
+              key={branch.id}
               to={`/${currentLang}/rooms?branch=${branch.id}`}
               className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md flex flex-col justify-end p-6 text-left rtl:text-right"
             >
               {/* Background Image */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-10" />
-              <img 
-                src={branch.image} 
+              <img
+                src={branch.image}
                 alt={name}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
               />

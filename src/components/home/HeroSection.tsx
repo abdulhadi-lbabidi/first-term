@@ -1,13 +1,13 @@
 import { Input as InputPrimitive } from '@base-ui/react/input';
 import { MapPin, Users, ChevronDown, User, Search, ArrowRight } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { Branch } from '../../types';
-import { TextLang } from '../ui/TextLang';
+import { Button } from '@/components/ui/Button';
+import { Branch } from '@/types';
+import { TextLang } from '@/components/ui/TextLang';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '../ui/popover';
+} from '@/components/ui/popover';
 
 interface HeroSectionProps {
   branches: Branch[];

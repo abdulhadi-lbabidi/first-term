@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppSelector } from '../store';
-import { bookingService, roomService } from '../services';
-import { Booking, Room, Branch } from '../types';
-import { Button } from '../components/ui/Button';
+import { useAppSelector } from '@/store';
+import { bookingService, roomService } from '@/services';
+import { Booking, Room, Branch } from '@/types';
+import { Button } from '@/components/ui/Button';
 import { Calendar, CreditCard, XCircle, Briefcase } from 'lucide-react';
 import dayjs from 'dayjs';
 
@@ -17,10 +17,10 @@ export default function MyBookings() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const currentLang = lang || 'en';
-  
+
   const navigate = useNavigate();
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
-  
+
   const [bookings, setBookings] = useState<BookingWithDetails[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +37,7 @@ export default function MyBookings() {
     try {
       const fetchedBookings = await bookingService.getBookings(user.id);
       const branches = await roomService.getBranches();
-      
+
       const detailedBookings = await Promise.all(
         fetchedBookings.map(async (b) => {
           const room = await roomService.getRoomById(b.roomId);
@@ -107,25 +107,25 @@ export default function MyBookings() {
         <div className="space-y-4">
           {bookings.map((booking) => {
             const roomName = currentLang === 'ar' ? booking.room.nameAr : booking.room.nameEn;
-            const branchName = booking.branch 
+            const branchName = booking.branch
               ? (currentLang === 'ar' ? booking.branch.nameAr : booking.branch.nameEn)
               : '';
-            
+
             const isConfirmed = booking.status === 'confirmed';
             const isCancelled = booking.status === 'cancelled';
             const isPaid = booking.paymentStatus === 'paid';
 
             return (
-              <div 
-                key={booking.id} 
+              <div
+                key={booking.id}
                 className="bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl p-5 shadow-sm flex flex-col md:flex-row gap-5 items-center md:items-start text-left rtl:text-right"
               >
                 {/* Compact Room Image */}
                 <div className="w-24 h-20 rounded-xl overflow-hidden bg-canvas/30 shrink-0">
-                  <img 
-                    src={booking.room.images[0]} 
-                    alt={roomName} 
-                    className="w-full h-full object-cover" 
+                  <img
+                    src={booking.room.images[0]}
+                    alt={roomName}
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
@@ -152,20 +152,18 @@ export default function MyBookings() {
                     {/* Stats & Badges */}
                     <div className="flex flex-col items-end gap-1.5 text-right rtl:text-left">
                       <div className="flex items-center gap-1.5">
-                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
-                          isConfirmed 
-                            ? 'bg-success/5 text-success border-success/10' 
-                            : isCancelled 
-                              ? 'bg-error/5 text-error border-error/10'
-                              : 'bg-primary/5 text-primary border-primary/10'
-                        }`}>
+                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${isConfirmed
+                          ? 'bg-success/5 text-success border-success/10'
+                          : isCancelled
+                            ? 'bg-error/5 text-error border-error/10'
+                            : 'bg-primary/5 text-primary border-primary/10'
+                          }`}>
                           {t(`bookings.${booking.status}`)}
                         </span>
-                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
-                          isPaid 
-                            ? 'bg-success/5 text-success border-success/10' 
-                            : 'bg-primary-soft text-primary border-primary/10'
-                        }`}>
+                        <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${isPaid
+                          ? 'bg-success/5 text-success border-success/10'
+                          : 'bg-primary-soft text-primary border-primary/10'
+                          }`}>
                           {t(`bookings.${booking.paymentStatus}`)}
                         </span>
                       </div>
@@ -177,7 +175,7 @@ export default function MyBookings() {
 
                   {/* Unified Action Row */}
                   <div className={`flex flex-wrap items-center gap-2.5 pt-3 border-t border-border/30 dark:border-border-strong/10 mt-3 ${!isCancelled && isPaid ? 'justify-between' : 'justify-end'}`}>
-                    
+
                     {/* Status Badge on Left for Paid */}
                     {!isCancelled && isPaid && (
                       <span className="text-[12px] text-success font-medium flex items-center gap-1.5 bg-success/5 px-3 py-1.5 rounded-full">

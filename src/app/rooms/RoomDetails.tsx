@@ -3,22 +3,22 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
 import { Star, Maximize2, Users, ChevronRightIcon } from 'lucide-react';
-import { roomService, reviewService, StorageService } from '../services';
-import { hotelSettings } from '../config/hotelSettings';
-import { Room, Branch, Review } from '../types';
-import { useAppDispatch } from '../store';
-import { addToCart } from '../store/cartSlice';
-import { BookingWidget } from '../components/bookings/BookingWidget';
-import { Skeleton } from '../components/ui/skeleton';
+import { roomService, reviewService, StorageService } from '@/services';
+import { hotelSettings } from '@/config/hotelSettings';
+import { Room, Branch, Review } from '@/types';
+import { useAppDispatch } from '@/store';
+import { addToCart } from '@/store/cartSlice';
+import { BookingWidget } from '@/components/bookings/BookingWidget';
+import { Skeleton } from '@/components/ui/skeleton';
 
-import { RoomGallery } from '../components/room-details/RoomGallery';
-import { RoomAmenities } from '../components/room-details/RoomAmenities';
-import { RoomMap } from '../components/room-details/RoomMap';
-import { RoomReviews } from '../components/room-details/RoomReviews';
-import { RoomRecommendations } from '../components/room-details/RoomRecommendations';
-import { RoomBookingDialog } from '../components/room-details/RoomBookingDialog';
-import { MobileBookingBar } from '../components/room-details/MobileBookingBar';
-import SEO from '../components/SEO';
+import { RoomGallery } from '@/components/room-details/RoomGallery';
+import { RoomAmenities } from '@/components/room-details/RoomAmenities';
+import { RoomMap } from '@/components/room-details/RoomMap';
+import { RoomReviews } from '@/components/room-details/RoomReviews';
+import { RoomRecommendations } from '@/components/room-details/RoomRecommendations';
+import { RoomBookingDialog } from '@/components/room-details/RoomBookingDialog';
+import { MobileBookingBar } from '@/components/room-details/MobileBookingBar';
+import SEO from '@/components/SEO';
 
 export default function RoomDetails() {
   const { t, i18n } = useTranslation();

@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { StorageService, roomService } from '../services';
-import { Branch, Room } from '../types';
-import LiveMap from '../components/map/LiveMap';
-import FilterSidebar from '../components/filters/FilterSidebar';
-import { useRoomFilters } from '../hooks/useRoomFilters';
+import { StorageService, roomService } from '@/services';
+import { Branch, Room } from '@/types';
+import LiveMap from '@/components/map/LiveMap';
+import FilterSidebar from '@/components/filters/FilterSidebar';
+import { useRoomFilters } from '@/hooks/useRoomFilters';
 import { MapPin, Navigation, Calendar } from 'lucide-react';
-import SEO from '../components/SEO';
+import SEO from '@/components/SEO';
 
 export default function LocationsMap() {
   const { lang } = useParams<{ lang: string }>();
@@ -107,7 +107,7 @@ export default function LocationsMap() {
             />
             {loading && (
               <div className="absolute top-0 left-0 right-0 z-[1000] h-1.5 bg-primary/20 rounded-t-[2rem] overflow-hidden pointer-events-none">
-                <div 
+                <div
                   className="h-full bg-primary rounded-full"
                   style={{
                     width: '30%',

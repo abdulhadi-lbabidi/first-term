@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Room } from '../../types';
+import { Room } from '@/types';
 
 interface MobileBookingBarProps {
   room: Room;

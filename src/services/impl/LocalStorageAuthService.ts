@@ -1,12 +1,12 @@
 import { IAuthService } from '../interfaces';
-import { User } from '../../types';
+import { User } from '@/types';
 import { StorageService } from '../storage.service';
-import { hashPassword } from '../../utils/crypto';
+import { hashPassword } from '@/utils/crypto';
 
 export class LocalStorageAuthService implements IAuthService {
   async register(fullName: string, email: string, password: string, phone?: string): Promise<User> {
     const users = StorageService.getUsers();
-    
+
     // Check if email already exists
     const emailExists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
     if (emailExists) {
@@ -25,18 +25,18 @@ export class LocalStorageAuthService implements IAuthService {
 
     users.push(newUser);
     StorageService.setUsers(users);
-    
+
     // Set current user session (exclude password from saved object)
     const { password: _, ...userSession } = newUser;
     StorageService.setCurrentUser(userSession as User);
-    
+
     return userSession as User;
   }
 
   async login(email: string, password: string): Promise<User> {
     const users = StorageService.getUsers();
     const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    
+
     if (!user) {
       throw new Error('البريد الإلكتروني أو كلمة المرور غير صحيحة / Incorrect email or password');
     }
@@ -48,7 +48,7 @@ export class LocalStorageAuthService implements IAuthService {
 
     const { password: _, ...userSession } = user;
     StorageService.setCurrentUser(userSession as User);
-    
+
     return userSession as User;
   }
 
@@ -63,7 +63,7 @@ export class LocalStorageAuthService implements IAuthService {
   async updateProfile(userId: string, fullName: string, phone?: string, email?: string, password?: string): Promise<User> {
     const users = StorageService.getUsers();
     const userIndex = users.findIndex(u => u.id === userId);
-    
+
     if (userIndex === -1) {
       throw new Error('المستخدم غير موجود / User not found');
     }

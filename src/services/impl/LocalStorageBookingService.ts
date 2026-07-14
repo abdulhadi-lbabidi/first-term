@@ -1,20 +1,20 @@
 import { IBookingService } from '../interfaces';
-import { Booking } from '../../types';
+import { Booking } from '@/types';
 import { StorageService } from '../storage.service';
 import dayjs from 'dayjs';
-import { hotelSettings } from '../../config/hotelSettings';
+import { hotelSettings } from '@/config/hotelSettings';
 
 export class LocalStorageBookingService implements IBookingService {
   async createBooking(userId: string, roomId: string, checkInDate: string, checkOutDate: string, guests: number): Promise<Booking> {
     const rooms = StorageService.getRooms();
     const roomIndex = rooms.findIndex(r => r.id === roomId);
-    
+
     if (roomIndex === -1) {
       throw new Error('الغرفة غير موجودة / Room not found');
     }
 
     const room = rooms[roomIndex];
-    
+
     // Generate precise timestamps based on hotel settings
     const startAt = dayjs(`${checkInDate}T${hotelSettings.checkInTime}:00`).toISOString();
     const endAt = dayjs(`${checkOutDate}T${hotelSettings.checkOutTime}:00`).toISOString();
@@ -22,17 +22,17 @@ export class LocalStorageBookingService implements IBookingService {
     if (dayjs(endAt).isBefore(dayjs(startAt)) || (!hotelSettings.allowSameDayBooking && checkInDate === checkOutDate)) {
       throw new Error('تواريخ غير صالحة / Invalid dates');
     }
-    
+
     // Check interval conflicts with existing bookings
     // A room type is unavailable ONLY when the number of overlapping bookings >= room.quantity
     const bookings = StorageService.getBookings();
-    const overlappingBookings = bookings.filter(b => 
-      b.roomId === roomId && 
-      b.status === 'confirmed' && 
-      dayjs(startAt).isBefore(dayjs(b.endAt)) && 
+    const overlappingBookings = bookings.filter(b =>
+      b.roomId === roomId &&
+      b.status === 'confirmed' &&
+      dayjs(startAt).isBefore(dayjs(b.endAt)) &&
       dayjs(endAt).isAfter(dayjs(b.startAt))
     );
-    
+
     if (overlappingBookings.length >= (room.quantity || 1)) {
       throw new Error('الغرفة محجوزة بالفعل خلال هذه الفترة / Room is already reserved for the selected period');
     }
@@ -40,7 +40,7 @@ export class LocalStorageBookingService implements IBookingService {
     const start = dayjs(checkInDate);
     const end = dayjs(checkOutDate);
     let nights = end.diff(start, 'day');
-    
+
     if (nights < hotelSettings.minimumStay) {
       nights = hotelSettings.minimumStay;
     }
@@ -85,7 +85,7 @@ export class LocalStorageBookingService implements IBookingService {
   async cancelBooking(bookingId: string): Promise<Booking> {
     const bookings = StorageService.getBookings();
     const bookingIndex = bookings.findIndex(b => b.id === bookingId);
-    
+
     if (bookingIndex === -1) {
       throw new Error('الحجز غير موجود / Booking not found');
     }
@@ -109,7 +109,7 @@ export class LocalStorageBookingService implements IBookingService {
   async payBooking(bookingId: string): Promise<Booking> {
     const bookings = StorageService.getBookings();
     const bookingIndex = bookings.findIndex(b => b.id === bookingId);
-    
+
     if (bookingIndex === -1) {
       throw new Error('الحجز غير موجود / Booking not found');
     }

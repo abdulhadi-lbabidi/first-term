@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { roomService } from '../services';
-import { Room, Branch } from '../types';
-import { useRoomFilters } from '../hooks/useRoomFilters';
-import FilterSidebar from '../components/filters/FilterSidebar';
-import RoomCard from '../components/room/RoomCard';
+import { roomService } from '@/services';
+import { Room, Branch } from '@/types';
+import { useRoomFilters } from '@/hooks/useRoomFilters';
+import FilterSidebar from '@/components/filters/FilterSidebar';
+import RoomCard from '@/components/room/RoomCard';
 import { SlidersHorizontal, LayoutGrid, Grid, List as ListIcon } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
-import { Skeleton } from '../components/ui/skeleton';
+import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Sheet,
   SheetContent,
@@ -17,8 +17,8 @@ import {
   SheetTitle,
   SheetFooter,
   SheetTrigger,
-} from '../components/ui/sheet';
-import SEO from '../components/SEO';
+} from '@/components/ui/sheet';
+import SEO from '@/components/SEO';
 
 export default function Rooms() {
   const { t, i18n } = useTranslation();

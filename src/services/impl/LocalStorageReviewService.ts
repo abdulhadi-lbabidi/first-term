@@ -1,5 +1,5 @@
 import { IReviewService } from '../interfaces';
-import { Review } from '../../types';
+import { Review } from '@/types';
 import { StorageService } from '../storage.service';
 
 export class LocalStorageReviewService implements IReviewService {

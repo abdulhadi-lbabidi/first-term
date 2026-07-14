@@ -1,20 +1,22 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-import MainLayout from '../components/layouts/MainLayout';
-import Home from '../pages/Home';
-import Rooms from '../pages/Rooms';
-import RoomDetails from '../pages/RoomDetails';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Cart from '../pages/Cart';
-import Checkout from '../pages/Checkout';
-import MyBookings from '../pages/MyBookings';
-import Profile from '../pages/Profile';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
-import NotFound from '../pages/NotFound';
-import LocationsMap from '../pages/LocationsMap';
-import { StorageService } from '../services';
+import MainLayout from '@/components/layout/MainLayout';
+import Home from '@/app/public/Home';
+import Rooms from '@/app/rooms/Rooms';
+import RoomDetails from '@/app/rooms/RoomDetails';
+import Login from '@/app/auth/Login';
+import Register from '@/app/auth/Register';
+import Cart from '@/app/booking/Cart';
+import Checkout from '@/app/booking/Checkout';
+import MyBookings from '@/app/booking/MyBookings';
+import Profile from '@/app/profile/Profile';
+import About from '@/app/public/About';
+import Contact from '@/app/public/Contact';
+import Terms from '@/app/legal/Terms';
+import Privacy from '@/app/legal/Privacy';
+import NotFound from '@/app/public/NotFound';
+import LocationsMap from '@/app/rooms/LocationsMap';
+import { StorageService } from '@/services';
 
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -25,16 +27,9 @@ function RouteTracker() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Start progress bar on route change
     NProgress.start();
-    
-    // Scroll to top
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Complete progress bar after a short delay for smooth UI
     const timer = setTimeout(() => {
       NProgress.done();
     }, 300);
@@ -62,9 +57,11 @@ export default function AppRoutes() {
         <Route path="/:lang" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="terms" element={<Terms />} />
+          <Route path="privacy" element={<Privacy />} />
           <Route path="rooms" element={<Rooms />} />
           <Route path="rooms/:id" element={<RoomDetails />} />
-          <Route path="contact" element={<Contact />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
 

@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield, Sparkles, Compass, Heart, Building2, Star, Lock, Globe } from 'lucide-react';
-import SEO from '../components/SEO';
+import SEO from '@/components/SEO';
 
 export default function About() {
   const { t, i18n } = useTranslation();
@@ -9,25 +9,25 @@ export default function About() {
   const currentLang = lang || 'en';
 
   const features = [
-    { 
-      icon: <Shield className="w-6 h-6 text-primary" />, 
-      title: currentLang === 'ar' ? 'حجز ذكي وواثق' : 'Smart Booking', 
-      desc: currentLang === 'ar' ? 'احجز بثقة من خلال نظام حجز ذكي يعرض التوفر الفعلي والأسعار المحدثة لحظياً، مع تأكيد فوري يضمن لك تجربة خالية من التعقيد منذ أول خطوة.' : 'Book with confidence through a smart reservation system that displays real-time availability and live rates, ensuring a seamless experience from the very first step.' 
+    {
+      icon: <Shield className="w-6 h-6 text-primary" />,
+      title: currentLang === 'ar' ? 'حجز ذكي وواثق' : 'Smart Booking',
+      desc: currentLang === 'ar' ? 'احجز بثقة من خلال نظام حجز ذكي يعرض التوفر الفعلي والأسعار المحدثة لحظياً، مع تأكيد فوري يضمن لك تجربة خالية من التعقيد منذ أول خطوة.' : 'Book with confidence through a smart reservation system that displays real-time availability and live rates, ensuring a seamless experience from the very first step.'
     },
-    { 
-      icon: <Compass className="w-6 h-6 text-primary" />, 
-      title: currentLang === 'ar' ? 'بحث مخصص لك' : 'Personalized Search', 
-      desc: currentLang === 'ar' ? 'استكشف عشرات الخيارات بسهولة عبر محرك بحث متقدم يتيح تصفية النتائج حسب الوجهة، نوع الغرفة، الميزانية، المرافق، والخدمات لتصل إلى الإقامة المثالية خلال ثوانٍ.' : 'Effortlessly explore dozens of choices with an advanced search engine, filtering by destination, room type, budget, and amenities to find your perfect stay in seconds.' 
+    {
+      icon: <Compass className="w-6 h-6 text-primary" />,
+      title: currentLang === 'ar' ? 'بحث مخصص لك' : 'Personalized Search',
+      desc: currentLang === 'ar' ? 'استكشف عشرات الخيارات بسهولة عبر محرك بحث متقدم يتيح تصفية النتائج حسب الوجهة، نوع الغرفة، الميزانية، المرافق، والخدمات لتصل إلى الإقامة المثالية خلال ثوانٍ.' : 'Effortlessly explore dozens of choices with an advanced search engine, filtering by destination, room type, budget, and amenities to find your perfect stay in seconds.'
     },
-    { 
-      icon: <Sparkles className="w-6 h-6 text-primary" />, 
-      title: currentLang === 'ar' ? 'تجارب موثقة' : 'Authentic Reviews', 
-      desc: currentLang === 'ar' ? 'اطلع على تقييمات موثقة من نزلاء سابقين، واستعرض الصور الحقيقية وموقع الفندق على الخريطة، لتتخذ قرارك بناءً على معلومات واضحة وتجارب موثوقة.' : 'Read verified reviews from past guests, browse real photos, and view the precise map location to make your decision based on transparent and trusted experiences.' 
+    {
+      icon: <Sparkles className="w-6 h-6 text-primary" />,
+      title: currentLang === 'ar' ? 'تجارب موثقة' : 'Authentic Reviews',
+      desc: currentLang === 'ar' ? 'اطلع على تقييمات موثقة من نزلاء سابقين، واستعرض الصور الحقيقية وموقع الفندق على الخريطة، لتتخذ قرارك بناءً على معلومات واضحة وتجارب موثوقة.' : 'Read verified reviews from past guests, browse real photos, and view the precise map location to make your decision based on transparent and trusted experiences.'
     },
-    { 
-      icon: <Heart className="w-6 h-6 text-primary" />, 
-      title: currentLang === 'ar' ? 'إدارة سلسة لرحلتك' : 'Seamless Dashboard', 
-      desc: currentLang === 'ar' ? 'إدارة رحلتك أصبحت أسهل من أي وقت مضى. تابع حجوزاتك، قم بتعديلها، واحتفظ بجميع تفاصيل إقامتك في مكان واحد.' : 'Managing your journey has never been easier. Track your reservations, make adjustments, and keep all your stay details beautifully organized in one place.' 
+    {
+      icon: <Heart className="w-6 h-6 text-primary" />,
+      title: currentLang === 'ar' ? 'إدارة سلسة لرحلتك' : 'Seamless Dashboard',
+      desc: currentLang === 'ar' ? 'إدارة رحلتك أصبحت أسهل من أي وقت مضى. تابع حجوزاتك، قم بتعديلها، واحتفظ بجميع تفاصيل إقامتك في مكان واحد.' : 'Managing your journey has never been easier. Track your reservations, make adjustments, and keep all your stay details beautifully organized in one place.'
     },
   ];
 
@@ -85,8 +85,8 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((f, i) => (
-            <div 
-              key={i} 
+            <div
+              key={i}
               className="bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 p-6 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.02)] text-left rtl:text-right space-y-4 transition-transform hover:-translate-y-1"
             >
               <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
@@ -116,9 +116,9 @@ export default function About() {
           </p>
         </div>
         <div className="aspect-[16/10] rounded-2xl overflow-hidden shadow-md border border-border/20">
-          <img 
-            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80" 
-            alt="Luxury Hotel Interior" 
+          <img
+            src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=80"
+            alt="Luxury Hotel Interior"
             className="w-full h-full object-cover"
           />
         </div>

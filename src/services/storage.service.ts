@@ -1,4 +1,4 @@
-import { Branch, Room, User, Booking, Review } from '../types';
+import { Branch, Room, User, Booking, Review } from '@/types';
 
 const PREFIX = 'vh_v1_';
 

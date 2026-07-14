@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import RoomCard from '../room/RoomCard';
-import { Room, Branch } from '../../types';
+import RoomCard from '@/components/room/RoomCard';
+import { Room, Branch } from '@/types';
 
 interface RoomRecommendationsProps {
   recommendedRooms: Room[];

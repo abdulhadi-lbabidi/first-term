@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Branch } from '../../types';
+import { Branch } from '@/types';
 import { Link } from 'react-router-dom';
 
 // Fix for default marker icon in react-leaflet

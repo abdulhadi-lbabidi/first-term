@@ -1,26 +1,94 @@
-const fs = require('fs');
-const file = 'd:/projects/vercel-hotels/src/pages/Profile.tsx';
-let content = fs.readFileSync(file, 'utf8');
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { authService } from '@/services';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { updateProfileSuccess } from '@/store/authSlice';
+import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck, Mail, Lock } from 'lucide-react';
+import { bookingService } from '@/services';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
-// Add new imports
-content = content.replace(
-  "import { User, Phone, CheckCircle, AlertCircle } from 'lucide-react';",
-  "import { User, Phone, CheckCircle, AlertCircle, CalendarDays, ShieldCheck } from 'lucide-react';\nimport { bookingService } from '../services';"
-);
+export default function Profile() {
+  const { t, i18n } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const currentLang = lang || 'en';
 
-// Add state for booking count
-content = content.replace(
-  "const [formError, setFormError] = useState('');",
-  "const [formError, setFormError] = useState('');\n  const [bookingCount, setBookingCount] = useState(0);\n\n  useEffect(() => {\n    if (user) {\n      bookingService.getBookings(user.id).then(res => setBookingCount(res.length)).catch(console.error);\n    }\n  }, [user]);"
-);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
-// Replace UI
-const uiOldStart = '<div className="max-w-md mx-auto px-6 font-interfaceEn my-12">';
-const uiOldStartIndex = content.indexOf(uiOldStart);
+  const [formSuccess, setFormSuccess] = useState('');
+  const [formError, setFormError] = useState('');
+  const [bookingCount, setBookingCount] = useState(0);
 
-const uiNew = `    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
+  useEffect(() => {
+    if (user) {
+      bookingService.getBookings(user.id).then(res => setBookingCount(res.length)).catch(console.error);
+    }
+  }, [user]);
+
+  // Route protection
+  useEffect(() => {
+    if (!isAuthenticated || !user) {
+      navigate(`/${currentLang}/login?redirect=profile`);
+    }
+  }, [isAuthenticated, navigate, currentLang, user]);
+
+  const profileSchema = z.object({
+    fullName: z.string().min(1, t('auth.validation.nameRequired')),
+    email: z.string().email(t('auth.validation.emailInvalid')).optional(),
+    phone: z.string().optional(),
+    password: z.string().optional(),
+  });
+
+  type ProfileForm = z.infer<typeof profileSchema>;
+
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<ProfileForm>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      fullName: user?.fullName || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      password: '',
+    }
+  });
+
+  // Reset form when user loads
+  useEffect(() => {
+    if (user) {
+      reset({
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone || '',
+        password: '',
+      });
+    }
+  }, [user, reset]);
+
+  const onSubmit = async (data: ProfileForm) => {
+    setFormSuccess('');
+    setFormError('');
+    if (!user) return;
+
+    try {
+      const updatedUser = await authService.updateProfile(user.id, data.fullName, data.phone, data.email, data.password);
+      dispatch(updateProfileSuccess(updatedUser));
+      setFormSuccess(currentLang === 'ar' ? 'تم تحديث الملف الشخصي بنجاح' : 'Profile updated successfully');
+    } catch (err: any) {
+      setFormError(err.message || 'خطأ في التحديث');
+    }
+  };
+
+  if (!user) return null;
+
+  return (
+    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left rtl:text-right">
-        
+
         {/* Left Sidebar: Profile Card */}
         <div className="md:col-span-1 space-y-6">
           <div className="bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-3xl p-8 shadow-sm text-center">
@@ -32,13 +100,13 @@ const uiNew = `    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12
               {user.fullName}
             </h1>
             <p className="text-[13px] text-muted font-mono mt-1">{user.email}</p>
-            
+
             <div className="mt-6 pt-6 border-t border-border/40 dark:border-border-strong/10 grid grid-cols-2 gap-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-ink dark:text-canvas">{bookingCount}</p>
                 <p className="text-[11px] font-semibold text-muted uppercase tracking-wider">{currentLang === 'ar' ? 'حجوزات' : 'Bookings'}</p>
               </div>
-              <div className="text-center">
+              <div className="text-center flex justify-between flex-col">
                 <p className="text-2xl font-bold text-success flex justify-center"><ShieldCheck className="w-6 h-6" /></p>
                 <p className="text-[11px] font-semibold text-muted uppercase tracking-wider">{currentLang === 'ar' ? 'مؤكد' : 'Verified'}</p>
               </div>
@@ -62,10 +130,25 @@ const uiNew = `    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12
                   {...register('fullName')}
                 />
                 <Input
+                  type="email"
+                  label={currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email'}
+                  error={errors.email?.message}
+                  icon={<Mail className="w-4.5 h-4.5 text-muted" />}
+                  {...register('email')}
+                />
+                <Input
                   type="text"
                   label={t('auth.phoneLabel')}
                   icon={<Phone className="w-4.5 h-4.5 text-muted" />}
                   {...register('phone')}
+                />
+                <Input
+                  type="password"
+                  label={currentLang === 'ar' ? 'كلمة المرور الجديدة (اختياري)' : 'New Password (Optional)'}
+                  error={errors.password?.message}
+                  icon={<Lock className="w-4.5 h-4.5 text-muted" />}
+                  placeholder="••••••••"
+                  {...register('password')}
                 />
               </div>
 
@@ -98,9 +181,6 @@ const uiNew = `    <div className="max-w-4xl mx-auto px-6 font-interfaceEn my-12
         </div>
 
       </div>
-    </div>`;
-
-content = content.substring(0, uiOldStartIndex) + uiNew + '\n  );\n}\n';
-
-fs.writeFileSync(file, content, 'utf8');
-console.log('Profile updated');
+    </div>
+  );
+}

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, useAppSelector } from '../store';
-import { clearCart } from '../store/cartSlice';
-import { bookingService, roomService } from '../services';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { clearCart } from '@/store/cartSlice';
+import { bookingService, roomService } from '@/services';
 import { AlertTriangle, CreditCard, ShieldCheck, CheckCircle2, ShoppingBag } from 'lucide-react';
 
 export default function Checkout() {

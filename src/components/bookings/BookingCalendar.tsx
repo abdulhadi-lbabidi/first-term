@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { ar, enUS } from 'date-fns/locale';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
 import { DateRange } from 'react-day-picker';
-import { Calendar } from '../ui/calendar';
-import { Button } from '../ui/Button';
+import { Calendar } from '@/components/ui/calendar';
+import { Button } from '@/components/ui/Button';
 
 interface BookingCalendarProps {
   initialCheckIn?: Date;
@@ -105,12 +105,12 @@ export function BookingCalendar({
   const handleConfirm = () => {
     if (dateRange?.from) {
       let end = dateRange.to || addDays(dateRange.from, 1);
-      
+
       // Prevent same day check-in and check-out
       if (dateRange.to && dateRange.from.toDateString() === dateRange.to.toDateString()) {
         end = addDays(dateRange.from, 1);
       }
-      
+
       onConfirm(dateRange.from, end);
     }
   };
@@ -138,8 +138,8 @@ export function BookingCalendar({
           <Button variant="outline" onClick={onCancel} className="hover:bg-canvas/50">
             {currentLang === 'ar' ? 'إلغاء' : 'Cancel'}
           </Button>
-          <Button 
-            onClick={handleConfirm} 
+          <Button
+            onClick={handleConfirm}
             disabled={!dateRange?.from}
             className="bg-primary hover:bg-primary-hover text-white transition-colors"
           >

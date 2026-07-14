@@ -1,7 +1,7 @@
 import { IRoomService } from '../interfaces';
-import { Branch, Room, RoomFilterOptions } from '../../types';
+import { Branch, Room, RoomFilterOptions } from '@/types';
 import { StorageService } from '../storage.service';
-import { hotelSettings } from '../../config/hotelSettings';
+import { hotelSettings } from '@/config/hotelSettings';
 
 export class LocalStorageRoomService implements IRoomService {
   async getBranches(): Promise<Branch[]> {
@@ -77,15 +77,15 @@ export class LocalStorageRoomService implements IRoomService {
       rooms = rooms.filter(r => {
         const overlappingBookings = bookings.filter(b => {
           if (b.roomId !== r.id || b.status !== 'confirmed') return false;
-          
+
           const bStart = new Date(b.startAt).getTime();
           const bEnd = new Date(b.endAt).getTime();
           const filterStart = new Date(startAt).getTime();
           const filterEnd = new Date(endAt).getTime();
-          
+
           return filterStart < bEnd && filterEnd > bStart;
         });
-        
+
         const isAvailable = overlappingBookings.length < (r.quantity || 1);
         if (!isAvailable) {
           console.log(`[Filter] Room ${r.id} HIDDEN by Date: Overlaps=${overlappingBookings.length}, Quantity=${r.quantity}`);

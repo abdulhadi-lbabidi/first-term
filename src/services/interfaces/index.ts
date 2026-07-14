@@ -1,4 +1,4 @@
-import { User, Branch, Room, Booking, Review, RoomFilterOptions } from '../../types';
+import { User, Branch, Room, Booking, Review, RoomFilterOptions } from '@/types';
 
 export interface IAuthService {
   register(fullName: string, email: string, password: string, phone?: string): Promise<User>;

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { roomService } from '../services';
-import { Room, Branch } from '../types';
+import { roomService } from '@/services';
+import { Room, Branch } from '@/types';
 
-import HeroSection from '../components/home/HeroSection';
-import AboutSection from '../components/home/AboutSection';
-import FeaturedSection from '../components/home/FeaturedSection';
-import BranchesSection from '../components/home/BranchesSection';
-import ServicesSection from '../components/home/ServicesSection';
-import SEO from '../components/SEO';
+import HeroSection from '@/components/home/HeroSection';
+import AboutSection from '@/components/home/AboutSection';
+import FeaturedSection from '@/components/home/FeaturedSection';
+import BranchesSection from '@/components/home/BranchesSection';
+import ServicesSection from '@/components/home/ServicesSection';
+import SEO from '@/components/SEO';
 export default function Home() {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();

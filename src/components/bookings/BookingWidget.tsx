@@ -4,10 +4,10 @@ import { format } from 'date-fns';
 import { ar, enUS } from 'date-fns/locale';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import dayjs from 'dayjs';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Button } from '../ui/Button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/Button';
 import { BookingCalendar } from './BookingCalendar';
-import { Room } from '../../types';
+import { Room } from '@/types';
 
 interface BookingWidgetProps {
   room: Room;

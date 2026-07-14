@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { authService } from '../services';
-import { useAppDispatch } from '../store';
-import { loginSuccess, setAuthLoading, setAuthError } from '../store/authSlice';
+import { authService } from '@/services';
+import { useAppDispatch } from '@/store';
+import { loginSuccess, setAuthLoading, setAuthError } from '@/store/authSlice';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import { Button } from '../components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
 export default function Login() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
   const currentLang = lang || 'en';
-  
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [formError, setFormError] = useState('');

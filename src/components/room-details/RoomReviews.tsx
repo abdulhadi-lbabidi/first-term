@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { reviewService, bookingService } from '../../services';
-import { Review, Room } from '../../types';
-import { useAppSelector } from '../../store';
+import { reviewService, bookingService } from '@/services';
+import { Review, Room } from '@/types';
+import { useAppSelector } from '@/store';
 import { Star, MessageSquare, Sparkles } from 'lucide-react';
 
 interface RoomReviewsProps {
@@ -27,8 +27,8 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
 
   // Analytics Calculations
   const totalReviews = reviews.length;
-  const averageRating = totalReviews > 0 
-    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(1) 
+  const averageRating = totalReviews > 0
+    ? (reviews.reduce((acc, r) => acc + r.rating, 0) / totalReviews).toFixed(1)
     : '0.0';
 
   const ratingCounts = [5, 4, 3, 2, 1].map(stars => ({
@@ -140,7 +140,7 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
                   <Star className="w-3.5 h-3.5 fill-current" />
                 </div>
                 <div className="flex-1 h-2.5 bg-border/40 dark:bg-border-strong/20 rounded-full overflow-hidden">
-                  <div 
+                  <div
                     className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
                     style={{ width: `${percentage}%` }}
                   />

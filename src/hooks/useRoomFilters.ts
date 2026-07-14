@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
 import { useMemo } from 'react';
-import { RoomFilterOptions } from '../types';
+import { RoomFilterOptions } from '@/types';
 
 export function useRoomFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +33,7 @@ export function useRoomFilters() {
   };
 
   // Get active filters count (excluding default/empty ones)
-  const activeFiltersCount = useMemo(() => 
+  const activeFiltersCount = useMemo(() =>
     Object.entries(filters).filter(
       ([_, value]) => value !== undefined && value !== null && value !== ''
     ).length,

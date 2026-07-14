@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useRoomFilters } from '../../hooks/useRoomFilters';
-import { Branch } from '../../types';
-import { Input } from '../ui/Input';
-import MultiSelect from '../ui/MultiSelect';
-import DualRangeSlider from '../ui/DualRangeSlider';
-import SelectWithIcon from '../ui/SelectWithIcon';
+import { useRoomFilters } from '@/hooks/useRoomFilters';
+import { Branch } from '@/types';
+import { Input } from '@/components/ui/Input';
+import MultiSelect from '@/components/ui/MultiSelect';
+import DualRangeSlider from '@/components/ui/DualRangeSlider';
+import SelectWithIcon from '@/components/ui/SelectWithIcon';
 import { format, isValid, startOfDay } from 'date-fns';
 import { ar, enUS } from 'date-fns/locale';
 import { DateRange } from 'react-day-picker';
-import { Calendar } from '../ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Button } from '../ui/Button';
-import { BookingCalendar } from '../bookings/BookingCalendar';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/Button';
+import { BookingCalendar } from '@/components/bookings/BookingCalendar';
 import {
   Search,
   Star,

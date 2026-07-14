@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { Room } from '../../types';
-import { Dialog, DialogContent } from '../../components/ui/Dialog';
+import { Room } from '@/types';
+import { Dialog, DialogContent } from '@/components/ui/Dialog';
 
 interface RoomBookingDialogProps {
   room: Room;

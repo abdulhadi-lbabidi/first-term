@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Mail, Phone, MapPin, CheckCircle2, AlertCircle, Send, Map } from 'lucide-react';
-import { Input } from '../components/ui/Input';
-import SEO from '../components/SEO';
+import { Input } from '@/components/ui/Input';
+import SEO from '@/components/SEO';
 
 export default function Contact() {
   const { t, i18n } = useTranslation();
@@ -54,14 +54,14 @@ export default function Contact() {
 
       {/* Main Layout Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
-        
+
         {/* Left Side: Visual & Contact Info */}
         <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
-          
+
           <div className="relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg border border-border/20">
-            <img 
-              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80" 
-              alt="Hotel Entrance" 
+            <img
+              src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80"
+              alt="Hotel Entrance"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -80,7 +80,7 @@ export default function Contact() {
             <h4 className="font-serif-display text-xl font-bold text-ink dark:text-canvas mb-6 pb-4 border-b border-border/40 dark:border-border-strong/10">
               {currentLang === 'ar' ? 'فريق العناية بالضيوف' : 'Guest Relations'}
             </h4>
-            
+
             <ul className="space-y-6">
               <li className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-white dark:bg-ink border border-border/40 dark:border-border-strong/10 shadow-sm flex items-center justify-center text-primary shrink-0">

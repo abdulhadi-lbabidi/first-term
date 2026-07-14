@@ -1,9 +1,9 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { hotelSettings } from '../../config/hotelSettings';
-import { Room, Branch } from '../../types';
+import { hotelSettings } from '@/config/hotelSettings';
+import { Room, Branch } from '@/types';
 import { Star, Users, Maximize2, DollarSign } from 'lucide-react';
-import { StorageService } from '../../services/storage.service';
+import { StorageService } from '@/services/storage.service';
 
 interface RoomCardProps {
   room: Room;

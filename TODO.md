@@ -10,25 +10,18 @@
 - [ ] filter 
     - [ ] date
     - [ ] bug filter and scroll bad
-    - [ ] capcity
-- [x] video record
+- [ ] video record response 
 # testing responsiv for all pages
 - [ ] home
 - [ ] rooms
 - [ ] room details
+    - اسم الفندق في التاب والموبايل تحت الصور
+    - في وضع الديسكتوب الوصف تحت الصور
+    - 
 - [ ] room details - all images 
 - [ ] room details - booking 
 - [ ] room details - review
 - [ ] booking
-- [ ] footer
+- [x] footer
 - [ ] about
-- [ ] all forms 
-# testing all features
-- [ ] performance
-# testing content
-- [ ] about
-- [ ] contact
-- [ ] footer
-- [ ] terms 
-- [ ] privacy
-- [ ] home
+- [ ] all forms
