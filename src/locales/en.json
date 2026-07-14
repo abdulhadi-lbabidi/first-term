@@ -46,7 +46,22 @@
       "pool": "Infinity Pool",
       "gym": "Fitness Center",
       "transfer": "Airport Shuttle"
-    }
+    },
+    "branchesList": [
+      {
+        "id": "dubai-branch",
+        "name": "Vercel Dubai"
+      },
+      {
+        "id": "istanbul-branch",
+        "name": "Vercel Istanbul"
+      },
+      {
+        "id": "paris-branch",
+        "name": "Vercel Paris"
+      }
+    ],
+    "branchesMap": "Branches Map"
   },
   "auth": {
     "loginTitle": "Sign In to Luxury",

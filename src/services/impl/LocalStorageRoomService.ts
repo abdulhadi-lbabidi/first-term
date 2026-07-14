@@ -14,6 +14,7 @@ export class LocalStorageRoomService implements IRoomService {
   }
 
   async getRooms(filters?: RoomFilterOptions): Promise<Room[]> {
+    await new Promise(resolve => setTimeout(resolve, 50));
     let rooms = StorageService.getRooms();
     console.log(`[Filter] Initial rooms count: ${rooms.length}`);
 

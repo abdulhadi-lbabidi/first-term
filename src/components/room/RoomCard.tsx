@@ -4,6 +4,7 @@ import { hotelSettings } from '@/config/hotelSettings';
 import { Room, Branch } from '@/types';
 import { Star, Users, Maximize2, DollarSign } from 'lucide-react';
 import { StorageService } from '@/services/storage.service';
+import { Badge } from '../ui/Badge';
 
 interface RoomCardProps {
   room: Room;
@@ -42,6 +43,11 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
     isAvailable = !hasConflict;
   }
 
+  const reviews = StorageService.getReviews().filter(r => r.roomId === room.id);
+  const rating = reviews.length > 0
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+    : "5.0";
+
   if (layout === 'list') {
     return (
       <Link
@@ -63,10 +69,10 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
             <span className="text-[12px] font-bold text-primary tracking-wider uppercase">
               {branchName}
             </span>
-            <div className="flex items-center gap-1 bg-primary/10 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-primary select-none">
+            {/* <div className="flex items-center gap-1 bg-primary/10 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-primary select-none">
               <Star className="w-3 h-3 fill-primary" />
-              <span className="font-interfaceEn">{room.stars || 5}.0</span>
-            </div>
+              <span className="font-interfaceEn">{rating}</span>
+            </div> */}
           </div>
 
           <h3 className="font-serif-display text-2xl lg:text-3xl font-bold tracking-wide text-ink dark:text-canvas line-clamp-1 leading-tight my-0 group-hover:text-primary transition-colors duration-300">
@@ -112,7 +118,7 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
   return (
     <Link
       to={`/${currentLang}/rooms/${room.id}`}
-      className="group relative aspect-[3/4] rounded-[28px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-luxury flex flex-col justify-end text-left rtl:text-right h-full w-full border border-border/10"
+      className="group max-h-[400px] relative aspect-square md:aspect-[4/5] lg:aspect-[3/4] rounded-[28px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] transition-luxury flex flex-col justify-end text-left rtl:text-right h-full w-full border border-border/10"
     >
       {/* Background Room Image */}
       <img
@@ -129,13 +135,13 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
       <div className="relative z-20 p-6 flex flex-col space-y-3.5 w-full text-white">
         {/* Branch Name & Rating Badge */}
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[12px] font-bold text-primary tracking-wider uppercase">
+          <Badge className="text-[12px] font-light uppercase">
             {branchName}
-          </span>
-          <div className="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-bold select-none border border-white/10 text-white">
+          </Badge>
+          {/* <div className="flex items-center gap-1 bg-white/10 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-bold select-none border border-white/10 text-white">
             <Star className="w-3 h-3 fill-primary text-primary" />
-            <span className="font-interfaceEn">{room.stars || 5}.0</span>
-          </div>
+            <span className="font-interfaceEn">{rating}</span>
+          </div> */}
         </div>
 
         {/* Room Title - Ensure image hover dims/focuses text */}

@@ -108,20 +108,8 @@ export default function RoomDetails() {
   };
 
   const isDateDisabled = (dateItem: dayjs.Dayjs | Date) => {
-    if (!room) return false;
     const date = dayjs(dateItem);
-
-    if (date.isBefore(dayjs(), 'day')) return true;
-
-    const bookingsList = StorageService.getBookings();
-    const roomBookings = bookingsList.filter(b => b.roomId === room.id && b.status === 'confirmed');
-
-    // A date is fully disabled if it falls strictly between check-in and check-out of any booking
-    return roomBookings.some(b => {
-      const bStart = dayjs(b.startAt).startOf('day');
-      const bEnd = dayjs(b.endAt).startOf('day');
-      return date.isAfter(bStart, 'day') && date.isBefore(bEnd, 'day');
-    });
+    return date.isBefore(dayjs(), 'day');
   };
 
   if (loading || !room) {
@@ -131,8 +119,8 @@ export default function RoomDetails() {
           <Skeleton className="h-4 w-4 rounded-full" />
           <Skeleton className="h-4 w-16 rounded" />
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start mt-6 text-left rtl:text-right">
-          <div className="space-y-10 lg:col-span-3">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-12 items-start mt-6 text-left rtl:text-right">
+          <div className="space-y-10 xl:col-span-3">
             <div className="space-y-4">
               <Skeleton className="h-[300px] sm:h-[400px] w-full rounded-3xl" />
               <div className="grid grid-cols-4 gap-3">
@@ -151,7 +139,7 @@ export default function RoomDetails() {
               </div>
             </div>
           </div>
-          <div className="lg:col-span-2 lg:sticky lg:top-28">
+          <div className="hidden xl:block xl:col-span-2 xl:sticky xl:top-28">
             <Skeleton className="h-[500px] w-full rounded-2xl" />
           </div>
         </div>
@@ -161,6 +149,10 @@ export default function RoomDetails() {
 
   const roomName = currentLang === 'ar' ? room.nameAr : room.nameEn;
   const branchName = branch ? (currentLang === 'ar' ? branch.nameAr : branch.nameEn) : '';
+
+  const rating = reviews.length > 0 
+    ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) 
+    : "5.0";
 
   return (
     <div className={`max-w-7xl mx-auto px-6 py-8 ${currentLang === 'ar' ? 'font-interfaceAr' : 'font-interfaceEn'}`}>
@@ -172,9 +164,19 @@ export default function RoomDetails() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start mt-6 text-left rtl:text-right">
-        <div className="space-y-10 lg:col-span-3">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-12 items-start mt-6 text-left rtl:text-right">
+        <div className="space-y-10 xl:col-span-3">
           <RoomGallery images={room.images} roomName={roomName} />
+
+          {/* Title block for Mobile/Tablet ONLY */}
+          <div className="xl:hidden">
+            <Info branchName={branchName} roomName={roomName} stars={room.stars || 5} size={room.size} capacity={room.capacity} currentLang={currentLang} t={t} rating={rating} />
+          </div>
+
+          {/* Description for ALL views */}
+          <div className="text-[15px] leading-relaxed text-body/90 dark:text-canvas/80 border-b border-border/40 dark:border-border-strong/10 pb-6 xl:pb-0 xl:border-none break-words">
+            {currentLang === 'ar' ? room.descriptionAr : room.descriptionEn}
+          </div>
 
           <RoomAmenities services={room.services} />
 
@@ -188,19 +190,8 @@ export default function RoomDetails() {
           />
         </div>
 
-        <div className="space-y-10 lg:col-span-2 lg:sticky lg:top-24">
-          <div className="space-y-4">
-            <span className="text-[13px] font-semibold text-primary uppercase">{branchName}</span>
-            <h1 className="font-serif-display text-4xl font-semibold">{roomName}</h1>
-            <div className="flex text-primary">
-              {Array.from({ length: 5 }).map((_, i) => <Star key={i} className={`w-4 h-4 ${i < (room.stars || 5) ? 'fill-primary' : 'text-border'}`} />)}
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-6 gap-2 rtl:space-x-reverse py-4 border-y border-border/40 text-[14px] font-semibold">
-            <span className="flex items-center gap-1 space-x-2"><Maximize2 className="w-4 h-4 text-primary" /><span>{t('common.roomSize', { size: room.size })}</span></span>
-            <span className="flex items-center gap-1 space-x-2"><Users className="w-4 h-4 text-primary" /><span>{t('rooms.capacityLabel', { count: room.capacity })}</span></span>
-          </div>
+        <div className="hidden xl:block space-y-10 xl:col-span-2 xl:sticky xl:top-24">
+          <Info branchName={branchName} roomName={roomName} stars={room.stars || 5} size={room.size} capacity={room.capacity} currentLang={currentLang} t={t} rating={rating} />
 
           <BookingWidget
             room={room}
@@ -239,7 +230,46 @@ export default function RoomDetails() {
         checkOut={checkOut}
         setBookingStep={setBookingStep}
         setIsBookingDialogOpen={setIsBookingDialogOpen}
+        isDateDisabled={isDateDisabled}
+        bookedDates={StorageService.getBookings().filter(b => b.roomId === room?.id && b.status === 'confirmed')}
+        onBookNow={(start, end, guestsCount) => {
+          setCheckIn(start);
+          setCheckOut(end);
+          setGuests(guestsCount);
+          setBookingStep(3);
+          setIsBookingDialogOpen(true);
+        }}
       />
     </div>
   );
+}
+
+type InfoType = {
+  branchName: string,
+  roomName: string,
+  stars: number,
+  size: number,
+  capacity: number,
+  currentLang: string,
+  t: any,
+  rating: string
+}
+function Info({ branchName, roomName, stars, size, capacity, currentLang, t, rating }: InfoType) {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <span className="text-[13px] font-semibold text-primary mb-3 uppercase">{branchName}</span>
+        <h1 className="font-serif-display text-3xl xl:text-4xl font-semibold text-ink dark:text-canvas">{roomName}</h1>
+        <div className="flex items-center gap-1 text-primary">
+          <Star className="w-4 h-4 fill-primary" />
+          <span className="text-[14px] font-bold mt-1 font-interfaceEn">{rating}</span>
+        </div>
+      </div>
+
+      <div className="flex items-center space-x-6 gap-2 rtl:space-x-reverse py-4 border-y border-border/40 text-[14px] font-semibold">
+        <span className="flex items-center gap-1 space-x-2"><Maximize2 className="w-4 h-4 text-primary" /><span>{t('common.roomSize', { size: size })}</span></span>
+        <span className="flex items-center gap-1 space-x-2"><Users className="w-4 h-4 text-primary" /><span>{t('rooms.capacityLabel', { count: capacity })}</span></span>
+      </div>
+    </div>
+  )
 }

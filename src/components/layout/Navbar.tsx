@@ -106,15 +106,13 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-[15px] justify-start text-start font-medium tracking-wide transition-colors duration-300 relative py-1 ${isActive
+                className={`group text-[15px] justify-start text-start font-medium tracking-wide transition-colors duration-300 relative py-1 ${isActive
                   ? 'text-primary'
                   : 'text-ink/80 dark:text-canvas/80 hover:text-primary dark:hover:text-primary'
                   }`}
               >
                 {link.name}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full animate-fade-in" />
-                )}
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] bg-primary rounded-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] ${isActive ? 'w-full' : 'w-0 group-hover:w-full'}`} />
               </Link>
             );
           })}

@@ -17,7 +17,7 @@ export function RoomAmenities({ services }: RoomAmenitiesProps) {
       </h3>
       <div className="flex flex-wrap gap-4">
         {services.map((srv) => (
-          <div key={srv} className="flex flex-1 items-center space-x-3 rtl:space-x-reverse p-4 bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-xl min-w-[150px] sm:min-w-[200px]">
+          <div key={srv} className="flex flex-1 items-center gap-2  p-4 bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-xl">
             <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
               <Check className="w-4 h-4" />
             </div>

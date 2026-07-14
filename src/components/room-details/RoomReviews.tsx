@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { reviewService, bookingService } from '@/services';
+import { reviewService, bookingService, roomService } from '@/services';
 import { Review, Room } from '@/types';
 import { useAppSelector } from '@/store';
 import { Star, MessageSquare, Sparkles } from 'lucide-react';
@@ -89,9 +89,9 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
       setRating(5);
       setReviewError('');
       setShowReviewForm(false);
-      // Optional: If you have a room service method to refresh stars
-      // const updatedRoom = await roomService.getRoomById(room.id);
-      // if (updatedRoom) setRoom(updatedRoom);
+      // Refresh the room data to update average rating and total reviews count globally on the page
+      const updatedRoom = await roomService.getRoomById(room.id);
+      if (updatedRoom) setRoom(updatedRoom);
     } catch (err: any) {
       setReviewError(err.message || 'فشل إرسال التقييم / Failed to submit review');
     }
@@ -209,7 +209,7 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
               <div key={rev.id} className="bg-white dark:bg-ink border border-border/40 dark:border-border-strong/15 rounded-2xl p-6 shadow-sm">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
-                    <span className="text-[14px] font-bold">{rev.userName}</span>
+                    <span className="text-[14px] font-bold break-words">{rev.userName}</span>
                     {isAuthenticated && user?.id === rev.userId && (
                       <button
                         onClick={() => {
@@ -228,7 +228,7 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
                     {Array.from({ length: 5 }).map((_, i) => <Star key={i} className={`w-3 h-3 ${i < rev.rating ? 'fill-primary' : 'text-border'}`} />)}
                   </div>
                 </div>
-                <p className="text-[14px] text-body dark:text-canvas/80 leading-relaxed italic">"{rev.comment}"</p>
+                <p className="text-[14px] text-body dark:text-canvas/80 leading-relaxed italic break-words">"{rev.comment}"</p>
               </div>
             ))}
             {reviews.length > 3 && (
@@ -240,8 +240,31 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
             )}
           </div>
         ) : (
-          <div className="bg-canvas/30 rounded-2xl p-8 text-center border border-dashed border-border/50">
-            <p className="text-[14px] text-muted italic">{t('rooms.noReviews')}</p>
+          <div className="bg-canvas/30 rounded-2xl p-10 text-center border border-dashed border-border/50 flex flex-col items-center">
+            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 text-primary">
+              <Star className="w-8 h-8" />
+            </div>
+            <h4 className="font-serif-display text-xl font-semibold text-ink dark:text-canvas mb-2">
+              {currentLang === 'ar' ? 'كن أول من يقيّم هذه الغرفة!' : 'Be the first to review this room!'}
+            </h4>
+            <p className="text-[14px] text-muted mb-6 max-w-md">
+              {currentLang === 'ar'
+                ? 'شارك تجربتك مع ضيوفنا الآخرين وساعدهم في اتخاذ القرار الأفضل.'
+                : 'Share your experience with other guests and help them make the best choice.'}
+            </p>
+            {isAuthenticated && canReview && !showReviewForm && (
+              <button
+                onClick={() => setShowReviewForm(true)}
+                className="bg-primary hover:bg-primary-hover text-white px-6 py-2.5 rounded-full text-[14px] font-semibold transition-colors shadow-sm"
+              >
+                {t('rooms.addReview')}
+              </button>
+            )}
+            {!isAuthenticated && (
+              <Link to={`/${currentLang}/login`} className="bg-primary/10 hover:bg-primary/20 text-primary px-6 py-2.5 rounded-full text-[14px] font-semibold transition-colors">
+                {t('common.login')}
+              </Link>
+            )}
           </div>
         )}
       </div>

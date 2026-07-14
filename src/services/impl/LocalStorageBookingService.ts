@@ -23,8 +23,7 @@ export class LocalStorageBookingService implements IBookingService {
       throw new Error('تواريخ غير صالحة / Invalid dates');
     }
 
-    // Check interval conflicts with existing bookings
-    // A room type is unavailable ONLY when the number of overlapping bookings >= room.quantity
+    // Check interval conflicts with existing bookings night by night
     const bookings = StorageService.getBookings();
     const overlappingBookings = bookings.filter(b =>
       b.roomId === roomId &&
@@ -33,8 +32,20 @@ export class LocalStorageBookingService implements IBookingService {
       dayjs(endAt).isAfter(dayjs(b.startAt))
     );
 
-    if (overlappingBookings.length >= (room.quantity || 1)) {
-      throw new Error('الغرفة محجوزة بالفعل خلال هذه الفترة / Room is already reserved for the selected period');
+    let currentDay = dayjs(checkInDate);
+    const endDay = dayjs(checkOutDate);
+    
+    while (currentDay.isBefore(endDay)) {
+      const count = overlappingBookings.filter(b => {
+        const bIn = dayjs(b.checkInDate);
+        const bOut = dayjs(b.checkOutDate);
+        return (bIn.isBefore(currentDay, 'day') || bIn.isSame(currentDay, 'day')) && bOut.isAfter(currentDay, 'day');
+      }).length;
+
+      if (count >= (room.quantity || 1)) {
+        throw new Error('الغرفة محجوزة بالفعل خلال هذه الفترة / Room is already reserved for the selected period');
+      }
+      currentDay = currentDay.add(1, 'day');
     }
 
     const start = dayjs(checkInDate);

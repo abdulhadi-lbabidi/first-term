@@ -65,7 +65,7 @@ export default function FilterSidebar({ branches }: FilterSidebarProps) {
     searchTimeoutRef.current = setTimeout(() => {
       updateFilters({ q: val || undefined });
       searchTimeoutRef.current = null;
-    }, 1000);
+    }, 100);
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function FilterSidebar({ branches }: FilterSidebarProps) {
         max_price: max !== undefined && max < 2000 ? max : undefined
       });
       priceTimeoutRef.current = null;
-    }, 1000);
+    }, 100);
   };
 
   useEffect(() => {
@@ -219,35 +219,6 @@ export default function FilterSidebar({ branches }: FilterSidebarProps) {
             onChange={({ min, max }) => handlePriceChange(min, max)}
             currentLang={currentLang}
           />
-        </FilterSection>
-
-        {/* 4. Stars Rating */}
-        <FilterSection
-          id="stars"
-          title={t('rooms.starsFilter')}
-          icon={<Star className="w-4 h-4 text-primary" />}
-          isActive={filters.stars !== undefined}
-          openSection={openSection}
-          setOpenSection={setOpenSection}
-        >
-          <div className="flex items-center gap-2">
-            {[1, 2, 3, 4, 5].map((star) => {
-              const isColored = filters.stars !== undefined && star <= filters.stars;
-              return (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => handleStarsChange(star)}
-                  className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all cursor-pointer ${isColored
-                    ? 'bg-primary border-primary text-white shadow-sm'
-                    : 'border-border dark:border-border-strong/20 text-muted hover:border-primary/50'
-                    }`}
-                >
-                  <Star className={`w-4.5 h-4.5 ${isColored ? 'fill-white' : ''}`} />
-                </button>
-              );
-            })}
-          </div>
         </FilterSection>
 
         {/* 5. Guests Capacity Filter */}

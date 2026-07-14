@@ -46,7 +46,22 @@
       "pool": "مسبح إنفينيتي",
       "gym": "مركز لياقة بدنية",
       "transfer": "نقل من وإلى المطار"
-    }
+    },
+    "branchesList": [
+      {
+        "id": "dubai-branch",
+        "name": "فرع دبي"
+      },
+      {
+        "id": "istanbul-branch",
+        "name": "فرع إسطنبول"
+      },
+      {
+        "id": "paris-branch",
+        "name": "فرع باريس"
+      }
+    ],
+    "branchesMap": "خريطة الفروع"
   },
   "auth": {
     "loginTitle": "دخول إلى عالم الفخامة",

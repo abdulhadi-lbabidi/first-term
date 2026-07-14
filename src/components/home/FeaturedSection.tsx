@@ -18,7 +18,7 @@ export default function FeaturedSection({
   t
 }: FeaturedSectionProps) {
   return (
-    <section className="relative py-24 bg-surface-soft/40 dark:bg-body/5 border-y border-border/20 dark:border-border-strong/10 overflow-hidden">
+    <section className="relative py-16 md:py-20 bg-surface-soft/40 dark:bg-body/5 border-y border-border/20 dark:border-border-strong/10 overflow-hidden">
       {/* Decorative Light Mode Pattern */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-0 pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23000000'/%3E%3C/svg%3E")` }} />
       {/* Decorative Dark Mode Pattern */}

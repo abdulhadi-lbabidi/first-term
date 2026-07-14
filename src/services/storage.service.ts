@@ -67,7 +67,7 @@ const SEED_ROOMS: Room[] = [
     pricePerNight: 650,
     size: 120,
     capacity: 3,
-    quantity: 5,
+    quantity: 2,
     stars: 5,
     descriptionAr: 'جناح ملكي فاخر بإطلالة بانورامية كاملة على أفق دبي والخليج العربي. يحتوي على غرفتي نوم وصالة معيشة واسعة ومسبح خاص داخلي.',
     descriptionEn: 'Luxury Royal suite with full panoramic view over Dubai Skyline and Arabian Gulf. Features two bedrooms, a spacious living area and a private plunge pool.',
@@ -205,6 +205,16 @@ const SEED_ROOMS: Room[] = [
   },
 ];
 
+const SEED_REVIEWS: Review[] = SEED_ROOMS.map(room => ({
+  id: `review-${room.id}-1`,
+  userId: 'user-default',
+  roomId: room.id,
+  rating: 5,
+  comment: 'إقامة رائعة وتجربة ممتازة.',
+  createdAt: new Date().toISOString(),
+  userName: 'ضيف',
+}));
+
 export class StorageService {
   static init(): void {
     const existingBranches = localStorage.getItem(KEYS.BRANCHES);
@@ -230,7 +240,16 @@ export class StorageService {
       localStorage.setItem(KEYS.BOOKINGS, JSON.stringify([]));
     }
     if (!localStorage.getItem(KEYS.REVIEWS)) {
-      localStorage.setItem(KEYS.REVIEWS, JSON.stringify([]));
+      localStorage.setItem(KEYS.REVIEWS, JSON.stringify(SEED_REVIEWS));
+    } else {
+      try {
+        const existingReviews = JSON.parse(localStorage.getItem(KEYS.REVIEWS) || '[]');
+        if (existingReviews.length === 0) {
+          localStorage.setItem(KEYS.REVIEWS, JSON.stringify(SEED_REVIEWS));
+        }
+      } catch (e) {
+        localStorage.setItem(KEYS.REVIEWS, JSON.stringify(SEED_REVIEWS));
+      }
     }
 
     // Migrate old data to include quantity

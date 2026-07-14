@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ar, enUS } from 'date-fns/locale';
 import { addDays, isAfter, isBefore, startOfDay } from 'date-fns';
+import dayjs from 'dayjs';
 import { DateRange } from 'react-day-picker';
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/Button';
@@ -40,18 +41,18 @@ export function BookingCalendar({
   if (bookedDates && effectiveQuantity > 0) {
     const dateCounts: Record<string, number> = {};
     bookedDates.forEach(b => {
-      let current = startOfDay(new Date(b.startAt));
-      const end = startOfDay(new Date(b.endAt));
-      while (isBefore(current, end)) {
-        const dateStr = current.toISOString().split('T')[0];
+      let current = dayjs(b.startAt).startOf('day');
+      const end = dayjs(b.endAt).startOf('day');
+      while (current.isBefore(end)) {
+        const dateStr = current.format('YYYY-MM-DD');
         dateCounts[dateStr] = (dateCounts[dateStr] || 0) + 1;
-        current = addDays(current, 1);
+        current = current.add(1, 'day');
       }
     });
 
     Object.entries(dateCounts).forEach(([dateStr, count]) => {
       if (count >= effectiveQuantity) {
-        fullyBookedDates.push(new Date(dateStr));
+        fullyBookedDates.push(dayjs(dateStr).toDate());
       }
     });
   }
@@ -89,6 +90,23 @@ export function BookingCalendar({
     }
   };
 
+  const isDateFullyBooked = (date: Date) => {
+    return fullyBookedDates.some(d => d.getTime() === startOfDay(date).getTime());
+  };
+
+  const isCompletelyDisabled = (date: Date) => {
+    // 1. If it's disabled by parent (e.g. past dates)
+    if (isDateDisabled(date)) return true;
+
+    // 2. If it cannot be check-in AND cannot be check-out
+    const cannotCheckIn = isDateFullyBooked(date);
+    
+    const prevDay = addDays(date, -1);
+    const cannotCheckOut = isDateFullyBooked(prevDay) || isDateDisabled(prevDay);
+
+    return cannotCheckIn && cannotCheckOut;
+  };
+
   const modifiers = {
     booked: fullyBookedDates,
   };
@@ -124,7 +142,7 @@ export function BookingCalendar({
           onSelect={handleSelect}
           locale={locale}
           numberOfMonths={window.innerWidth < 640 ? 1 : 2}
-          disabled={isDateDisabled}
+          disabled={isCompletelyDisabled}
           modifiers={modifiers}
           modifiersClassNames={modifiersClassNames}
           className="w-full flex justify-center"

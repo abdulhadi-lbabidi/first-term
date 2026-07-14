@@ -10,7 +10,7 @@ interface BranchesSectionProps {
 
 export default function BranchesSection({ branches, currentLang, t }: BranchesSectionProps) {
   return (
-    <section className="py-24 max-w-7xl mx-auto px-6">
+    <section className="py-16 md:py-20 max-w-7xl mx-auto px-6">
       <div className="text-center max-w-2xl mx-auto mb-16">
         <span className="text-[13px] font-semibold text-primary tracking-widest uppercase block mb-3">
           {t('common.branches')}
@@ -28,7 +28,7 @@ export default function BranchesSection({ branches, currentLang, t }: BranchesSe
             <Link
               key={branch.id}
               to={`/${currentLang}/rooms?branch=${branch.id}`}
-              className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md flex flex-col justify-end p-6 text-left rtl:text-right"
+              className="group relative aspect-[4/5] lg:aspect-[3/4] rounded-2xl overflow-hidden shadow-md flex flex-col justify-end p-6 text-left rtl:text-right"
             >
               {/* Background Image */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent z-10" />

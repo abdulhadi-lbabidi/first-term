@@ -80,10 +80,10 @@ export default function Footer() {
           <div className="space-y-6 lg:col-span-2">
             <Link
               to={`/${currentLang}`}
-              className="flex items-center gap-2.5 group select-none hover:text-primary transition-colors"
+              className="flex w-max items-center gap-2.5 group select-none hover:text-primary transition-colors"
             >
               <div className="w-12 h-12 flex items-center justify-center drop-shadow-md transition-transform duration-300 group-hover:scale-105">
-                <img src="/logo-white.webp" alt="Vercel Hotels Logo" className="w-full h-full object-contain" />
+                <img src="/logo-clean.webp" alt="Vercel Hotels Logo" className="p-2 w-full h-full object-contain" />
               </div>
               <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
                 Vercel Hotels
@@ -120,27 +120,19 @@ export default function Footer() {
               {t('common.branches')}
             </h4>
             <ul className="space-y-3 text-[14px] text-canvas/70">
-              <li>
-                <Link to={`/${currentLang}/rooms?branch=dubai-branch`} className="hover:text-primary transition-colors">
-                  {currentLang === 'ar' ? 'فرع دبي' : 'Vercel Dubai'}
-                </Link>
-              </li>
-              <li>
-                <Link to={`/${currentLang}/rooms?branch=istanbul-branch`} className="hover:text-primary transition-colors">
-                  {currentLang === 'ar' ? 'فرع إسطنبول' : 'Vercel Istanbul'}
-                </Link>
-              </li>
-              <li>
-                <Link to={`/${currentLang}/rooms?branch=paris-branch`} className="hover:text-primary transition-colors">
-                  {currentLang === 'ar' ? 'فرع باريس' : 'Vercel Paris'}
-                </Link>
-              </li>
               <li className="pt-2">
                 <Link to={`/${currentLang}/map`} className="hover:text-primary transition-colors flex items-center gap-2 text-primary font-medium">
-                  <MapPin className="w-4 h-4" />
-                  {currentLang === 'ar' ? 'خريطة الفروع' : 'Branches Map'}
+                  {/* <MapPin className="w-4 h-4" /> */}
+                  {t('common.branchesMap', 'Branches Map')}
                 </Link>
               </li>
+              {(t('common.branchesList', { returnObjects: true }) as { id: string, name: string }[]).map((branch) => (
+                <li key={branch.id}>
+                  <Link to={`/${currentLang}/rooms?branch=${branch.id}`} className="hover:text-primary transition-colors">
+                    {branch.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
