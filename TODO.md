@@ -17,7 +17,8 @@
 - [ ] room details
     - اسم الفندق في التاب والموبايل تحت الصور
     - في وضع الديسكتوب الوصف تحت الصور
-    - 
+    - Suite Features & Amenities خليها warp min w
+    - الحجز في التاب عائم وفي الموبايل عائم واخفيها منترتيبة المحتوى
 - [ ] room details - all images 
 - [ ] room details - booking 
 - [ ] room details - review
