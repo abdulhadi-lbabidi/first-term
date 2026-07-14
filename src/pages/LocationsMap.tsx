@@ -7,6 +7,7 @@ import LiveMap from '../components/map/LiveMap';
 import FilterSidebar from '../components/filters/FilterSidebar';
 import { useRoomFilters } from '../hooks/useRoomFilters';
 import { MapPin, Navigation, Calendar } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function LocationsMap() {
   const { lang } = useParams<{ lang: string }>();
@@ -63,6 +64,7 @@ export default function LocationsMap() {
 
   return (
     <div className="relative min-h-screen py-12 lg:py-20 bg-surface-soft/20 dark:bg-body/5 overflow-hidden">
+      <SEO title={currentLang === 'ar' ? 'فروعنا حول العالم' : 'Hotels Map'} />
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-0 pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23000000'/%3E%3C/svg%3E")` }} />
       <div className="absolute inset-0 opacity-0 dark:opacity-[0.06] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='2' cy='2' r='1.5' fill='%23ffffff'/%3E%3C/svg%3E")` }} />
 

@@ -73,7 +73,7 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
     e.preventDefault();
     if (!isAuthenticated || !user || !room) return;
     if (!comment.trim()) {
-      setReviewError('يرجى كتابة تعليق / Please write a comment');
+      setReviewError(currentLang === 'ar' ? 'يرجى كتابة تعليق قبل الإرسال.' : 'Please write a comment before submitting.');
       return;
     }
     try {
@@ -194,8 +194,11 @@ export function RoomReviews({ room, reviews, setReviews, setRoom }: RoomReviewsP
         )}
 
         {!isAuthenticated && (
-          <div className="bg-canvas/40 p-6 rounded-2xl text-center border border-dashed border-border mb-8">
-            <Link to={`/${currentLang}/login`} className="text-primary font-semibold hover:underline">{t('common.login')}</Link>
+          <div className="bg-canvas/40 p-6 rounded-2xl text-center border border-dashed border-border mb-8 space-y-3">
+            <p className="text-[14px] text-muted leading-relaxed">
+              {t('rooms.loginToReview')}
+            </p>
+            <Link to={`/${currentLang}/login`} className="text-primary font-semibold hover:underline text-[14px]">{t('common.login')}</Link>
           </div>
         )}
 

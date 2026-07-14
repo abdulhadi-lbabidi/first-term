@@ -90,8 +90,8 @@ export default function Navbar() {
           to={`/${currentLang}`}
           className="flex items-center gap-2.5 group select-none"
         >
-          <div className="w-9 h-9 rounded-lg bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary border border-primary/20 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-sm">
-            <Crown className="w-5 h-5 fill-current" />
+          <div className="w-10 h-10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 drop-shadow-sm">
+            <img src="/logo-primary.webp" alt="Vercel Hotels Logo" className="w-full h-full object-contain" />
           </div>
           <span className="font-serif-display text-lg lg:text-xl font-bold tracking-wider text-ink dark:text-canvas uppercase group-hover:text-primary transition-colors">
             Vercel Hotels

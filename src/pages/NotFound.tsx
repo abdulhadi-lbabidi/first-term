@@ -18,21 +18,27 @@ export default function NotFound() {
       </h1>
       
       <h2 className="font-serif-display text-2xl text-ink dark:text-canvas">
-        {currentLang === 'ar' ? 'الصفحة غير موجودة' : 'Page Not Found'}
+        {currentLang === 'ar' ? 'الصفحة غير متاحة' : 'This Page Has Moved'}
       </h2>
       
       <p className="text-[14px] text-muted max-w-xs mx-auto leading-relaxed">
         {currentLang === 'ar' 
-          ? 'المعذرة، الصفحة التي تبحث عنها غير متوفرة أو تم نقلها.' 
-          : 'The luxury page you are trying to access is unavailable or has been relocated.'}
+          ? 'لم نتمكن من إيجاد ما تبحث عنه. يمكنك استكشاف غرفنا أو التواصل مع فريق الكونسيرج.' 
+          : "We couldn't locate what you're looking for. Explore our suites or reach out to our concierge team."}
       </p>
 
-      <div className="pt-2">
+      <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
         <Link 
-          to={`/${currentLang}`}
+          to={`/${currentLang}/rooms`}
           className="bg-primary hover:bg-primary-hover text-white text-[14px] font-semibold px-8 py-3 rounded-full transition-luxury inline-block shadow-md"
         >
-          {currentLang === 'ar' ? 'العودة للرئيسية' : 'Return Home'}
+          {currentLang === 'ar' ? 'استكشف الغرف' : 'Explore Rooms'}
+        </Link>
+        <Link 
+          to={`/${currentLang}/contact`}
+          className="border border-border dark:border-border-strong/30 hover:border-primary text-ink dark:text-canvas text-[14px] font-semibold px-8 py-3 rounded-full transition-luxury inline-block"
+        >
+          {currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us'}
         </Link>
       </div>
     </div>

@@ -18,6 +18,7 @@ import {
   SheetFooter,
   SheetTrigger,
 } from '../components/ui/sheet';
+import SEO from '../components/SEO';
 
 export default function Rooms() {
   const { t, i18n } = useTranslation();
@@ -60,6 +61,7 @@ export default function Rooms() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 font-interfaceEn">
+      <SEO title={t('common.rooms')} />
       {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto mb-12 mt-6">
         <h1 className="font-serif-display text-4xl lg:text-5xl font-semibold text-ink dark:text-canvas mb-4">
@@ -148,7 +150,7 @@ export default function Rooms() {
                 {currentLang === 'ar' ? (showFilters ? 'إخفاء الفلاتر' : 'إظهار الفلاتر') : (showFilters ? 'Hide Filters' : 'Show Filters')}
               </Button>
               <span className="text-[13px] text-muted font-semibold uppercase tracking-wider">
-                {t('rooms.title')}: {rooms.length} {currentLang === 'ar' ? 'غرف' : 'rooms'}
+                {rooms.length} {currentLang === 'ar' ? 'خيار متاح' : 'Suites Available'}
               </span>
             </div>
             <div className="bg-canvas dark:bg-body/20 p-1 rounded-full border border-border/40 dark:border-border-strong/10 flex items-center gap-1">
@@ -209,7 +211,7 @@ export default function Rooms() {
 
             /* Rooms Grid */
           ) : rooms.length > 0 ? (
-            <div className={`grid gap-6 ${cols === 'list' ? 'grid-cols-1' : cols === 'grid-3' ? (showFilters ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4') : (showFilters ? 'grid-cols-2 lg:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3')}`}>
+            <div className={`grid gap-6 min-h-screen ${cols === 'list' ? 'grid-cols-1' : cols === 'grid-3' ? (showFilters ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4') : (showFilters ? 'grid-cols-2 lg:grid-cols-2' : 'grid-cols-2 lg:grid-cols-3')}`}>
               {rooms.map((room) => {
                 const branch = branches.find(b => b.id === room.branchId);
                 return (

@@ -200,14 +200,14 @@ export default function HeroSection({
             <div className="w-full">
               <TextLang
                 as="span"
-                ar="البحث السريع"
-                en="Keyword"
+                ar="ابحث"
+                en="Search"
                 lang={currentLang}
                 className="text-[10px] text-white/50 block font-semibold uppercase tracking-wider mb-0.5"
               />
               <InputPrimitive
                 type="text"
-                placeholder={tl('ابحث باسم الغرفة...', 'Search by room...')}
+                placeholder={tl('اسم الجناح أو الخدمة...', 'Suite name, amenity...')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent text-white text-[14px] w-full outline-none border-none placeholder:text-white/45 font-medium text-start"
@@ -222,7 +222,7 @@ export default function HeroSection({
             size="lg"
             className="w-full lg:w-auto shrink-0 rounded-full px-6 gap-2 group"
           >
-            <TextLang ar="ابحث الآن" en="Search" lang={currentLang} className="hidden sm:inline" />
+            <TextLang ar="استكشف الغرف" en="Explore Rooms" lang={currentLang} className="hidden sm:inline" />
             <ArrowRight className={`w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 ${currentLang === 'ar' ? 'rotate-180' : ''}`} />
           </Button>
         </form>

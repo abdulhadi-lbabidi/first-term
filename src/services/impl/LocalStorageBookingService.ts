@@ -24,16 +24,16 @@ export class LocalStorageBookingService implements IBookingService {
     }
     
     // Check interval conflicts with existing bookings
-    // A room is unavailable ONLY when: newStart < existingEnd AND newEnd > existingStart
+    // A room type is unavailable ONLY when the number of overlapping bookings >= room.quantity
     const bookings = StorageService.getBookings();
-    const hasConflict = bookings.some(b => 
+    const overlappingBookings = bookings.filter(b => 
       b.roomId === roomId && 
       b.status === 'confirmed' && 
       dayjs(startAt).isBefore(dayjs(b.endAt)) && 
       dayjs(endAt).isAfter(dayjs(b.startAt))
     );
     
-    if (hasConflict) {
+    if (overlappingBookings.length >= (room.quantity || 1)) {
       throw new Error('الغرفة محجوزة بالفعل خلال هذه الفترة / Room is already reserved for the selected period');
     }
 

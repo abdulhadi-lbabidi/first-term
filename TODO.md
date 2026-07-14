@@ -1,8 +1,8 @@
 # tasks code
 - [ ] rooms
-    - [ ] add capcity in hotil
     - [ ] detils:   
-        - [ ] booking: اصلاح الوان يوم الحجز
+        - [ ] add description in details
+        - [x] booking: اصلاح الوان يوم الحجز
             - الاحمر مع خط محجوز كامل ولا يمكن الضغط عليها
             - البيج هو اللون الذي يمكن التحديد منه الى يوم سابق او تالي اذا متاح
             - الرمادي منتهي المدة
@@ -11,7 +11,7 @@
     - [ ] date
     - [ ] bug filter and scroll bad
     - [ ] capcity
-- [ ] video record
+- [x] video record
 # testing responsiv for all pages
 - [ ] home
 - [ ] rooms
@@ -24,8 +24,6 @@
 - [ ] about
 - [ ] all forms 
 # testing all features
-- [x] SEO
-- [ ] Security 
 - [ ] performance
 # testing content
 - [ ] about
@@ -34,16 +32,3 @@
 - [ ] terms 
 - [ ] privacy
 - [ ] home
-- [ ] UX writer
-    - rooms
-    - room
-    - booking
-    - header
-    - footer
-    - about
-    - contact
-    - terms
-    - privacy
-    - not found page
-    - booking form
-    - full report from UX writer

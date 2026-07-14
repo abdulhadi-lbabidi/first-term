@@ -27,7 +27,7 @@ export default function AboutSection({ currentLang, t }: AboutSectionProps) {
             to={`/${currentLang}/about`}
             className="text-[14px] font-semibold text-primary hover:text-primary-hover border-b border-primary/40 pb-1"
           >
-            {t('common.viewDetails')}
+            {currentLang === 'ar' ? 'اكتشف قصتنا' : 'Discover Our Story'}
           </Link>
         </div>
       </div>

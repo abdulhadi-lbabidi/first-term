@@ -41,7 +41,7 @@ const createCustomIcon = (availableCount: number | null, isSelected: boolean) =>
   const hasNoAvailability = availableCount === 0;
   const countDisplay = availableCount !== null ? availableCount : '';
   const bgColor = hasNoAvailability ? 'bg-error' : (availableCount !== null ? 'bg-success' : 'bg-primary');
-  
+
   const html = `
     <div class="relative flex flex-col items-center justify-center transform ${isSelected ? 'scale-125 z-50' : 'scale-100'} transition-transform duration-300 drop-shadow-md">
       <div class="${bgColor} text-white font-bold text-xs w-9 h-9 rounded-full flex items-center justify-center border-2 border-white relative z-10">
@@ -63,8 +63,8 @@ export default function LiveMap({ branches, currentLang, selectedBranchId, branc
   const mapRef = useRef<L.Map>(null);
 
   // Default center (can be middle of the world or first branch)
-  const defaultCenter: [number, number] = branches.length > 0 && branches[0].lat && branches[0].lng 
-    ? [branches[0].lat, branches[0].lng] 
+  const defaultCenter: [number, number] = branches.length > 0 && branches[0].lat && branches[0].lng
+    ? [branches[0].lat, branches[0].lng]
     : [25.2048, 55.2708]; // Dubai
 
   const selectedBranch = branches.find(b => b.id === selectedBranchId);
@@ -90,32 +90,34 @@ export default function LiveMap({ branches, currentLang, selectedBranchId, branc
 
         {branches.map((branch) => {
           if (!branch.lat || !branch.lng) return null;
-          
+
           const availableCount = branchAvailability ? branchAvailability[branch.id] : null;
           const hasNoAvailability = availableCount === 0;
-          
+
+          if (hasNoAvailability) return null;
+
           let roomsUrl = `/${currentLang}/rooms?branch=${branch.id}`;
           if (checkIn && checkOut) {
             roomsUrl += `&check_in=${checkIn}&check_out=${checkOut}`;
           }
 
           return (
-            <Marker 
-              key={branch.id} 
+            <Marker
+              key={branch.id}
               position={[branch.lat, branch.lng]}
               icon={createCustomIcon(availableCount, branch.id === selectedBranchId)}
             >
               <Popup className="custom-popup">
                 <div className="text-center font-interfaceEn min-w-[220px]">
                   <div className="relative">
-                    <img 
-                      src={branch.image} 
-                      alt={currentLang === 'ar' ? branch.nameAr : branch.nameEn} 
+                    <img
+                      src={branch.image}
+                      alt={currentLang === 'ar' ? branch.nameAr : branch.nameEn}
                       className={`w-full h-28 object-cover rounded-lg mb-3 shadow-sm ${hasNoAvailability ? 'grayscale' : ''}`}
                     />
                     {branchAvailability && (
                       <div className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-1 rounded-md shadow-sm ${hasNoAvailability ? 'bg-error/90 text-white' : 'bg-success/90 text-white'}`}>
-                        {hasNoAvailability 
+                        {hasNoAvailability
                           ? (currentLang === 'ar' ? 'غير متاح' : 'Not available')
                           : `${availableCount}`
                         }
@@ -128,13 +130,13 @@ export default function LiveMap({ branches, currentLang, selectedBranchId, branc
                   <p className="text-[12px] text-muted mb-4 line-clamp-2 leading-relaxed">
                     {currentLang === 'ar' ? branch.addressAr : branch.addressEn}
                   </p>
-                  
+
                   {hasNoAvailability ? (
                     <div className="block w-full bg-surface-soft text-muted py-2 rounded-lg text-[13px] font-semibold">
                       {currentLang === 'ar' ? 'لا يوجد غرف' : 'No Rooms'}
                     </div>
                   ) : (
-                    <Link 
+                    <Link
                       to={roomsUrl}
                       className="block w-full bg-primary text-white py-2 rounded-lg text-[13px] font-semibold hover:bg-primary-hover transition-colors"
                     >

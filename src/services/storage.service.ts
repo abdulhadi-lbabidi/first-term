@@ -66,7 +66,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Royal Luxury Suite',
     pricePerNight: 650,
     size: 120,
-    capacity: 4,
+    capacity: 3,
+    quantity: 5,
     stars: 5,
     descriptionAr: 'جناح ملكي فاخر بإطلالة بانورامية كاملة على أفق دبي والخليج العربي. يحتوي على غرفتي نوم وصالة معيشة واسعة ومسبح خاص داخلي.',
     descriptionEn: 'Luxury Royal suite with full panoramic view over Dubai Skyline and Arabian Gulf. Features two bedrooms, a spacious living area and a private plunge pool.',
@@ -86,7 +87,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Deluxe Ocean View Room',
     pricePerNight: 350,
     size: 55,
-    capacity: 2,
+    capacity: 5,
+    quantity: 5,
     stars: 5,
     descriptionAr: 'غرفة ديلوكس عصرية وأنيقة ومجهزة بالكامل مع شرفة واسعة تطل مباشرة على الشاطئ والخليج.',
     descriptionEn: 'Modern and elegant deluxe room fully equipped with a large balcony overlooking the beach and gulf directly.',
@@ -106,6 +108,7 @@ const SEED_ROOMS: Room[] = [
     pricePerNight: 450,
     size: 75,
     capacity: 2,
+    quantity: 5,
     stars: 4,
     descriptionAr: 'جناح تنفيذي مجهز بمساحة عمل متكاملة واتصال إنترنت فائق السرعة، مثالي لرجال الأعمال والباحثين عن الراحة والعمل.',
     descriptionEn: 'Executive suite equipped with a full workspace and high-speed internet connection, ideal for business travelers seeking comfort and focus.',
@@ -126,7 +129,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Royal Bosphorus Suite',
     pricePerNight: 500,
     size: 95,
-    capacity: 3,
+    capacity: 4,
+    quantity: 5,
     stars: 5,
     descriptionAr: 'جناح فسيح وراقٍ بتصميم تركي تقليدي فاخر وإطلالة خلابة مباشرة على مضيق البوسفور وجسر البوسفور الشهير.',
     descriptionEn: 'Spacious and sophisticated suite with traditional luxury Turkish design and breathtaking direct views of the Bosphorus Strait and Bridge.',
@@ -145,7 +149,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Comfort Family Room',
     pricePerNight: 220,
     size: 45,
-    capacity: 3,
+    capacity: 2,
+    quantity: 5,
     stars: 4,
     descriptionAr: 'غرفة عائلية هادئة ومريحة تحتوي على سرير مزدوج وسرير مفرد مع إطلالة على حديقة الفندق الداخلية.',
     descriptionEn: 'Quiet and comfortable family room featuring a double bed and a single bed with a view of the hotel internal garden.',
@@ -166,7 +171,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Eiffel Luxury Suite',
     pricePerNight: 580,
     size: 85,
-    capacity: 2,
+    capacity: 7,
+    quantity: 5,
     stars: 5,
     descriptionAr: 'عش الرومانسية الفرنسية في هذا الجناح الفاخر ذو الإطلالة المباشرة والكاملة على برج إيفل من صالتك وشرفتك الخاصة.',
     descriptionEn: 'Experience French romance in this luxury suite featuring direct and full views of the Eiffel Tower from your private lounge and balcony.',
@@ -185,7 +191,8 @@ const SEED_ROOMS: Room[] = [
     nameEn: 'Classic Parisian Room',
     pricePerNight: 190,
     size: 35,
-    capacity: 2,
+    capacity: 3,
+    quantity: 5,
     stars: 4,
     descriptionAr: 'غرفة كلاسيكية دافئة بتفاصيل فنية ونوافذ فرنسية تقليدية تطل على شوارع باريس الجميلة.',
     descriptionEn: 'Cozy classic room with artistic details and traditional French windows overlooking the beautiful streets of Paris.',
@@ -224,6 +231,20 @@ export class StorageService {
     }
     if (!localStorage.getItem(KEYS.REVIEWS)) {
       localStorage.setItem(KEYS.REVIEWS, JSON.stringify([]));
+    }
+
+    // Migrate old data to include quantity
+    const rooms = this.getRooms();
+    let modified = false;
+    const migratedRooms = rooms.map(r => {
+      if (!r.quantity) {
+        modified = true;
+        return { ...r, quantity: 5 };
+      }
+      return r;
+    });
+    if (modified) {
+      this.set(KEYS.ROOMS, migratedRooms);
     }
   }
 

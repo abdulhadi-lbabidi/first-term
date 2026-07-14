@@ -67,9 +67,9 @@ export function BookingWidget({ room, onBookNow, isDateDisabled, bookedDates }: 
                   className="h-auto w-full py-3 px-4 justify-between rounded-none hover:bg-canvas/50 text-right rtl:text-right ltr:text-left h-full"
                 >
                   <div className="flex flex-col w-full text-start">
-                    <div className="text-[10px] font-bold mb-1 uppercase tracking-wider text-ink dark:text-canvas">{currentLang === 'ar' ? 'الوصول' : 'Check-in'}</div>
+                    <div className="text-[10px] font-bold mb-1 uppercase tracking-wider text-ink dark:text-canvas">{currentLang === 'ar' ? 'تاريخ الوصول' : 'Arrival'}</div>
                     <div className={`text-[13px] ${!checkIn ? "text-muted" : "text-ink dark:text-canvas"}`}>
-                      {checkIn ? format(new Date(checkIn), "yyyy/MM/dd", { locale }) : (currentLang === 'ar' ? 'إضافة تاريخ' : 'Add date')}
+                      {checkIn ? format(new Date(checkIn), "yyyy/MM/dd", { locale }) : (currentLang === 'ar' ? 'اختر تاريخ الوصول' : 'Select arrival date')}
                     </div>
                   </div>
                 </Button>
@@ -82,6 +82,7 @@ export function BookingWidget({ room, onBookNow, isDateDisabled, bookedDates }: 
                   onCancel={() => setIsCalendarOpen(false)}
                   isDateDisabled={isDateDisabled}
                   bookedDates={bookedDates}
+                  roomQuantity={room?.quantity || 1}
                 />
               </PopoverContent>
             </Popover>
@@ -92,9 +93,9 @@ export function BookingWidget({ room, onBookNow, isDateDisabled, bookedDates }: 
               className="h-auto w-full py-3 px-4 justify-between rounded-none hover:bg-canvas/50 text-right rtl:text-right ltr:text-left h-full"
             >
               <div className="flex flex-col w-full text-start">
-                <div className="text-[10px] font-bold mb-1 uppercase tracking-wider text-ink dark:text-canvas">{currentLang === 'ar' ? 'المغادرة' : 'Check-out'}</div>
+                <div className="text-[10px] font-bold mb-1 uppercase tracking-wider text-ink dark:text-canvas">{currentLang === 'ar' ? 'تاريخ المغادرة' : 'Departure'}</div>
                 <div className={`text-[13px] ${!checkOut ? "text-muted" : "text-ink dark:text-canvas"}`}>
-                  {checkOut ? format(new Date(checkOut), "yyyy/MM/dd", { locale }) : (currentLang === 'ar' ? 'إضافة تاريخ' : 'Add date')}
+                  {checkOut ? format(new Date(checkOut), "yyyy/MM/dd", { locale }) : (currentLang === 'ar' ? 'اختر تاريخ المغادرة' : 'Select departure date')}
                 </div>
               </div>
             </Button>
@@ -139,12 +140,12 @@ export function BookingWidget({ room, onBookNow, isDateDisabled, bookedDates }: 
           disabled={!checkIn || !checkOut}
           className="w-full py-6 text-[16px] bg-primary hover:bg-primary-hover text-white rounded-xl transition-all duration-300 font-bold"
         >
-          {currentLang === 'ar' ? 'احجز' : 'Reserve'}
+          {currentLang === 'ar' ? 'احجز الآن' : 'Reserve Now'}
         </Button>
 
         {!checkIn || !checkOut ? (
           <div className="text-center text-sm text-muted mt-4">
-            {currentLang === 'ar' ? 'لن يتم خصم أي مبلغ بعد' : "You won't be charged yet"}
+            {currentLang === 'ar' ? 'اختر تواريخ إقامتك للمتابعة' : 'Select your dates to continue'}
           </div>
         ) : (
           <div className="mt-6">

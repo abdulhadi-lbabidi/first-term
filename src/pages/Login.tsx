@@ -101,43 +101,6 @@ export default function Login() {
           </Button>
         </form>
 
-        {/* Default credentials suggestion */}
-        <div className="bg-canvas/50 dark:bg-body/20 border border-border dark:border-border-strong/10 rounded-xl p-4 text-[13px] space-y-2">
-          <p className="font-semibold text-ink/75 dark:text-canvas/75 flex items-center gap-1.5 justify-center">
-            <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-            {t('auth.defaultCredentials')}
-          </p>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              type="button"
-              onClick={() => {
-                setValue('email', 'concierge@luxury.com');
-                setValue('password', '12345678');
-              }}
-              className="bg-white dark:bg-ink hover:bg-canvas dark:hover:bg-body/30 border border-border dark:border-border-strong/10 rounded-lg p-2.5 text-center transition-luxury cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary/50 text-[12px] shadow-sm font-interfaceEn"
-            >
-              <div className="font-semibold text-primary mb-0.5">{t('auth.defaultConcierge')}</div>
-              <div className="text-muted text-[11px] truncate">concierge@luxury.com</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setValue('email', 'guest@luxury.com');
-                setValue('password', '12345678');
-              }}
-              className="bg-white dark:bg-ink hover:bg-canvas dark:hover:bg-body/30 border border-border dark:border-border-strong/10 rounded-lg p-2.5 text-center transition-luxury cursor-pointer focus:outline-none focus:ring-1 focus:ring-primary/50 text-[12px] shadow-sm font-interfaceEn"
-            >
-              <div className="font-semibold text-primary mb-0.5">{t('auth.defaultGuest')}</div>
-              <div className="text-muted text-[11px] truncate">guest@luxury.com</div>
-            </button>
-          </div>
-          <p className="text-[11px] text-muted text-center italic mt-1 font-interfaceEn">
-            {t('auth.defaultPassword')}
-          </p>
-        </div>
-
-        <hr className="border-border dark:border-border-strong/10" />
-
         {/* Redirect */}
         <div className="text-center text-[14px]">
           <span className="text-muted">{t('auth.noAccount')} </span>

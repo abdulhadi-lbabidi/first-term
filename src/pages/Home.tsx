@@ -9,7 +9,7 @@ import AboutSection from '../components/home/AboutSection';
 import FeaturedSection from '../components/home/FeaturedSection';
 import BranchesSection from '../components/home/BranchesSection';
 import ServicesSection from '../components/home/ServicesSection';
-
+import SEO from '../components/SEO';
 export default function Home() {
   const { t } = useTranslation();
   const { lang } = useParams<{ lang: string }>();
@@ -55,6 +55,7 @@ export default function Home() {
 
   return (
     <div className="font-interfaceEn">
+      <SEO title={t('common.home')} />
       {/* 1. Hero search and presentation section */}
       <HeroSection
         branches={branches}

@@ -93,15 +93,15 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
               <span className="text-2xl font-bold text-ink dark:text-canvas">${room.pricePerNight}</span>
               <span className="text-xs text-muted">/ {currentLang === 'ar' ? 'الليلة' : 'night'}</span>
             </div>
-            {isAvailable ? (
-              <span className="text-[13px] font-bold text-primary group-hover:underline">
-                {t('common.bookNow')} &rarr;
-              </span>
-            ) : (
-              <span className="text-[13px] font-bold text-error">
-                {t('rooms.unavailable')}
-              </span>
-            )}
+            {/* {isAvailable ? ( */}
+            <span className="text-[13px] font-bold text-primary group-hover:underline">
+              {t('common.bookNow')} &rarr;
+            </span>
+            {/* ) : ( */}
+            {/* <span className="text-[13px] font-bold text-error">
+              {t('rooms.unavailable')}
+            </span> */}
+            {/* )} */}
           </div>
         </div>
       </Link>
@@ -167,15 +167,15 @@ export default function RoomCard({ room, branch, layout = "grid" }: RoomCardProp
 
         {/* Dynamic Action Trigger Button */}
         <div className="pt-2 select-none">
-          {isAvailable ? (
-            <div className="w-full bg-white text-ink text-center text-[13px] font-bold py-3 rounded-full shadow-lg group-hover:bg-primary group-hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] active:scale-95 cursor-pointer">
-              {t('common.bookNow')}
-            </div>
-          ) : (
-            <div className="w-full bg-white/10 backdrop-blur-sm text-white/40 text-center text-[13px] font-bold py-3 rounded-full border border-white/5 cursor-not-allowed">
+          {/* {isAvailable ? ( */}
+          <div className="w-full bg-white text-ink text-center text-[13px] font-bold py-3 rounded-full shadow-lg group-hover:bg-primary group-hover:text-white transition-all duration-300 transform group-hover:scale-[1.01] active:scale-95 cursor-pointer">
+            {t('common.bookNow')}
+          </div>
+          {/* ) : ( */}
+          {/* <div className="w-full bg-white/10 backdrop-blur-sm text-white/40 text-center text-[13px] font-bold py-3 rounded-full border border-white/5 cursor-not-allowed">
               {t('rooms.unavailable')}
-            </div>
-          )}
+            </div> */}
+          {/* )} */}
         </div>
       </div>
     </Link>

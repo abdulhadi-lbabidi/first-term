@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../store';
 import { setLanguage } from '../../store/uiSlice';
 import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
+import SEO from '../SEO';
 
 export default function MainLayout() {
   const { lang } = useParams<{ lang: string }>();
@@ -30,6 +31,7 @@ export default function MainLayout() {
 
   return (
     <div className="flex flex-col min-h-screen bg-canvas dark:bg-ink transition-colors duration-300">
+      <SEO />
       {/* Top Fixed Header */}
       <Navbar />
 

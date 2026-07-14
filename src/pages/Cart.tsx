@@ -159,7 +159,7 @@ export default function Cart() {
           {/* Cart Summary Panel (30%) */}
           <div className="lg:col-span-4 bg-white dark:bg-ink border border-border dark:border-border-strong/20 rounded-2xl p-6 shadow-md space-y-6">
             <h3 className="font-serif-display text-xl font-semibold text-ink dark:text-canvas pb-4 border-b border-border/50 dark:border-border-strong/15 text-left rtl:text-right">
-              {t('bookings.duration')}
+              {t('bookings.orderSummary')}
             </h3>
 
             <div className="space-y-4 text-[14px] text-left rtl:text-right">
@@ -178,7 +178,7 @@ export default function Cart() {
               to={`/${currentLang}/checkout`}
               className="w-full bg-primary hover:bg-primary-hover text-white font-semibold h-12 rounded-full transition-luxury shadow-md flex items-center justify-center space-x-2"
             >
-              <span>{currentLang === 'ar' ? 'المتابعة للدفع الحجز' : 'Proceed to Checkout'}</span>
+              <span>{currentLang === 'ar' ? 'إتمام الحجز' : 'Proceed to Checkout'}</span>
               {currentLang === 'ar' ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </Link>
           </div>
@@ -189,7 +189,7 @@ export default function Cart() {
             <ShoppingBag className="w-8 h-8" />
           </div>
           <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas mb-3">
-            {currentLang === 'ar' ? 'السلة فارغة' : 'Your Selection is Empty'}
+            {currentLang === 'ar' ? 'لم تختر أي غرف بعد' : 'No Rooms Selected Yet'}
           </h3>
           <p className="text-[14px] text-muted mb-6 leading-relaxed">
             {t('bookings.cartEmpty')}

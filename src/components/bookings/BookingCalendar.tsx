@@ -13,6 +13,7 @@ interface BookingCalendarProps {
   onCancel: () => void;
   isDateDisabled: (date: Date) => boolean;
   bookedDates?: { startAt: string; endAt: string }[];
+  roomQuantity?: number;
 }
 
 export function BookingCalendar({
@@ -22,6 +23,7 @@ export function BookingCalendar({
   onCancel,
   isDateDisabled,
   bookedDates,
+  roomQuantity = 1,
 }: BookingCalendarProps) {
   const { i18n } = useTranslation();
   const currentLang = i18n.language;
@@ -32,13 +34,49 @@ export function BookingCalendar({
     to: initialCheckOut,
   });
 
-  const handleSelect = (range: any) => {
+  // Calculate fully booked dates based on room quantity
+  const fullyBookedDates: Date[] = [];
+  const effectiveQuantity = roomQuantity > 0 ? roomQuantity : 1;
+  if (bookedDates && effectiveQuantity > 0) {
+    const dateCounts: Record<string, number> = {};
+    bookedDates.forEach(b => {
+      let current = startOfDay(new Date(b.startAt));
+      const end = startOfDay(new Date(b.endAt));
+      while (isBefore(current, end)) {
+        const dateStr = current.toISOString().split('T')[0];
+        dateCounts[dateStr] = (dateCounts[dateStr] || 0) + 1;
+        current = addDays(current, 1);
+      }
+    });
+
+    Object.entries(dateCounts).forEach(([dateStr, count]) => {
+      if (count >= effectiveQuantity) {
+        fullyBookedDates.push(new Date(dateStr));
+      }
+    });
+  }
+
+  const handleSelect = (range: any, selectedDay: Date) => {
+    // Check if the selected day is fully booked
+    const isDayFullyBooked = fullyBookedDates.some(
+      (d) => d.getTime() === startOfDay(selectedDay).getTime()
+    );
+
+    // If starting a new selection on a fully booked day, reject
+    if (range?.from && !range?.to && isDayFullyBooked) {
+      return;
+    }
+
     if (range?.from && range?.to) {
-      const overlaps = bookedDates?.some(b => {
-        const bStart = startOfDay(new Date(b.startAt));
-        const bEnd = startOfDay(new Date(b.endAt));
-        return isBefore(range.from, bEnd) && isAfter(range.to, bStart);
+      // If a range is selected, check if any fully booked date falls within the stay nights
+      // Nights are from range.from to range.to - 1 day
+      const overlaps = fullyBookedDates.some(fullyBookedDate => {
+        return (
+          (fullyBookedDate.getTime() >= startOfDay(range.from).getTime()) &&
+          (fullyBookedDate.getTime() < startOfDay(range.to).getTime())
+        );
       });
+
       if (overlaps) {
         setDateRange({ from: range.from, to: undefined });
         return;
@@ -52,18 +90,11 @@ export function BookingCalendar({
   };
 
   const modifiers = {
-    booked: bookedDates?.map(b => ({
-      from: addDays(new Date(b.startAt), 1),
-      to: addDays(new Date(b.endAt), -1)
-    })) || [],
-    checkIn: bookedDates?.map(b => new Date(b.startAt)) || [],
-    checkOut: bookedDates?.map(b => new Date(b.endAt)) || [],
+    booked: fullyBookedDates,
   };
 
   const modifiersClassNames = {
-    booked: "bg-error/10 text-error line-through rounded-none dark:bg-error/20 pointer-events-none",
-    checkIn: "bg-primary-soft/60 text-ink dark:bg-primary-soft/20 dark:text-canvas font-bold",
-    checkOut: "bg-primary-soft/60 text-ink dark:bg-primary-soft/20 dark:text-canvas font-bold",
+    booked: "bg-error/10 text-error line-through rounded-none dark:bg-error/20",
     disabled: "text-muted/60 bg-border/20 dark:bg-border-strong/10 opacity-50 pointer-events-none",
   };
 

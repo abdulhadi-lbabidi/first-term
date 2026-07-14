@@ -170,7 +170,7 @@ export default function Checkout() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[13px] font-semibold text-ink/80 dark:text-canvas/80 uppercase block">
-                    {currentLang === 'ar' ? 'تاريخ الانتهاء' : 'Expiry Date'}
+                    {t('bookings.expiryDate')}
                   </label>
                   <input
                     type="text"
@@ -197,7 +197,7 @@ export default function Checkout() {
               {/* Secure disclaimer */}
               <div className="pt-2 flex items-center space-x-2 rtl:space-x-reverse text-muted text-[13px] font-medium">
                 <ShieldCheck className="w-4.5 h-4.5 mx-2 text-success" />
-                <span>{currentLang === 'ar' ? 'دفع آمن تجريبي - محمي بتقنية SSL' : 'Simulated Secure Payment - SSL Encrypted'}</span>
+                <span>{currentLang === 'ar' ? 'دفع آمن تجريبي — محمي بتقنية SSL' : 'Simulated Secure Payment — SSL Encrypted'}</span>
               </div>
 
               {/* Submit */}
@@ -240,7 +240,7 @@ export default function Checkout() {
             <ShoppingBag className="w-8 h-8 mx-2" />
           </div>
           <h3 className="font-serif-display text-2xl font-semibold text-ink dark:text-canvas mb-3">
-            {currentLang === 'ar' ? 'سلة الحجز فارغة' : 'No reservations in checkout'}
+            {currentLang === 'ar' ? 'لا توجد حجوزات للمتابعة' : 'Nothing to Check Out'}
           </h3>
           <p className="text-[14px] text-muted mb-6">
             {t('bookings.cartEmpty')}

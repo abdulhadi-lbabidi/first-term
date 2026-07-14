@@ -60,7 +60,7 @@ export default function Footer() {
           <div className="relative z-10 w-full md:w-auto flex-1 max-w-md flex items-center gap-2">
             <input
               type="email"
-              placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Your email address'}
+              placeholder={currentLang === 'ar' ? 'بريدك الإلكتروني' : 'Enter your email address'}
               className="w-full bg-canvas/10 border border-canvas/20 focus:border-primary text-canvas rounded-full px-6 py-3.5 text-[14px] outline-none transition-all placeholder:text-canvas/40"
             />
             <button className="bg-primary hover:bg-primary-hover text-white px-6 py-3.5 rounded-full font-semibold text-[14px] transition-all whitespace-nowrap">
@@ -82,8 +82,8 @@ export default function Footer() {
               to={`/${currentLang}`}
               className="flex items-center gap-2.5 group select-none hover:text-primary transition-colors"
             >
-              <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-primary border border-primary/25 shadow-sm">
-                <Crown className="w-6 h-6 fill-current" />
+              <div className="w-12 h-12 flex items-center justify-center drop-shadow-md transition-transform duration-300 group-hover:scale-105">
+                <img src="/logo-white.webp" alt="Vercel Hotels Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-serif-display text-2xl font-bold tracking-wider text-canvas uppercase">
                 Vercel Hotels

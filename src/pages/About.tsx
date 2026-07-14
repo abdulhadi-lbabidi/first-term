@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shield, Sparkles, Compass, Heart, Building2, Star, Lock, Globe } from 'lucide-react';
+import SEO from '../components/SEO';
 
 export default function About() {
   const { t, i18n } = useTranslation();
@@ -55,6 +56,7 @@ export default function About() {
 
   return (
     <div className={`max-w-7xl mx-auto px-6 space-y-24 py-8 ${currentLang === 'ar' ? 'font-interfaceAr' : 'font-interfaceEn'}`}>
+      <SEO title={t('common.about')} />
       {/* 1. Header Hero section */}
       <section className="text-center max-w-3xl mx-auto space-y-4 mt-6">
         <span className="text-[13px] font-semibold text-primary uppercase tracking-widest block">

@@ -182,7 +182,7 @@ export default function MyBookings() {
                     {!isCancelled && isPaid && (
                       <span className="text-[12px] text-success font-medium flex items-center gap-1.5 bg-success/5 px-3 py-1.5 rounded-full">
                         <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
-                        <span>{currentLang === 'ar' ? 'تم الدفع والـتأكيد' : 'Paid & Confirmed'}</span>
+                        <span>{currentLang === 'ar' ? 'مدفوع ومؤكد' : 'Paid & Confirmed'}</span>
                       </span>
                     )}
 
@@ -190,7 +190,7 @@ export default function MyBookings() {
                     <div className="flex items-center gap-2.5 rtl:flex-row-reverse">
                       <Link to={`/${currentLang}/rooms/${booking.room.id}`}>
                         <Button size="sm" variant="outline">
-                          {currentLang === 'ar' ? 'عرض الغرفة' : 'View Room'}
+                          {currentLang === 'ar' ? 'عرض الجناح' : 'View Suite'}
                         </Button>
                       </Link>
 
@@ -229,7 +229,7 @@ export default function MyBookings() {
             <Briefcase className="w-6 h-6" />
           </div>
           <h3 className="font-serif-display text-xl font-semibold text-ink dark:text-canvas mb-2">
-            {currentLang === 'ar' ? 'لا توجد حجوزات' : 'No Reservations Found'}
+            {currentLang === 'ar' ? 'لا توجد حجوزات بعد' : 'No Reservations Yet'}
           </h3>
           <p className="text-[13px] text-muted mb-5 leading-relaxed">
             {t('bookings.noBookings')}

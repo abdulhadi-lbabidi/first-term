@@ -15,18 +15,20 @@ export class LocalStorageRoomService implements IRoomService {
 
   async getRooms(filters?: RoomFilterOptions): Promise<Room[]> {
     let rooms = StorageService.getRooms();
+    console.log(`[Filter] Initial rooms count: ${rooms.length}`);
 
     if (!filters) {
       return rooms;
     }
 
-    // Filter by branch (supports comma-separated list of branch IDs)
+    // Filter by branch
     if (filters.branch) {
       const branchIds = filters.branch.split(',');
       rooms = rooms.filter(r => branchIds.includes(r.branchId));
+      console.log(`[Filter] By Branch (${filters.branch}): ${rooms.length} rooms left`);
     }
 
-    // Filter by search query (case-insensitive)
+    // Filter by search query
     if (filters.q) {
       const q = filters.q.toLowerCase().trim();
       rooms = rooms.filter(
@@ -37,6 +39,7 @@ export class LocalStorageRoomService implements IRoomService {
           r.descriptionEn.toLowerCase().includes(q) ||
           r.roomNumber.includes(q)
       );
+      console.log(`[Filter] By Query (${filters.q}): ${rooms.length} rooms left`);
     }
 
     // Filter by price
@@ -55,6 +58,7 @@ export class LocalStorageRoomService implements IRoomService {
     // Filter by capacity (can accommodate at least the requested capacity)
     if (filters.capacity !== undefined && filters.capacity > 0) {
       rooms = rooms.filter(r => r.capacity >= filters.capacity!);
+      console.log(`[Filter] By Capacity (requested: ${filters.capacity}): ${rooms.length} rooms left`);
     }
 
     // Filter by date availability
@@ -71,7 +75,7 @@ export class LocalStorageRoomService implements IRoomService {
 
       const bookings = StorageService.getBookings();
       rooms = rooms.filter(r => {
-        const hasConflict = bookings.some(b => {
+        const overlappingBookings = bookings.filter(b => {
           if (b.roomId !== r.id || b.status !== 'confirmed') return false;
           
           const bStart = new Date(b.startAt).getTime();
@@ -81,10 +85,17 @@ export class LocalStorageRoomService implements IRoomService {
           
           return filterStart < bEnd && filterEnd > bStart;
         });
-        return !hasConflict;
+        
+        const isAvailable = overlappingBookings.length < (r.quantity || 1);
+        if (!isAvailable) {
+          console.log(`[Filter] Room ${r.id} HIDDEN by Date: Overlaps=${overlappingBookings.length}, Quantity=${r.quantity}`);
+        }
+        return isAvailable;
       });
+      console.log(`[Filter] By Date (${checkInDate} to ${checkOutDate}): ${rooms.length} rooms left`);
     }
 
+    console.log(`[Filter] Final rooms count: ${rooms.length}`);
     return rooms;
   }
 

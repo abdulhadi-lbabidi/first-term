@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Mail, Phone, MapPin, CheckCircle2, AlertCircle, Send, Map } from 'lucide-react';
 import { Input } from '../components/ui/Input';
+import SEO from '../components/SEO';
 
 export default function Contact() {
   const { t, i18n } = useTranslation();
@@ -35,7 +36,7 @@ export default function Contact() {
 
   return (
     <div className={`max-w-7xl mx-auto px-6 space-y-16 py-12 ${currentLang === 'ar' ? 'font-interfaceAr' : 'font-interfaceEn'}`}>
-      
+      <SEO title={t('common.contact')} />
       {/* Hero Section */}
       <section className="text-center max-w-3xl mx-auto space-y-4">
         <span className="text-[13px] font-semibold text-primary uppercase tracking-widest block">
@@ -87,7 +88,7 @@ export default function Contact() {
                 </div>
                 <div className="space-y-1 pt-1 text-left rtl:text-right">
                   <span className="text-[12px] font-semibold text-muted uppercase tracking-wider">
-                    {currentLang === 'ar' ? 'رقم الهاتف' : 'Telephone'}
+                    {currentLang === 'ar' ? 'الهاتف' : 'Phone'}
                   </span>
                   <p className="text-[15px] font-medium text-ink dark:text-canvas"><bdi>+971 4 123 4567</bdi></p>
                 </div>
@@ -99,7 +100,7 @@ export default function Contact() {
                 </div>
                 <div className="space-y-1 pt-1 text-left rtl:text-right">
                   <span className="text-[12px] font-semibold text-muted uppercase tracking-wider">
-                    {currentLang === 'ar' ? 'البريد الإلكتروني' : 'Electronic Mail'}
+                    {currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email'}
                   </span>
                   <p className="text-[15px] font-medium text-ink dark:text-canvas">reservations@vercelhotels.com</p>
                 </div>

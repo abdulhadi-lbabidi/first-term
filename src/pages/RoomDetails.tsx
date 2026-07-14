@@ -18,6 +18,7 @@ import { RoomReviews } from '../components/room-details/RoomReviews';
 import { RoomRecommendations } from '../components/room-details/RoomRecommendations';
 import { RoomBookingDialog } from '../components/room-details/RoomBookingDialog';
 import { MobileBookingBar } from '../components/room-details/MobileBookingBar';
+import SEO from '../components/SEO';
 
 export default function RoomDetails() {
   const { t, i18n } = useTranslation();
@@ -163,6 +164,7 @@ export default function RoomDetails() {
 
   return (
     <div className={`max-w-7xl mx-auto px-6 py-8 ${currentLang === 'ar' ? 'font-interfaceAr' : 'font-interfaceEn'}`}>
+      <SEO title={roomName} />
       <div className="mb-6">
         <Link to={`/${currentLang}/rooms`} className="gap-2 text-[14px] font-semibold text-muted hover:text-primary transition-colors flex items-center space-x-2 rtl:space-x-reverse">
           <ChevronRightIcon className='ltr:rotate-180' />

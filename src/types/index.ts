@@ -30,6 +30,8 @@ export interface Room {
   pricePerNight: number;
   size: number; // in square meters
   capacity: number; // number of guests
+  quantity: number; // number of available rooms of this type
+
   stars?: number; // 1-5
   descriptionAr: string;
   descriptionEn: string;
